@@ -1,0 +1,5 @@
+name for files
+
+home => index page
+instructions => Instructions Page
+registration => Registration Page
