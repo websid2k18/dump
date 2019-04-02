@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+# CORS Font Allow
+<FilesMatch ".(eot|ttf|otf|woff2|woff)">
+	Allow from all
+	Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
