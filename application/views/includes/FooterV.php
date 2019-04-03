@@ -10,6 +10,8 @@
             </footer>
             <!-- /footer content -->
 
+            <!-- jQuery -->
+            <script src="http://127.0.0.1/epp/assets/plugins/jquery/dist/jquery.min.js"></script>
             <!-- Bootstrap -->
             <script src="<?= base_url(); ?>assets/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
             <!-- FastClick -->

@@ -1,4 +1,3 @@
-
 <div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
@@ -15,23 +14,23 @@
                         <a href="<?= base_url('/placement/')?>"><i class="fas fa-home"></i>&nbsp;&nbsp;Home </a>
                     </li>
                     <li class="<?php echo $active=="instructions" ? "active" :  ""; ?>">
-                        <a href="<?= base_url('/placement/home')?>"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Instructions </a>
+                        <a href="<?= base_url('/placement/xyz')?>"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Instructions </a>
                     </li>
-                    <li class="<?php echo $active=="registration" ? "active" :  ""; ?>">
+                    <li class="<?php echo ($active=="RegTPO" && $active=="RegCom") ? "active" :  ""; ?>">
                         <a>
                             <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Registration <span class="fas fa-chevron-down"></span>
                         </a>
                         <ul class="nav child_menu">
-                            <li><a href="<?= base_url()?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;Company</a></li>
-                            <li><a href="<?= base_url(); ?>tpoCtrl/registerFun"><i class="fas fa-university"></i>&nbsp;&nbsp;College</a></li>
+                            <li><a href="<?= base_url('/placement/regComF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;Company</a></li>
+                            <li><a href="<?= base_url('/placement/regTpoF'); ?>"><i class="fas fa-university"></i>&nbsp;&nbsp;College</a></li>
                             <li><a href="<?= base_url(); ?>studentCtrl/registerFun"><i class="fas fa-user-graduate"></i>&nbsp;&nbsp;Student</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fas fa-user"></i>&nbsp;&nbsp;Log In <span class="fas fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="<?= base_url()?>HomeC/LoginCompanyF"><i class="fas fa-industry"></i>&nbsp;&nbsp;Company</a></li>
-                            <li><a href="<?= base_url()?>HomeC/LoginTpoF"><i class="fas fa-university"></i>&nbsp;&nbsp;TPO</a></li>
-                            <li><a href="<?= base_url()?>HomeC/LoginStudentF"><i class="fas fa-user-graduate"></i>&nbsp;&nbsp;Student</a></li>
+                            <li><a href="<?= base_url('/placement/logComF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;Company</a></li>
+                            <li><a href="<?= base_url('/placement/logTpoF')?>"><i class="fas fa-university"></i>&nbsp;&nbsp;TPO</a></li>
+                            <li><a href="<?= base_url('/placement/logStdF')?>"><i class="fas fa-user-graduate"></i>&nbsp;&nbsp;Student</a></li>
                         </ul>
                     </li>
                     <li class="<?php echo $active=="about" ?  "active":  ""; ?>">

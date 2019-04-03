@@ -55,7 +55,7 @@
                                 <?php echo form_error('Email'); ?>
                             </li>
                         </ul>
-                        <?php echo form_input('Email', set_value('Email'), 'type="email" id="EmailId" required="required" onchange="unique(this.value);" maxlength="250" placeholder="Company Email" class="form-control col-md-7 col-xs-12"'); ?>
+                        <?php echo form_input('Email', set_value('Email'), 'id="EmailId" required="required" onchange="unique(this.value);" maxlength="250" placeholder="Company Email" class="form-control col-md-7 col-xs-12"'); ?>
                     </div>
                     <div>
                         <ul class="parsley-errors-list filled text-left" id="parsley-id-2">
@@ -63,7 +63,7 @@
                                 <?php echo form_error('Password'); ?>
                             </li>
                         </ul>
-                        <?php echo form_password('Password', set_value('Password'), 'type="Password" id="PasswordId" required="required" placeholder="Password" name="Password" class="form-control col-md-7 col-xs-12"'); ?>
+                        <?php echo form_password('Password', set_value('Password'), 'id="PasswordId" required="required" placeholder="Password" class="form-control col-md-7 col-xs-12"'); ?>
                     </div>
                     <div>
                         <a class="reset_pass pull-left" href="#">Forget password?</a>

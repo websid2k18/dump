@@ -1,6 +1,8 @@
 <?php
 $config = array(
 
+    /*===============================================================================================================*/
+
     /* Admin Login Starts */
     'aLogin' => array(
         array(
@@ -14,7 +16,7 @@ $config = array(
         array(
             'field'     => 'Password',
             'label'     => 'Password',
-            'rules'     => 'xss_clean|xss_clean|trim|required|min_length[6]|max_length[255]|regex_match["^(?=[a-zA-Z0-9#@$?]{6,64}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*"]',
+            'rules'     => 'xss_clean|trim|required|min_length[6]|max_length[255]|regex_match["^(?=[a-zA-Z0-9#@$?]{6,64}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*"]',
             'errors'    => array(
                 'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
             ),
@@ -22,25 +24,129 @@ $config = array(
     ),
     /* Admin Login Ends */
 
-    /* College Login */
+    /*===============================================================================================================*/
+
+    /* Company Login */
     'cLogin' => array(
         array(
             'field'     => 'Email',
             'label'     => 'Username',
-            'rules'     => 'xss_clean|trim|required|min_length[6]|max_length[255]|valid_email|is_exists[tbl_company.a_email]',
+            'rules'     => 'xss_clean|trim|required|min_length[6]|max_length[255]|valid_email|is_exists[tbl_company.c_email]',
             'errors'    => array(
-                'is_exists' => "You are not Register yet!<a href='<?= base_url(); ?>HomeC/RegClgF'> Click Here To Register</a>"
+                'is_exists' => "You are not Register yet!"
             ),
         ),
         array(
             'field'     => 'Password',
             'label'     => 'Password',
-            'rules'     => 'xss_clean|xss_clean|trim|required|min_length[6]|max_length[255]|regex_match["^(?=[a-zA-Z0-9#@$?]{6,64}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*"]',
+            'rules'     => 'xss_clean|trim|required|min_length[6]|max_length[255]|regex_match["^(?=[a-zA-Z0-9#@$?]{6,64}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*"]',
             'errors'    => array(
                 'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
             ),
         )
-    )
-    /* College Login Ends */
+    ),
+    /* Company Login Ends */
+
+    /*===============================================================================================================*/
+
+    /* Company Login */
+    'tLogin' => array(
+        array(
+            'field'     => 'Email',
+            'label'     => 'Username',
+            'rules'     => 'xss_clean|trim|required|min_length[6]|max_length[255]|valid_email|is_exists[tbl_tpo.t_email]',
+            'errors'    => array(
+                'is_exists' => "You are not Register yet!"
+            ),
+        ),
+        array(
+            'field'     => 'Password',
+            'label'     => 'Password',
+            'rules'     => 'xss_clean|trim|required|min_length[6]|max_length[255]|regex_match["^(?=[a-zA-Z0-9#@$?]{6,64}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*"]',
+            'errors'    => array(
+                'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
+            ),
+        )
+    ),
+    /* Company Login Ends */
+
+    /*===============================================================================================================*/
+
+    /* Tpo Registration */
+
+    'tRegister' => array(
+        array(
+            'field' => 'tEmail',
+            'label' => 'Username',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|valid_email|is_unique[tbl_tpo.t_email]',
+            'errors' => array(
+            ),
+        ),
+        array(
+            'field' => 'tPassword',
+            'label' => 'Password',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|regex_match["^(?=[a-zA-Z0-9#@$?]{6,64}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*"]',
+            'errors' => array(
+                'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
+            ),
+        ),
+        array(
+            'field' => 'tPasswordConfirm',
+            'label' => 'Confirm Password',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|matches[tPassword]',
+            'errors' => array(
+                'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
+            ),
+        ),
+        array(
+            'field' => 'tMobileNo',
+            'label' => 'Password',
+            'rules' => 'xss_clean|trim|required|min_length[10]|max_length[10]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        )
+    ),
+    /* Tpo Validation Ends */
+
+    /*===============================================================================================================*/
+
+    /* Company Registration */
+    'cRegister' => array(
+        array(
+            'field' => 'cEmail',
+            'label' => 'Username',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|valid_email|is_unique[tbl_company.c_email]',
+            'errors' => array(
+            ),
+        ),
+        array(
+            'field' => 'cPassword',
+            'label' => 'Password',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|regex_match["^(?=[a-zA-Z0-9#@$?]{6,64}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*"]',
+            'errors' => array(
+                'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
+            ),
+        ),
+        array(
+            'field' => 'cPasswordConfirm',
+            'label' => 'Confirm Password',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|matches[cPassword]',
+            'errors' => array(
+                'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
+            ),
+        ),
+        array(
+            'field' => 'cMobileNo',
+            'label' => 'Mobile No',
+            'rules' => 'xss_clean|trim|required|min_length[10]|max_length[10]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        )
+    ),
+    /* Company Validation Ends */    
+
+    /*===============================================================================================================*/
 );
 ?>
