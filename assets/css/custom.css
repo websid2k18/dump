@@ -1,18 +1,18 @@
 
 html , body{
-	
-   height:100%;
-
+    height:100%;
 }
 
 .full-width {
-	
-   width:100%;
-
+    width:100%;
 }
 
 .full-height{
-   height:100%;
+    height:100%;
+}
+
+.height-500 {
+    height: 500px !important;
 }
 
 .daterangepicker .ranges li {
@@ -774,7 +774,7 @@ a:focus {
     top: 0
 }
 .nav-md ul.nav.child_menu li:last-child::after {
-  bottom: 50%;
+    bottom: 50%;
 }
 .nav.side-menu>li>a,
 .nav.child_menu>li>a {
@@ -1900,13 +1900,13 @@ h4.graph_title {
     height: 20px;
     color: #BAB8B8;
     position: absolute;
-    right: 53px;
+    right: 50px;
     top: 22px;
     z-index: 1
 }
 .tile-stats .icon i {
     margin: 0;
-    font-size: 60px;
+    font-size: 45px;
     line-height: 0;
     vertical-align: bottom;
     padding: 0
@@ -2466,7 +2466,7 @@ textarea:focus {
     line-height: 1.4;
     text-align: center;
     background-color: #f9f9f9;
-    border: 1px solid #fff
+    border: 1px solid #fff  
 }
 .bs-glyphicons .glyphicon {
     margin-top: 5px;
@@ -3237,15 +3237,15 @@ ul.project_files li a i {
 .input-group-btn .btn { margin-bottom:0; }
 
 /*!
- * bootstrap-vertical-tabs - v1.2.1
- * https://dbtek.github.io/bootstrap-vertical-tabs
- * 2014-11-07
- * Copyright (c) 2014 İsmail Demirbilek
- * License: MIT
- */
+* bootstrap-vertical-tabs - v1.2.1
+* https://dbtek.github.io/bootstrap-vertical-tabs
+* 2014-11-07
+* Copyright (c) 2014 İsmail Demirbilek
+* License: MIT
+*/
 
- .tabs-left,
- .tabs-right {
+.tabs-left,
+.tabs-right {
     border-bottom: none;
     padding-top: 2px
 }
@@ -4173,7 +4173,7 @@ ul.notifications {
 
 /*
 .x_content {
-    direction: rtl;
+direction: rtl;
 }
 */
 
@@ -4193,7 +4193,7 @@ ul.notifications {
 
 
 @media (max-width: 767px) {
- .dataTables_length { float:none; }
+    .dataTables_length { float:none; }
 }
 
 
@@ -4205,22 +4205,22 @@ ul.notifications {
 .checkbox-input:before { display:block;content:"";position:absolute;top:2px;left:0;height:20px;width:20px;background:red;border-radius:3px; }
 
 
- #input + label:after {
-    content: 'click my input';
-    color: blue;
-  }
+#input + label:after {
+content: 'click my input';
+color: blue;
+}
 
-  #input:focus + label:after {
-    content: 'not valid yet';
-    color: blue;
-  }
+#input:focus + label:after {
+content: 'not valid yet';
+color: blue;
+}
 
-  #input:valid + label:after {
-    content: 'looks good';
-    color: red;
-  }
+#input:valid + label:after {
+content: 'looks good';
+color: red;
+}
 
-  /* CSS3 Checkbox - end */
+/* CSS3 Checkbox - end */
 /*
 
 /*
@@ -4251,7 +4251,7 @@ table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 .daterangepicker.xdisplay { width:228px; }
 
 .dataTables_wrapper > .row{
-  overflow:auto !important; /*prevent datatables overflowing its container*/
+    overflow:auto !important; /*prevent datatables overflowing its container*/
 }
 
 /** bootstrap-datetimepicker **/

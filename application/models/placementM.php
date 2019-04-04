@@ -49,6 +49,14 @@ class PlacementM extends CI_Model {
         // $privilege = array(
         //  'emailVerification' => uniqid(12),
         // );
+
+        if($this->session->userdata('sessRole') == 'ADMIN'){
+            $t_status = '1';
+        }
+        else{
+            $t_status = '0';
+        }
+
         $data = array(
             't_email'              => strtolower($this->input->post('tEmail')),
             't_password'           => hash ( "sha256", $this->input->post('tPassword')),
@@ -58,7 +66,7 @@ class PlacementM extends CI_Model {
             't_address'            => $this->input->post('tAddress'),
             't_contact_number'     => $this->input->post('tMobileNo'),
             't_website'            => $this->input->post('tWebSite'),
-            't_status'             => '0',
+            't_status'             => $t_status,
             //'t_img'              => $this->input->post('tImg'),
             //'t_tpo_img'          => $this->input->post('tpoImg'),
             't_tpo_name'           => $this->input->post('tpoName'),
@@ -98,7 +106,7 @@ class PlacementM extends CI_Model {
             $row = $query->row();
             if($row->c_status == 0)
                 return "BLOCKED";
-            
+
             if($row->c_status == 1)
             {
                 $path = base_url() . "assets/images/company/" . $row->c_img;
@@ -109,7 +117,7 @@ class PlacementM extends CI_Model {
                     'sessID'  => $row->c_ID,
                     'sessName'=> $row->c_name,
                     'sessImg' => $path,
-                    'sessRole'=> "ADMIN",
+                    'sessRole'=> "COMPANY",
                     'sessPrivilege'=> $c_privilege,
                 );
 
@@ -147,7 +155,7 @@ class PlacementM extends CI_Model {
             $row = $query->row();
             if($row->t_status == 0)
                 return "BLOCKED";
-            
+
             if($row->t_status == 1)
             {
                 $path = base_url() . "assets/images/tpo/" . $row->t_img;
@@ -158,7 +166,7 @@ class PlacementM extends CI_Model {
                     'sessID'  => $row->t_ID,
                     'sessName'=> $row->t_name,
                     'sessImg' => $path,
-                    'sessRole'=> "ADMIN",
+                    'sessRole'=> "TPO",
                     'sessPrivilege'=> $t_privilege,
                 );
 
@@ -175,7 +183,7 @@ class PlacementM extends CI_Model {
     }
 
     /* Login TPO Ends*/
-    
+
     /*===============================================================================================================*/
 
     /* Login TPO */
@@ -198,7 +206,7 @@ class PlacementM extends CI_Model {
             $row = $query->row();
             if($row->a_status == 0)
                 return "BLOCKED";
-            
+
             if($row->a_status == 1)
             {
                 $path = base_url() . "assets/images/admin/" . $row->a_profile_img;
@@ -226,7 +234,7 @@ class PlacementM extends CI_Model {
     }
 
     /* Login TPO Ends*/
-    
+
     /*===============================================================================================================*/
 
 }

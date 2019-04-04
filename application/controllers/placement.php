@@ -23,30 +23,37 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Header For all User */
-    public function headers($page = "", $type = "")
+    public function headers($page = "")
     {
 
         if ($page != "") {
             $data['active'] = $page;
         } else {
 
-            $data['active'] = "home";
+            $data['active'] = "index";
         }
 
         $this->load->view('includes/HeadV',$data);
 
-        if($type == "admin") {
-            $this->check_isadmin();
+        if($this->session->userdata('sessRole')){
+            $type = $this->session->userdata('sessRole');
+        }
+        else{
+            $type = "";
+        }
+
+        if($type == "ADMIN") {
+            $this->checkIsAdminF();
             $this->load->view('includes/NavAdminV', $data);
         }
-        elseif ($type == "students") {
-            $this->load->view('includes/NavStuV', $data);
+        elseif ($type == "COMPANY") {
+            $this->load->view('includes/NavComV', $data);
         }
-        elseif ($type == "company") {
+        elseif ($type == "TPO") {
             $this->load->view('includes/NavTpoV', $data);
         }
-        elseif ($type == "tpo") {
-            $this->load->view('includes/NavComV', $data);
+        elseif ($type == "STUDENT") {
+            $this->load->view('includes/NavStdV', $data);
         }
         else {
             $this->load->view('includes/NavV', $data);
@@ -57,18 +64,47 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Footer For all User */
-    public function footers($type = "") {
-        if ($type == "admin" || $type == "students" || $type == "company" || $type == "tpo") {
+    public function footers() {
+
+        if($this->session->userdata('sessRole')){
+            $type = $this->session->userdata('sessRole');
+        }
+        else{
+            $type = "";
+        }
+
+        if ($type == "ADMIN" || $type == "STUDENT" || $type == "COMPANY" || $type == "TPO") {
             $data['session']=$this->session->all_userdata();
         }
 
         $this->load->view('includes/FooterV');
 
-        if ($type == "admin" || $type == "students" || $type == "company" || $type == "tpo") {
-            $this->load->view('security_check');
+        if ($type == "ADMIN" || $type == "STUDENT" || $type == "COMPANY" || $type == "TPO") {
+            // $this->load->view('security_check');
         }
     }
     /* Footer For all User Ends */
+
+    /*===============================================================================================================*/
+
+    /* Check is Admin For all User */
+    public function checkIsAdminF() {
+
+    }
+    /* Check is Admin For all User Ends */
+
+    /*===============================================================================================================*/
+
+    /* Log Out For all User */
+    public function logOutF() {
+
+        $this->session->sess_destroy();
+
+        redirect('placement/');
+
+    }
+    /* Log Out For all User Ends */
+
 
     /*===============================================================================================================*/
     /*|
@@ -78,17 +114,33 @@ class Placement extends CI_Controller {
 
 
     /* Home Page */
-    public function index($page = "home") {
+    public function index($page = "index") {
         $this->headers();
         $data = "";
-        // $this->load->model('placement_news');
-        // $data['news_data'] =$this->placement_news->get_news();
-        // if ($page == "home") {
 
-        $this->load->view('homeV',$data);
-        // } else {
-        //     $this->load->view('404');
-        // }
+        if($this->session->userdata('sessRole')){
+            $type = $this->session->userdata('sessRole');
+        }
+        else{
+            $type = "";
+        }
+
+        if($type == "ADMIN") {
+            redirect('/placement/dashboardAdminF','refresh');
+        }
+        elseif ($type == "STUDENT") {
+            redirect('/placement/dashboardStdF','refresh');
+        }
+        elseif ($type == "COMPANY") {
+            redirect('/placement/dashboardComF','refresh');
+        }
+        elseif ($type == "TPO") {
+            redirect('/placement/dashboardTpoF','refresh');
+        }
+        else {
+            $this->load->view('homeV', $data);
+        }
+
         $this->footers();
     }
     /* Home Page Ends */
@@ -96,7 +148,7 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Registration Company Page */
-    public function regComF($page='RegCom')
+    public function regComF($page='regComF')
     {
         $this->headers($page);
         $data[''] = "";
@@ -125,7 +177,7 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Registration TPO Page */
-    public function regTpoF($page='RegTPO')
+    public function regTpoF($page='regTpoF')
     {
         $this->headers($page);
         $data[''] = "";
@@ -154,7 +206,7 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Registration Std Page */
-    public function regStdF($page='RegStd')
+    public function regStdF($page='regStdF')
     {
         // $this->headers($page);
         // $data[''] = "";
@@ -183,7 +235,7 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Login Company Page */
-    public function logComF($page='LogCom')
+    public function logComF($page='logComF')
     {
         $this->headers($page);
         $data['method'] = "logComF";
@@ -215,7 +267,7 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Login TPO Page */
-    public function logTpoF($page='LogTpo')
+    public function logTpoF($page='logTpoF')
     {
         $this->headers($page);
         $data['method'] = "logTpoF";
@@ -247,7 +299,7 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Login Student Page */
-    public function logStdF($page='LogStd')
+    public function logStdF($page='logStdF')
     {
         $this->headers($page);
         $data['method'] = "logStdF";
@@ -280,7 +332,7 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Login Admin Page */
-    public function admin_login($page='LogAdmin')
+    public function admin_login($page='admin_login')
     {
         $data['method'] = "admin_login";
 
@@ -310,7 +362,7 @@ class Placement extends CI_Controller {
 
 
     /* About Us Page */
-    public function aboutUsF($page='AboutUs')
+    public function aboutUsF($page='aboutUsF')
     {
         $this->headers($page);
         $this->load->view('aboutUsV');
@@ -321,7 +373,7 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Contact Us Page */
-    public function contactUsF($page='ContactUs')
+    public function contactUsF($page='contactUsF')
     {
         $this->headers($page);
         $this->load->view('ContactUsV');
@@ -332,48 +384,70 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Dashboard Company Page */
-    public function dashboardAdminF($page='DashboardCom')
+    public function dashboardAdminF($page='dashboardAdminF')
     {
-        echo "string";
-        echo "<pre>";
-        print_r ($this->session->get_userdata());
-        echo "</pre>";
+        $this->headers($page);
+        $data="";
+
+        $this->load->view('admin/dashboardAdminV', $data);
+
+        $this->footers();
     }
     /* Dashboard Company Page Ends */
 
     /*===============================================================================================================*/
 
     /* Dashboard Company Page */
-    public function dashboardComF($page='DashboardCom')
+    public function dashboardComF($page='dashboardComF')
     {
-        echo "string";
-        echo "<pre>";
-        print_r ($this->session->get_userdata());
-        echo "</pre>";
+        // echo "<pre>";
+        // print_r ($this->session->get_userdata());
+        // echo "</pre>";
+
+        $this->headers($page);
+        $data="";
+
+        $this->load->view('admin/dashboardAdminV', $data);
+
+        $this->footers();
     }
     /* Dashboard Company Page Ends */
 
     /*===============================================================================================================*/
 
     /* Dashboard TPO Page */
-    public function dashboardTpoF($page='DashboardTpo')
+    public function dashboardTpoF($page='dashboardTpoF')
     {
         echo "string";
         echo "<pre>";
         print_r ($this->session->get_userdata());
         echo "</pre>";
+
+        $this->headers($page);
+        $data="";
+
+        // $this->load->view('admin/dashboardAdminV', $data);
+
+        $this->footers();
     }
     /* Dashboard TPO Page Ends */
 
     /*===============================================================================================================*/
 
     /* Dashboard TPO Page */
-    public function dashboardStdF($page='DashboardStd')
+    public function dashboardStdF($page='dashboardStdF')
     {
         echo "string";
         echo "<pre>";
         print_r ($this->session->get_userdata());
         echo "</pre>";
+
+        $this->headers($page);
+        $data="";
+
+        // $this->load->view('admin/dashboardAdminV', $data);
+
+        $this->footers();
     }
     /* Dashboard TPO Page Ends */
 
