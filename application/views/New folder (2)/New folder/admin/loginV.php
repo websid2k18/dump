@@ -41,7 +41,7 @@
                         <div class="col-md-12 no-padding">
                             <div class="form-group">
                                 <div class="alert alert-danger alert-dismissible fade in" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">Ã—</span>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                                     </button>
                                     <strong><?php echo form_error(); echo($errorMsg); ?></strong>
                                 </div>
@@ -74,7 +74,7 @@
                     <br />
                     <div>
                         <h1>E - Placement</h1>
-                        <p>Â©2019 All Rights Reserved.</p>
+                        <p>©2019 All Rights Reserved.</p>
                     </div>
                     <?php form_close(); ?>
                 </section>

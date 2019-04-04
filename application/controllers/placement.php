@@ -47,12 +47,15 @@ class Placement extends CI_Controller {
             $this->load->view('includes/NavAdminV', $data);
         }
         elseif ($type == "COMPANY") {
+            $this->checkIsComF();
             $this->load->view('includes/NavComV', $data);
         }
         elseif ($type == "TPO") {
+            $this->checkIsTpoF();
             $this->load->view('includes/NavTpoV', $data);
         }
         elseif ($type == "STUDENT") {
+            $this->checkIsStdF();
             $this->load->view('includes/NavStdV', $data);
         }
         else {
@@ -90,6 +93,54 @@ class Placement extends CI_Controller {
     /* Check is Admin For all User */
     public function checkIsAdminF() {
 
+        if( $this->session->userdata('sessRole') == 'ADMIN' && $this->session->userdata('sessRole') ) {
+            return TRUE;
+        }
+        else{
+            $this->logOutF();
+        }
+    }
+    /* Check is Admin For all User Ends */
+
+    /*===============================================================================================================*/
+
+    /* Check is Admin For all User */
+    public function checkIsComF() {
+
+        if( $this->session->userdata('sessRole') == 'COMPANY' && $this->session->userdata('sessRole') ) {
+            return TRUE;
+        }
+        else{
+            $this->logOutF();
+        }
+    }
+    /* Check is Admin For all User Ends */
+
+    /*===============================================================================================================*/
+
+    /* Check is Admin For all User */
+    public function checkIsTpoF() {
+
+        if( $this->session->userdata('sessRole') == 'TPO' && $this->session->userdata('sessRole') ) {
+            return TRUE;
+        }
+        else{
+            $this->logOutF();
+        }
+    }
+    /* Check is Admin For all User Ends */
+
+    /*===============================================================================================================*/
+
+    /* Check is Admin For all User */
+    public function checkIsStdF() {
+
+        if( $this->session->userdata('sessRole') == 'STUDENT' && $this->session->userdata('sessRole') ) {
+            return TRUE;
+        }
+        else{
+            $this->logOutF();
+        }
     }
     /* Check is Admin For all User Ends */
 
@@ -98,9 +149,30 @@ class Placement extends CI_Controller {
     /* Log Out For all User */
     public function logOutF() {
 
+        $type = $this->session->userdata('sessRole');
+        
         $this->session->sess_destroy();
 
-        redirect('placement/');
+        if($type == "ADMIN") {
+            $type = '';
+            redirect('placement/');
+        }
+        elseif ($type == "COMPANY") {
+            $type = '';
+            redirect('placement/logComF');
+        }
+        elseif ($type == "TPO") {
+            $type = '';
+            redirect('placement/logTpoF');
+        }
+        elseif ($type == "STUDENT") {
+            $type = '';
+            redirect('placement/logStdF');
+        }
+        else {
+            $type = '';
+            redirect('placement/');
+        }
 
     }
     /* Log Out For all User Ends */
@@ -386,6 +458,7 @@ class Placement extends CI_Controller {
     /* Dashboard Company Page */
     public function dashboardAdminF($page='dashboardAdminF')
     {
+        $this->checkIsAdminF();
         $this->headers($page);
         $data="";
 
@@ -400,14 +473,11 @@ class Placement extends CI_Controller {
     /* Dashboard Company Page */
     public function dashboardComF($page='dashboardComF')
     {
-        // echo "<pre>";
-        // print_r ($this->session->get_userdata());
-        // echo "</pre>";
-
+        $this->checkIsComF();
         $this->headers($page);
         $data="";
 
-        $this->load->view('admin/dashboardAdminV', $data);
+        $this->load->view('admin/dashboardComV', $data);
 
         $this->footers();
     }
@@ -418,15 +488,11 @@ class Placement extends CI_Controller {
     /* Dashboard TPO Page */
     public function dashboardTpoF($page='dashboardTpoF')
     {
-        echo "string";
-        echo "<pre>";
-        print_r ($this->session->get_userdata());
-        echo "</pre>";
-
+        $this->checkIsTpoF();
         $this->headers($page);
         $data="";
 
-        // $this->load->view('admin/dashboardAdminV', $data);
+        $this->load->view('admin/dashboardTpoV', $data);
 
         $this->footers();
     }
@@ -437,20 +503,15 @@ class Placement extends CI_Controller {
     /* Dashboard TPO Page */
     public function dashboardStdF($page='dashboardStdF')
     {
-        echo "string";
-        echo "<pre>";
-        print_r ($this->session->get_userdata());
-        echo "</pre>";
-
+        $this->checkIsStdF();
         $this->headers($page);
         $data="";
 
-        // $this->load->view('admin/dashboardAdminV', $data);
+        $this->load->view('admin/dashboardStdV', $data);
 
         $this->footers();
     }
     /* Dashboard TPO Page Ends */
-
 }
 
 /* End of file placement.php */
