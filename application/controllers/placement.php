@@ -237,7 +237,6 @@ class Placement extends CI_Controller {
         }
         else
         {
-            echo "s";
             $this->load->view('LoginV', $data);
         }
 
@@ -247,19 +246,134 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
+    /* Login Student Page */
+    public function logStdF($page='LogStd')
+    {
+        $this->headers($page);
+        $data['method'] = "logStdF";
+
+        // if ($this->form_validation->run('tLogin') == TRUE)
+        // {
+        //     $this->load->model('placementM');
+        //     $result = $this->placementM->getLogStdM();
+        //     if ($result == "BLOCKED") {
+        //         $this->load->view('contactToV', $data);
+        //     }
+        //     elseif ($result == "TRUE") {
+        //         redirect('/placement/dashboardStdF','refresh');
+        //     }
+        //     else {
+        //         $data['errorMsg'] = "User Name or Password is Wrong";
+        //         $this->load->view('LoginV', $data);
+        //     }
+        // }
+        // else
+        // {
+        //     echo "s";
+        $this->load->view('LoginV', $data);
+        // }
+
+        $this->footers();
+    }
+    /* Login Student Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Login Admin Page */
+    public function admin_login($page='LogAdmin')
+    {
+        $data['method'] = "admin_login";
+
+        if ($this->form_validation->run('aLogin') == TRUE)
+        {
+            $this->load->model('placementM');
+            $result = $this->placementM->getLogAdminM();
+            if ($result == "BLOCKED") {
+                $this->load->view('contactToV', $data);
+            }
+            elseif ($result == "TRUE") {
+                redirect('/placement/dashboardAdminF','refresh');
+            }
+            else {
+                $data['errorMsg'] = "User Name or Password is Wrong";
+                $this->load->view('admin/LoginAdminV', $data);
+            }
+        }
+        else
+        {
+            $this->load->view('admin/LoginAdminV', $data);
+        }
+    }
+    /* Login Admin Page Ends */
+
+    /*===============================================================================================================*/
+
+
+    /* About Us Page */
+    public function aboutUsF($page='AboutUs')
+    {
+        $this->headers($page);
+        $this->load->view('aboutUsV');
+        $this->footers();
+    }
+    /* About Us Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Contact Us Page */
+    public function contactUsF($page='ContactUs')
+    {
+        $this->headers($page);
+        $this->load->view('ContactUsV');
+        $this->footers();
+    }
+    /* Contact Us Page Ends */
+
+    /*===============================================================================================================*/
+
     /* Dashboard Company Page */
-    public function dashboardComF()
+    public function dashboardAdminF($page='DashboardCom')
     {
         echo "string";
+        echo "<pre>";
+        print_r ($this->session->get_userdata());
+        echo "</pre>";
+    }
+    /* Dashboard Company Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Dashboard Company Page */
+    public function dashboardComF($page='DashboardCom')
+    {
+        echo "string";
+        echo "<pre>";
+        print_r ($this->session->get_userdata());
+        echo "</pre>";
     }
     /* Dashboard Company Page Ends */
 
     /*===============================================================================================================*/
 
     /* Dashboard TPO Page */
-    public function dashboardTpoF()
+    public function dashboardTpoF($page='DashboardTpo')
     {
         echo "string";
+        echo "<pre>";
+        print_r ($this->session->get_userdata());
+        echo "</pre>";
+    }
+    /* Dashboard TPO Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Dashboard TPO Page */
+    public function dashboardStdF($page='DashboardStd')
+    {
+        echo "string";
+        echo "<pre>";
+        print_r ($this->session->get_userdata());
+        echo "</pre>";
     }
     /* Dashboard TPO Page Ends */
 

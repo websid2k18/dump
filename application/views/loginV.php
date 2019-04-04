@@ -13,7 +13,7 @@
                         <h2>College Log In Form</h2>
                     <?php } ?>
 
-                    <?php if($method == 'logStuF') { ?>
+                    <?php if($method == 'logStdF') { ?>
                         <h2>Students Log In Form</h2>
                     <?php } ?>
 

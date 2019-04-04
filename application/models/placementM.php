@@ -178,6 +178,57 @@ class PlacementM extends CI_Model {
     
     /*===============================================================================================================*/
 
+    /* Login TPO */
+    public function getLogAdminM()
+    {
+        $where = array(
+            'a_email'   => trim(strtolower($this->input->post('Email'))),
+            'a_password'=> hash ( "sha256", $this->input->post('Password'))
+        );
+
+        $this->db->select('*');
+        $this->db->from('tbl_admin');
+        $this->db->where($where);
+        $this->db->limit(1);
+
+        $query = $this->db->get();
+
+        if($query->num_rows() == 1)
+        {
+            $row = $query->row();
+            if($row->a_status == 0)
+                return "BLOCKED";
+            
+            if($row->a_status == 1)
+            {
+                $path = base_url() . "assets/images/admin/" . $row->a_profile_img;
+                $a_privilege = json_decode($row->a_privilege);
+
+                $array = array(
+                    'sessUser'=> $row->a_email,
+                    'sessID'  => $row->a_ID,
+                    'sessName'=> $row->a_name,
+                    'sessImg' => $path,
+                    'sessRole'=> "ADMIN",
+                    'sessPrivilege'=> $a_privilege,
+                );
+
+                $this->session->set_userdata( $array );
+
+                return "TRUE";
+
+            }
+
+            // If the previous process did not validate
+            // then return false.
+            return "FALSE";
+        }
+    }
+
+    /* Login TPO Ends*/
+    
+    /*===============================================================================================================*/
+
 }
 
 /* End of file placementM.php */

@@ -13,9 +13,9 @@
                     <li class="<?php echo $active=="home" ?  "active" :  ""; ?>">
                         <a href="<?= base_url('/placement/')?>"><i class="fas fa-home"></i>&nbsp;&nbsp;Home </a>
                     </li>
-                    <li class="<?php echo $active=="instructions" ? "active" :  ""; ?>">
+                    <!-- <li class="<?php echo $active=="instructions" ? "active" :  ""; ?>">
                         <a href="<?= base_url('/placement/xyz')?>"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Instructions </a>
-                    </li>
+                    </li> -->
                     <li class="<?php echo ($active=="RegTPO" && $active=="RegCom") ? "active" :  ""; ?>">
                         <a>
                             <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Registration <span class="fas fa-chevron-down"></span>
@@ -23,7 +23,7 @@
                         <ul class="nav child_menu">
                             <li><a href="<?= base_url('/placement/regComF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;Company</a></li>
                             <li><a href="<?= base_url('/placement/regTpoF'); ?>"><i class="fas fa-university"></i>&nbsp;&nbsp;College</a></li>
-                            <li><a href="<?= base_url(); ?>studentCtrl/registerFun"><i class="fas fa-user-graduate"></i>&nbsp;&nbsp;Student</a></li>
+                            <li><a href="<?= base_url('/placement/regStdF'); ?>"><i class="fas fa-user-graduate"></i>&nbsp;&nbsp;Student</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fas fa-user"></i>&nbsp;&nbsp;Log In <span class="fas fa-chevron-down"></span></a>
@@ -34,10 +34,10 @@
                         </ul>
                     </li>
                     <li class="<?php echo $active=="about" ?  "active":  ""; ?>">
-                        <a href="<?= base_url()?>HomeC/AboutUsF"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;About Us</a>
+                        <a href="<?= base_url('/placement/aboutUsF')?>"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;About Us</a>
                     </li>
                     <li  class="<?php echo $active=="contact" ?  "active":  ""; ?>">
-                        <a href="<?= base_url()?>HomeC/ContactUsV"><i class="fas fa-comment"></i>&nbsp;&nbsp;Contact Us</a>
+                        <a href="<?= base_url('/placement/contactUsF')?>"><i class="fas fa-comment"></i>&nbsp;&nbsp;Contact Us</a>
                     </li>
                 </ul>
             </div>
