@@ -13,9 +13,6 @@
                     <li class="<?php echo $active == "index" ?  "active" :  ""; ?>">
                         <a href="<?= base_url('/placement/')?>"><i class="fas fa-home"></i>&nbsp;&nbsp;Home </a>
                     </li>
-                    <!-- <li class="<?php echo $active=="instructions" ? "active" :  ""; ?>">
-                        <a href="<?= base_url('/placement/xyz')?>"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;Instructions </a>
-                    </li> -->
                     <li class="<?php echo ($active=="regComF" && $active=="regTpoF" && $active=="regTpoF") ? "active" :  ""; ?>">
                         <a>
                             <i class="fas fa-user-plus"></i>&nbsp;&nbsp;Registration <span class="fas fa-chevron-down"></span>

@@ -33,8 +33,8 @@ class Placement extends CI_Controller {
             $data['active'] = "index";
         }
 
+        // echo $this->session->userdata('sessRole');
         $this->load->view('includes/HeadV',$data);
-
         if($this->session->userdata('sessRole')){
             $type = $this->session->userdata('sessRole');
         }
@@ -261,7 +261,12 @@ class Placement extends CI_Controller {
 
             if ($result == TRUE) {
                 $data['method'] = "regTpoF";
-                $this->load->view('thankYouV', $data);
+                if($this->session->userdata('sessRole') == 'ADMIN'){
+                    redirect('placement/listTpoF');
+                }
+                else{
+                    $this->load->view('thankYouV', $data);
+                }
             }
             else {
                 $this->load->view('regTpoV');
@@ -455,18 +460,18 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
-    /* Dashboard Company Page */
+    /* Dashboard Admin Page */
     public function dashboardAdminF($page='dashboardAdminF')
     {
         $this->checkIsAdminF();
         $this->headers($page);
-        $data="";
+        $data = array();
 
         $this->load->view('admin/dashboardAdminV', $data);
 
         $this->footers();
     }
-    /* Dashboard Company Page Ends */
+    /* Dashboard Admin Page Ends */
 
     /*===============================================================================================================*/
 
@@ -475,7 +480,7 @@ class Placement extends CI_Controller {
     {
         $this->checkIsComF();
         $this->headers($page);
-        $data="";
+        $data = array();
 
         $this->load->view('admin/dashboardComV', $data);
 
@@ -490,7 +495,7 @@ class Placement extends CI_Controller {
     {
         $this->checkIsTpoF();
         $this->headers($page);
-        $data="";
+        $data = array();
 
         $this->load->view('admin/dashboardTpoV', $data);
 
@@ -501,17 +506,39 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Dashboard TPO Page */
+
     public function dashboardStdF($page='dashboardStdF')
     {
         $this->checkIsStdF();
         $this->headers($page);
-        $data="";
+        $data = array();
 
         $this->load->view('admin/dashboardStdV', $data);
 
         $this->footers();
     }
     /* Dashboard TPO Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Dashboard Admin Page */
+    public function listTpoF($page='listTpoF')
+    {
+        $this->checkIsAdminF();
+        $this->headers($page);
+        $data = array();
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->getListTpoM();
+        
+        $this->load->view('listTpoV', $data);
+
+        $this->footers();
+    }
+    /* Dashboard Admin Page Ends */
+
+    /*===============================================================================================================*/
+
 }
 
 /* End of file placement.php */

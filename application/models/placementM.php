@@ -209,7 +209,8 @@ class PlacementM extends CI_Model {
 
             if($row->a_status == 1)
             {
-                $path = base_url() . "assets/images/admin/" . $row->a_profile_img;
+                $path = (empty($row->a_profile_img)) ? base_url() . "assets/images/admin/user.png" . $row->a_profile_img : base_url() . "assets/images/admin/" . $row->a_profile_img ;
+                // $path = base_url() . "assets/images/admin/" . $row->a_profile_img;
                 $a_privilege = json_decode($row->a_privilege);
 
                 $array = array(
@@ -231,6 +232,30 @@ class PlacementM extends CI_Model {
             // then return false.
             return "FALSE";
         }
+    }
+
+    /* Login TPO Ends*/
+
+    /*===============================================================================================================*/
+
+    /* Login TPO */
+    public function getListTpoM()
+    {
+        $where = array(
+
+        );
+
+        $this->db->select('*');
+        $this->db->from('tbl_tpo');
+        $this->db->where($where);
+
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        return "FALSE";
     }
 
     /* Login TPO Ends*/
