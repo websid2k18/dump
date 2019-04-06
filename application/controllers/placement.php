@@ -232,7 +232,12 @@ class Placement extends CI_Controller {
 
             if ($result == TRUE) {
                 $data['method'] = "regComF";
-                $this->load->view('thankYouV', $data);
+                if($this->session->userdata('sessRole') == 'ADMIN'){
+                    redirect('placement/listComF');
+                }
+                else{
+                    $this->load->view('thankYouV', $data);
+                }   
             }
             else {
                 $this->load->view('regComV');
@@ -521,7 +526,7 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
-    /* Dashboard Admin Page */
+    /* List TPO Admin Page */
     public function listTpoF($page='listTpoF')
     {
         $this->checkIsAdminF();
@@ -535,7 +540,25 @@ class Placement extends CI_Controller {
 
         $this->footers();
     }
-    /* Dashboard Admin Page Ends */
+    /* List TPO Admin Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* List TPO Admin Page */
+    public function listComF($page='listComF')
+    {
+        $this->checkIsAdminF();
+        $this->headers($page);
+        $data = array();
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->getListComM();
+        
+        $this->load->view('listComV', $data);
+
+        $this->footers();
+    }
+    /* List TPO Admin Page Ends */
 
     /*===============================================================================================================*/
 

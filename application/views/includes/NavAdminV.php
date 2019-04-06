@@ -34,6 +34,14 @@
                         </ul>
                     </li>
 
+                    <li class="<?php echo ($active=="RegComF" && $active=="listComF") ? "active" :  ""; ?>">
+                        <a><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Company Management<span class="fas fa-chevron-down"></span></a>
+                        <ul class="nav child_menu" style="display: block;">
+                            <li><a href="<?= base_url('/placement/RegComF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;Add Company</a></li>
+                            <li><a href="<?= base_url('/placement/listComF')?>"><i class="fas fa-university"></i>&nbsp;&nbsp;List Company</a></li>
+                        </ul>
+                    </li>
+
                     <li  class="<?php echo $active=="contact" ?  "active":  ""; ?>">
                         <a href="<?= base_url('/placement/contactUsF')?>"><i class="fas fa-comment"></i>&nbsp;&nbsp;Contact Us</a>
                     </li>

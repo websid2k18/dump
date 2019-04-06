@@ -15,6 +15,14 @@ class PlacementM extends CI_Model {
         // $privilege = array(
         //  'emailVerification' => uniqid(12),
         // );
+
+        if($this->session->userdata('sessRole') == 'ADMIN'){
+            $c_status = '1';
+        }
+        else{
+            $c_status = '0';
+        }
+
         $data = array(
             'c_email'       => strtolower($this->input->post('cEmail')),
             'c_password'    => hash ( "sha256", $this->input->post('cPassword')),
@@ -23,7 +31,7 @@ class PlacementM extends CI_Model {
             'c_address'     => $this->input->post('cAddress'),
             'c_contact_no'  => $this->input->post('cMobileNo'),
             'c_website'     => $this->input->post('cWebSite'),
-            'c_status'      => '0',
+            'c_status'      => $c_status,
             //'c_img'       => $this->input->post('cImg'),
             //'c_hr_img'    => $this->input->post('hImg'),
             'c_hr_name'     => $this->input->post('hName'),
@@ -109,7 +117,8 @@ class PlacementM extends CI_Model {
 
             if($row->c_status == 1)
             {
-                $path = base_url() . "assets/images/company/" . $row->c_img;
+                $path = (empty($row->t_img)) ? base_url("assets/images/company/user.png") : base_url("assets/images/company/" . $row->t_img);
+
                 $c_privilege = json_decode($row->c_privilege);
 
                 $array = array(
@@ -158,7 +167,8 @@ class PlacementM extends CI_Model {
 
             if($row->t_status == 1)
             {
-                $path = base_url() . "assets/images/tpo/" . $row->t_img;
+                $path = (empty($row->t_img)) ? base_url("assets/images/tpo/user.png") : base_url("assets/images/tpo/" . $row->t_img);
+                
                 $t_privilege = json_decode($row->t_privilege);
 
                 $array = array(
@@ -186,7 +196,7 @@ class PlacementM extends CI_Model {
 
     /*===============================================================================================================*/
 
-    /* Login TPO */
+    /* Login Admin */
     public function getLogAdminM()
     {
         $where = array(
@@ -209,8 +219,8 @@ class PlacementM extends CI_Model {
 
             if($row->a_status == 1)
             {
-                $path = (empty($row->a_profile_img)) ? base_url() . "assets/images/admin/user.png" . $row->a_profile_img : base_url() . "assets/images/admin/" . $row->a_profile_img ;
-                // $path = base_url() . "assets/images/admin/" . $row->a_profile_img;
+                $path = (empty($row->a_profile_img)) ? base_url("assets/images/admin/user.png") : base_url("assets/images/admin/" . $row->a_profile_img);
+
                 $a_privilege = json_decode($row->a_privilege);
 
                 $array = array(
@@ -234,11 +244,11 @@ class PlacementM extends CI_Model {
         }
     }
 
-    /* Login TPO Ends*/
+    /* Login Admin Ends*/
 
     /*===============================================================================================================*/
 
-    /* Login TPO */
+    /* List TPO */
     public function getListTpoM()
     {
         $where = array(
@@ -258,10 +268,33 @@ class PlacementM extends CI_Model {
         return "FALSE";
     }
 
-    /* Login TPO Ends*/
+    /* List TPO Ends*/
 
     /*===============================================================================================================*/
 
+    /* Login Company */
+    public function getListComM()
+    {
+        $where = array(
+
+        );
+
+        $this->db->select('*');
+        $this->db->from('tbl_Company');
+        $this->db->where($where);
+
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        return "FALSE";
+    }
+
+    /* Login Company Ends*/
+
+    /*===============================================================================================================*/
 }
 
 /* End of file placementM.php */

@@ -3,7 +3,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
             <div class="x_title">
-                <h2>College List</h2>
+                <h2>Company List</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <div id="exportBtn"></div>
                 </ul>
@@ -17,10 +17,10 @@
                                 <th class="column-title"> Logo</th>
                                 <th class="column-title"> Name </th>
                                 <th class="column-title"> Contact Number </th>
-                                <th class="column-title"> Prof. Image </th>
-                                <th class="column-title"> Prof. name </th>
+                                <th class="column-title"> HR Image </th>
+                                <th class="column-title"> HR name </th>
                                 <th class="column-title"> Email </th>
-                                <th class="column-title"> Prof. Contact Number </th>
+                                <th class="column-title"> HR Contact Number </th>
                                 <th class="column-title"> Website </th>
                                 <th class="column-title"> Action </th>
                             </tr>
@@ -31,21 +31,21 @@
                             $odd = "odd";
 
                             foreach ($result as $key) {
-                                $t_img = (empty($key->t_img)) ? base_url("assets/images/tpo/user.png") : base_url("assets/images/tpo/" . $key->t_img) ;
-                                $t_tpo_img = (empty($key->t_tpo_img)) ? base_url("assets/images/tpo/user.png") : base_url("assets/images/tpo/" . $key->t_tpo_img) ;
+                                $c_img = (empty($key->c_img)) ? base_url("assets/images/company/user.png") : base_url("assets/images/company/" . $key->c_img) ;
+                                $c_hr_img = (empty($key->c_hr_img)) ? base_url("assets/images/company/user.png") : base_url("assets/images/company/" . $key->c_hr_img) ;
 
                                 $odd = ($odd == 'odd') ? "even" : "odd" ; ?>
 
-                                <tr class="pointer text-center <?php echo $odd . " "; echo ($key->t_status == '0') ? "danger" : "" ?>">
-                                    <td><img src="<?php echo $t_img ?>" alt="College Logo" class="hw-40"></td>
-                                    <td><?php echo $key->t_name ?></td>
-                                    <td><?php echo $key->t_contact_number ?></td>
-                                    <td><img src="<?php echo $t_tpo_img ?>" alt="Profile Image" class="img-circle hw-40"></td>
-                                    <td><?php echo $key->t_tpo_name ?></td>
-                                    <td><?php echo $key->t_email ?></td>
-                                    <td><?php echo $key->t_tpo_contact_number ?></td>
-                                    <td><?php echo $key->t_website ?></td>
-                                    <td><a href="/placenebt/profileTpoF" title="View Profile" class="btn btn-info">Info</a></td>
+                                <tr class="pointer text-center <?php echo $odd . " "; echo ($key->c_status == '0') ? "danger" : "" ?>">
+                                    <td><img src="<?php echo $c_img ?>" alt="College Logo" class="hw-40"></td>
+                                    <td><?php echo $key->c_name ?></td>
+                                    <td><?php echo $key->c_contact_no ?></td>
+                                    <td><img src="<?php echo $c_hr_img ?>" alt="Profile Image" class="img-circle hw-40"></td>
+                                    <td><?php echo $key->c_hr_name ?></td>
+                                    <td><?php echo $key->c_email ?></td>
+                                    <td><?php echo $key->c_hr_no ?></td>
+                                    <td><?php echo $key->c_website ?></td>
+                                    <td><a href="/placenebt/profileTpoF" title="Edit College" class="btn btn-info">Edit</a></td>
                                 </tr>
 
                             <?php } ?>
