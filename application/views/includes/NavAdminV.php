@@ -14,39 +14,37 @@
                 <h2><?php echo $_SESSION['sessName']; ?></h2>
             </div>
         </div>
+
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
+                <h3 class="text-center" style="width:35%; padding-left: 0px;">Admin</h3>
                 <ul class="nav side-menu">
                     <li class="<?php echo $active == "dashboardAdminF" ?  "active" :  ""; ?>">
                         <a href="<?= base_url('/placement/dashboardAdminF')?>"><i class="fas fa-home"></i>&nbsp;&nbsp;Home </a>
                     </li>
 
-                    <li class="<?php echo $active=="aboutUsF" ?  "active":  ""; ?>">
-                        <a href="<?= base_url('/placement/aboutUsF')?>"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;About Us</a>
-                    </li>
-
-                    <li class="<?php echo ($active=="RegTpoF" && $active=="listTpoF") ? "active" :  ""; ?>">
-                        <a><i class="fas fa-user-plus"></i>&nbsp;&nbsp;College Management<span class="fas fa-chevron-down"></span></a>
-                        <ul class="nav child_menu" style="display: block;">
+                    <li><a><i class="fas fa-user-plus"></i>&nbsp;&nbsp;College Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
+                        <ul class="nav child_menu">
                             <li><a href="<?= base_url('/placement/RegTpoF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;Add College</a></li>
                             <li><a href="<?= base_url('/placement/listTpoF')?>"><i class="fas fa-university"></i>&nbsp;&nbsp;List College</a></li>
                         </ul>
                     </li>
 
                     <li class="<?php echo ($active=="RegComF" && $active=="listComF") ? "active" :  ""; ?>">
-                        <a><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Company Management<span class="fas fa-chevron-down"></span></a>
-                        <ul class="nav child_menu" style="display: block;">
+                        <a><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Company Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
+                        <ul class="nav child_menu">
                             <li><a href="<?= base_url('/placement/RegComF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;Add Company</a></li>
                             <li><a href="<?= base_url('/placement/listComF')?>"><i class="fas fa-university"></i>&nbsp;&nbsp;List Company</a></li>
                         </ul>
                     </li>
 
-                    <li  class="<?php echo $active=="contact" ?  "active":  ""; ?>">
-                        <a href="<?= base_url('/placement/contactUsF')?>"><i class="fas fa-comment"></i>&nbsp;&nbsp;Contact Us</a>
+                    <li class="<?php echo $active=="aboutUsF" ?  "active":  ""; ?>">
+                        <a href="<?= base_url('/placement/aboutUsF')?>"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;About Us</a>
                     </li>
                 </ul>
             </div>
+
         </div>
         <!-- /sidebar menu -->
 

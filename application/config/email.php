@@ -8,7 +8,7 @@ $config['smtp_auth']          = null;                     // Whether to use SMTP
 $config['smtp_user']          = 'jaiswalsiddhrth989@gmail.com';
 $config['smtp_pass']          = '42092111';
 $config['smtp_port']          = 465;
-$config['smtp_timeout']       = 120;                       // (in seconds)
+$config['smtp_timeout']       = 300;                       // (in seconds)
 $config['smtp_crypto']        = 'ssl';                       // '' or 'tls' or 'ssl'
 $config['smtp_debug']         = 0;                        // PHPMailer's SMTP debug info level: 0 = off, 1 = commands, 2 = commands and data, 3 = as 2 plus connection status, 4 = low level data output.
 $config['debug_output']       = '';                       // PHPMailer's SMTP debug output: 'html', 'echo', 'error_log' or user defined function with parameter $str and $level. NULL or '' means 'echo' on CLI, 'html' otherwise.
