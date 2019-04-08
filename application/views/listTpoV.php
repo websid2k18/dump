@@ -44,8 +44,8 @@
                                     <td><?php echo $key->t_tpo_name ?></td>
                                     <td><?php echo $key->t_email ?></td>
                                     <td><?php echo $key->t_tpo_contact_number ?></td>
-                                    <td><?php echo $key->t_website ?></td>
-                                    <td><a href="/placenebt/profileTpoF" title="View Profile" class="btn btn-info">Info</a></td>
+                                    <td><a href="https://<?php echo $key->t_website ?>"><?php echo $key->t_website ?></a></td>
+                                    <td><a href="<?php echo base_url('/placement/profileTpoF/' . $key->t_ID); ?>" title="View Profile" class="btn btn-info">Info</a></td>
                                 </tr>
 
                             <?php } ?>

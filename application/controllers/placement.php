@@ -526,7 +526,7 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
-    /* List TPO Admin Page */
+    /* List TPO Page */
     public function listTpoF($page='listTpoF')
     {
         $this->checkIsAdminF();
@@ -540,11 +540,11 @@ class Placement extends CI_Controller {
 
         $this->footers();
     }
-    /* List TPO Admin Page Ends */
+    /* List TPO Page Ends */
 
     /*===============================================================================================================*/
 
-    /* List TPO Admin Page */
+    /* List TPO Page */
     public function listComF($page='listComF')
     {
         $this->checkIsAdminF();
@@ -558,10 +558,81 @@ class Placement extends CI_Controller {
 
         $this->footers();
     }
-    /* List TPO Admin Page Ends */
+    /* List TPO Page Ends */
 
     /*===============================================================================================================*/
 
+    /* List TPO Page */
+    public function listStdF($page='listComF')
+    {
+        $this->checkIsAdminF();
+
+        $this->headers($page);
+        $data = array();
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->getListComM();
+        
+        $this->load->view('listComV', $data);
+
+        $this->footers();
+    }
+    /* List TPO Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Profile TPO Page */
+    public function profileTpoF($id = NULL, $page='profileTpoF')
+    {
+
+        $this->headers($page);
+        $data = array();
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->profileTpoM($id);
+        
+        $this->load->view('profileTpoV', $data);
+
+        $this->footers();
+    }
+    /* Profile TPO Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Profile Compant Page */
+    public function profileComF($id = NULL, $page='profileComF')
+    {
+        $this->headers($page);
+        $data = array();
+
+        
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->profileComM($id);
+
+        $this->load->view('profileComV', $data);
+
+        $this->footers();
+    }
+    /* Profile Compant Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Profile Admin Page */
+    public function profileAdminF($id = NULL, $page='profileAdminF')
+    {
+        $this->headers($page);
+        $data = array();
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->profileTpoM($id);
+        
+        $this->load->view('profileTpoV', $data);
+
+        $this->footers();
+    }
+    /* Profile Admin Page Ends */
+
+    /*===============================================================================================================*/
 }
 
 /* End of file placement.php */

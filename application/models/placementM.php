@@ -18,9 +18,11 @@ class PlacementM extends CI_Model {
 
         if($this->session->userdata('sessRole') == 'ADMIN'){
             $c_status = '1';
+            $c_approved_by_admin_ID = $this->session->userdata('sessID');
         }
         else{
             $c_status = '0';
+            $c_approved_by_admin_ID = NULL;
         }
 
         $data = array(
@@ -35,7 +37,9 @@ class PlacementM extends CI_Model {
             //'c_img'       => $this->input->post('cImg'),
             //'c_hr_img'    => $this->input->post('hImg'),
             'c_hr_name'     => $this->input->post('hName'),
-            'c_hr_no'       => $this->input->post('hMobileNo')
+            'c_hr_no'       => $this->input->post('hMobileNo'),
+            'c_approved_by_admin_ID' => $c_approved_by_admin_ID,
+            // 't_privilege'          => json_encode($privilege)
         );
 
         $query = $this->db->insert('tbl_company', $data);
@@ -60,6 +64,7 @@ class PlacementM extends CI_Model {
 
         if($this->session->userdata('sessRole') == 'ADMIN'){
             $t_status = '1';
+            $t_approved_by_admin_ID = $this->session->userdata('sessID');
         }
         else{
             $t_status = '0';
@@ -79,6 +84,7 @@ class PlacementM extends CI_Model {
             //'t_tpo_img'          => $this->input->post('tpoImg'),
             't_tpo_name'           => $this->input->post('tpoName'),
             't_tpo_contact_number' => $this->input->post('tpoMobileNo'),
+            't_approved_by_admin_ID' => $t_approved_by_admin_ID,
             // 't_privilege'          => json_encode($privilege)
         );
 
@@ -272,7 +278,7 @@ class PlacementM extends CI_Model {
 
     /*===============================================================================================================*/
 
-    /* Login Company */
+    /* List Company */
     public function getListComM()
     {
         $where = array(
@@ -292,7 +298,57 @@ class PlacementM extends CI_Model {
         return "FALSE";
     }
 
-    /* Login Company Ends*/
+    /* List Company Ends*/
+
+    /*===============================================================================================================*/
+
+    /* Profile TPO Model */
+    public function profileTpoM($id)
+    {
+        $where = array(
+            't_ID' => $id,
+        );
+
+        $this->db->select('tbl_tpo.*, tbl_admin.a_ID, tbl_admin.a_name, tbl_admin.a_profile_img');
+        $this->db->from('tbl_tpo');
+        $this->db->where($where);
+        $this->db->join('tbl_admin', 'tbl_admin.a_ID = tbl_tpo.t_approved_by_admin_ID', 'left');
+
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        return "FALSE";
+    }
+
+    /* Profile TPO Model Ends*/
+
+    /*===============================================================================================================*/
+
+    /* Profile Company Model */
+    public function profileComM($id)
+    {
+        $where = array(
+            'c_ID' => $id,
+        );
+
+        $this->db->select('tbl_company.*, tbl_admin.a_ID, tbl_admin.a_name, tbl_admin.a_profile_img');
+        $this->db->from('tbl_company');
+        $this->db->where($where);
+        $this->db->join('tbl_admin', 'tbl_admin.a_ID = tbl_company.c_approved_by_admin_ID', 'left');
+
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        return "FALSE";
+    }
+
+    /* Profile Company Model Ends*/
 
     /*===============================================================================================================*/
 }

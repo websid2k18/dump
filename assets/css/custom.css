@@ -2604,6 +2604,11 @@ ul.bar_tabs.right {
 ul.bar_tabs.right li {
     float: right
 }
+@media(max-width:767px){
+    ul.bar_tabs {height: auto;}
+    ul.bar_tabs>li { margin-top: 10px; margin-bottom: 10px; border: 1px solid #E6E9ED; }
+    ul.bar_tabs>li.active { margin-top: 10px; margin-bottom: 10px; height: auto; }
+}
 a:focus {
     outline: none
 }

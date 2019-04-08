@@ -45,7 +45,7 @@
                                     <td><?php echo $key->c_email ?></td>
                                     <td><?php echo $key->c_hr_no ?></td>
                                     <td><?php echo $key->c_website ?></td>
-                                    <td><a href="/placenebt/profileComF/<?php echo $key->c_ID; ?>" title="Edit College" class="btn btn-info">Edit</a></td>
+                                    <td><a href="<?php echo base_url('/placement/profileComF/' . $key->c_ID); ?>" title="Edit College" class="btn btn-info">Edit</a></td>
                                 </tr>
 
                             <?php } ?>
