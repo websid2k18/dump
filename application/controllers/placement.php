@@ -219,11 +219,62 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
+    /* About Us Page */
+    public function aboutUsF($page='aboutUsF')
+    {
+        $this->headers($page);
+        $this->load->view('aboutUsV');
+        $this->footers();
+    }
+    /* About Us Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Contact Us Page */
+    public function contactUsF($page='contactUsF')
+    {
+        $this->headers($page);
+        $this->load->view('ContactUsV');
+        $this->footers();
+    }
+    /* Contact Us Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Registration Admin Page */
+    public function regAdminF($page='regAdminF')
+    {
+        $this->checkIsAdminF();
+        $this->headers($page);
+        $data[''] = array();
+
+        if ($this->form_validation->run('aRegister')) 
+        {
+            $this->load->model('placementM');
+            $result = $this->placementM->setRegAdminM();
+
+            if ($result == TRUE) {
+                redirect('placement/listAdminF');
+            }
+            else {
+                $this->load->view('regAdminV');
+            }
+        }
+        else {
+            $this->load->view('regAdminV', $data);
+        }
+
+        $this->footers();
+    }
+    /* Registration Admin Page Ends */
+
+    /*===============================================================================================================*/
+
     /* Registration Company Page */
     public function regComF($page='regComF')
     {
         $this->headers($page);
-        $data[''] = "";
+        $data[''] = array();
 
         if ($this->form_validation->run('cRegister')) 
         {
@@ -257,7 +308,7 @@ class Placement extends CI_Controller {
     public function regTpoF($page='regTpoF')
     {
         $this->headers($page);
-        $data[''] = "";
+        $data[''] = array();
 
         if ($this->form_validation->run('tRegister')) 
         {
@@ -313,6 +364,35 @@ class Placement extends CI_Controller {
         // $this->footers();
     }
     /* Registration Std Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Login Admin Page */
+    public function admin_login($page='admin_login')
+    {
+        $data['method'] = "admin_login";
+
+        if ($this->form_validation->run('aLogin') == TRUE)
+        {
+            $this->load->model('placementM');
+            $result = $this->placementM->getLogAdminM();
+            if ($result == "BLOCKED") {
+                $this->load->view('contactToV', $data);
+            }
+            elseif ($result == "TRUE") {
+                redirect('/placement/dashboardAdminF','refresh');
+            }
+            else {
+                $data['errorMsg'] = "User Name or Password is Wrong";
+                $this->load->view('admin/LoginAdminV', $data);
+            }
+        }
+        else
+        {
+            $this->load->view('admin/LoginAdminV', $data);
+        }
+    }
+    /* Login Admin Page Ends */
 
     /*===============================================================================================================*/
 
@@ -413,58 +493,6 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
-    /* Login Admin Page */
-    public function admin_login($page='admin_login')
-    {
-        $data['method'] = "admin_login";
-
-        if ($this->form_validation->run('aLogin') == TRUE)
-        {
-            $this->load->model('placementM');
-            $result = $this->placementM->getLogAdminM();
-            if ($result == "BLOCKED") {
-                $this->load->view('contactToV', $data);
-            }
-            elseif ($result == "TRUE") {
-                redirect('/placement/dashboardAdminF','refresh');
-            }
-            else {
-                $data['errorMsg'] = "User Name or Password is Wrong";
-                $this->load->view('admin/LoginAdminV', $data);
-            }
-        }
-        else
-        {
-            $this->load->view('admin/LoginAdminV', $data);
-        }
-    }
-    /* Login Admin Page Ends */
-
-    /*===============================================================================================================*/
-
-
-    /* About Us Page */
-    public function aboutUsF($page='aboutUsF')
-    {
-        $this->headers($page);
-        $this->load->view('aboutUsV');
-        $this->footers();
-    }
-    /* About Us Page Ends */
-
-    /*===============================================================================================================*/
-
-    /* Contact Us Page */
-    public function contactUsF($page='contactUsF')
-    {
-        $this->headers($page);
-        $this->load->view('ContactUsV');
-        $this->footers();
-    }
-    /* Contact Us Page Ends */
-
-    /*===============================================================================================================*/
-
     /* Dashboard Admin Page */
     public function dashboardAdminF($page='dashboardAdminF')
     {
@@ -510,7 +538,7 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
-    /* Dashboard TPO Page */
+    /* Dashboard Student Page */
 
     public function dashboardStdF($page='dashboardStdF')
     {
@@ -522,14 +550,48 @@ class Placement extends CI_Controller {
 
         $this->footers();
     }
-    /* Dashboard TPO Page Ends */
+    /* Dashboard Student Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* List Admin Page */
+    public function listAdminF($page='listAdminF')
+    {
+        $this->checkIsAdminF();
+        $this->headers($page);
+        $data = array();
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->getListAdminM();
+        
+        $this->load->view('listAdminV', $data);
+
+        $this->footers();
+    }
+    /* List Admin Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* List Company Page */
+    public function listComF($page='listComF')
+    {
+        $this->headers($page);
+        $data = array();
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->getListComM();
+        
+        $this->load->view('listComV', $data);
+
+        $this->footers();
+    }
+    /* List Company Page Ends */
 
     /*===============================================================================================================*/
 
     /* List TPO Page */
     public function listTpoF($page='listTpoF')
     {
-        $this->checkIsAdminF();
         $this->headers($page);
         $data = array();
 
@@ -544,40 +606,57 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
-    /* List TPO Page */
-    public function listComF($page='listComF')
+    /* List Students Page */
+    public function listStdF($page='listStdF')
     {
         $this->checkIsAdminF();
+
         $this->headers($page);
         $data = array();
 
         $this->load->model('placementM');
-        $data['result'] = $this->placementM->getListComM();
+        $data['result'] = $this->placementM->getListStdM();
         
         $this->load->view('listComV', $data);
 
         $this->footers();
     }
-    /* List TPO Page Ends */
+    /* List Students Page Ends */
 
     /*===============================================================================================================*/
 
-    /* List TPO Page */
-    public function listStdF($page='listComF')
+    /* Profile Admin Page */
+    public function profileAdminF($id = NULL, $page='profileAdminF')
     {
-        $this->checkIsAdminF();
-
         $this->headers($page);
         $data = array();
 
         $this->load->model('placementM');
-        $data['result'] = $this->placementM->getListComM();
+        $data['result'] = $this->placementM->profileAdminM($id);
         
-        $this->load->view('listComV', $data);
+        $this->load->view('profileAdminV', $data);
 
         $this->footers();
     }
-    /* List TPO Page Ends */
+    /* Profile Admin Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Profile Company Page */
+    public function profileComF($id = NULL, $page='profileComF')
+    {
+        $this->headers($page);
+        $data = array();
+
+        
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->profileComM($id);
+
+        $this->load->view('profileComV', $data);
+
+        $this->footers();
+    }
+    /* Profile Company Page Ends */
 
     /*===============================================================================================================*/
 
@@ -599,40 +678,24 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
-    /* Profile Compant Page */
-    public function profileComF($id = NULL, $page='profileComF')
+    /* Profile Student Page */
+    public function profileStdF($id = NULL, $page='profileStdF')
     {
-        $this->headers($page);
-        $data = array();
 
-        
-        $this->load->model('placementM');
-        $data['result'] = $this->placementM->profileComM($id);
-
-        $this->load->view('profileComV', $data);
-
-        $this->footers();
-    }
-    /* Profile Compant Page Ends */
-
-    /*===============================================================================================================*/
-
-    /* Profile Admin Page */
-    public function profileAdminF($id = NULL, $page='profileAdminF')
-    {
         $this->headers($page);
         $data = array();
 
         $this->load->model('placementM');
-        $data['result'] = $this->placementM->profileTpoM($id);
+        $data['result'] = $this->placementM->profileStdM($id);
         
-        $this->load->view('profileTpoV', $data);
+        $this->load->view('profileStdV', $data);
 
         $this->footers();
     }
-    /* Profile Admin Page Ends */
+    /* Profile Student Page Ends */
 
     /*===============================================================================================================*/
+
 }
 
 /* End of file placement.php */

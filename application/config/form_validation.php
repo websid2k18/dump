@@ -72,6 +72,45 @@ $config = array(
 
     /*===============================================================================================================*/
 
+    /* Admin Registration */
+
+    'aRegister' => array(
+        array(
+            'field' => 'aEmail',
+            'label' => 'Username',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|valid_email|is_unique[tbl_admin.a_email]',
+            'errors' => array(
+            ),
+        ),
+        array(
+            'field' => 'aPassword',
+            'label' => 'Password',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|regex_match["^(?=[a-zA-Z0-9#@$?]{6,64}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*"]',
+            'errors' => array(
+                'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
+            ),
+        ),
+        array(
+            'field' => 'aPasswordConfirm',
+            'label' => 'Confirm Password',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|matches[aPassword]',
+            'errors' => array(
+                'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
+            ),
+        ),
+        array(
+            'field' => 'aMobileNo',
+            'label' => 'Password',
+            'rules' => 'xss_clean|trim|required|min_length[10]|max_length[10]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        )
+    ),
+    /* Admin Validation Ends */
+
+    /*===============================================================================================================*/
+
     /* Tpo Registration */
 
     'tRegister' => array(
@@ -110,7 +149,7 @@ $config = array(
     /* Tpo Validation Ends */
 
     /*===============================================================================================================*/
-
+    
     /* Company Registration */
     'cRegister' => array(
         array(

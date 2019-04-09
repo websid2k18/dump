@@ -9,6 +9,43 @@ class PlacementM extends CI_Model {
     /*|
     /*================================================================================================================*/
 
+    /* Register Admin */
+    public function setRegAdminM()
+    {
+        // $privilege = array(
+        //  'emailVerification' => uniqid(12),
+        // );
+
+        if($this->session->userdata('sessRole') == 'ADMIN'){
+            $a_status = '1';
+            $a_created_by = $this->session->userdata('sessID');
+
+            $data = array(
+                'a_email'         => strtolower($this->input->post('aEmail')),
+                'a_password'      => hash ( "sha256", $this->input->post('aPassword')),
+                'a_name'          => $this->input->post('aName'),
+                'a_address'       => $this->input->post('aAddress'),
+                'a_contact_no'    => $this->input->post('aMobileNo'),
+                'a_status'        => $a_status,
+                /*'a_profile_img' => $this->input->post('aImg'),*/
+                'a_created_by'    => $a_created_by,
+                /*'a_privilege'   => json_encode($privilege)*/
+            );
+
+            $query = $this->db->insert('tbl_admin', $data);
+
+            if ($query){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+    }
+    /* Register TPO Ends */
+
+    /*===============================================================================================================*/
+
     /* Register Company */
     public function setRegComM()
     {
@@ -98,6 +135,103 @@ class PlacementM extends CI_Model {
         }
     }
     /* Register TPO Ends */
+
+    /*===============================================================================================================*/
+
+    /* Register Student */
+    public function setRegStdM()
+    {
+        // $privilege = array(
+        //  'emailVerification' => uniqid(12),
+        // );
+
+        // if($this->session->userdata('sessRole') == 'TPO'){
+        //     $s_status = '1';
+        //     $s_approved_by_admin_ID = $this->session->userdata('sessID');
+        // }
+        // else{
+        //     $s_status = '0';
+        // }
+
+        // $data = array(
+        //     's_email'              => strtolower($this->input->post('tEmail')),
+        //     's_password'           => hash ( "sha256", $this->input->post('tPassword')),
+        //     's_name'               => $this->input->post('tName'),
+        //     //'s_collage_code'     => $data['tCollageCode'],
+        //     's_description'        => $this->input->post('tDescription'),
+        //     's_address'            => $this->input->post('tAddress'),
+        //     's_contact_number'     => $this->input->post('tMobileNo'),
+        //     's_website'            => $this->input->post('tWebSite'),
+        //     's_status'             => $s_status,
+        //     //'s_img'              => $this->input->post('tImg'),
+        //     //'s_tpo_img'          => $this->input->post('tpoImg'),
+        //     's_tpo_name'           => $this->input->post('tpoName'),
+        //     's_tpo_contact_number' => $this->input->post('tpoMobileNo'),
+        //     's_approved_by_admin_ID' => $t_approved_by_admin_ID,
+        //     // 't_privilege'          => json_encode($privilege)
+        // );
+
+        // $query = $this->db->insert('tbl_tpo', $data);
+
+        // if ($query){
+        //     return true;
+        // }
+        // else{
+        //     return false;
+        // }
+    }
+    /* Register Student Ends */
+
+    /*===============================================================================================================*/
+
+    /* Login Admin */
+    public function getLogAdminM()
+    {
+        $where = array(
+            'a_email'   => trim(strtolower($this->input->post('Email'))),
+            'a_password'=> hash ( "sha256", $this->input->post('Password'))
+        );
+
+        $this->db->select('*');
+        $this->db->from('tbl_admin');
+        $this->db->where($where);
+        $this->db->limit(1);
+
+        $query = $this->db->get();
+
+        if($query->num_rows() == 1)
+        {
+            $row = $query->row();
+            if($row->a_status == 0)
+                return "BLOCKED";
+
+            if($row->a_status == 1)
+            {
+                $path = (empty($row->a_profile_img)) ? base_url("assets/images/admin/user.png") : base_url("assets/images/admin/" . $row->a_profile_img);
+
+                $a_privilege = json_decode($row->a_privilege);
+
+                $array = array(
+                    'sessUser'=> $row->a_email,
+                    'sessID'  => $row->a_ID,
+                    'sessName'=> $row->a_name,
+                    'sessImg' => $path,
+                    'sessRole'=> "ADMIN",
+                    'sessPrivilege'=> $a_privilege,
+                );
+
+                $this->session->set_userdata( $array );
+
+                return "TRUE";
+
+            }
+
+            // If the previous process did not validate
+            // then return false.
+            return "FALSE";
+        }
+    }
+    /* Login Admin Ends*/
 
     /*===============================================================================================================*/
 
@@ -197,72 +331,69 @@ class PlacementM extends CI_Model {
             return "FALSE";
         }
     }
-
     /* Login TPO Ends*/
 
     /*===============================================================================================================*/
 
-    /* Login Admin */
-    public function getLogAdminM()
+    /* Login Students */
+    public function getLogStdM()
     {
-        $where = array(
-            'a_email'   => trim(strtolower($this->input->post('Email'))),
-            'a_password'=> hash ( "sha256", $this->input->post('Password'))
-        );
+        // $where = array(
+        //     't_email'   => trim(strtolower($this->input->post('Email'))),
+        //     't_password'=> hash ( "sha256", $this->input->post('Password'))
+        // );
+        // $this->db->select('*');
+        // $this->db->from('tbl_tpo');
+        // $this->db->where($where);
+        // $this->db->limit(1);
 
-        $this->db->select('*');
-        $this->db->from('tbl_admin');
-        $this->db->where($where);
-        $this->db->limit(1);
+        // $query = $this->db->get();
 
-        $query = $this->db->get();
+        // if($query->num_rows() == 1)
+        // {
+        //     $row = $query->row();
+        //     if($row->t_status == 0)
+        //         return "BLOCKED";
 
-        if($query->num_rows() == 1)
-        {
-            $row = $query->row();
-            if($row->a_status == 0)
-                return "BLOCKED";
+        //     if($row->t_status == 1)
+        //     {
+        //         $path = (empty($row->t_img)) ? base_url("assets/images/tpo/user.png") : base_url("assets/images/tpo/" . $row->t_img);
 
-            if($row->a_status == 1)
-            {
-                $path = (empty($row->a_profile_img)) ? base_url("assets/images/admin/user.png") : base_url("assets/images/admin/" . $row->a_profile_img);
+        //         $t_privilege = json_decode($row->t_privilege);
 
-                $a_privilege = json_decode($row->a_privilege);
+        //         $array = array(
+        //             'sessUser'=> $row->t_email,
+        //             'sessID'  => $row->t_ID,
+        //             'sessName'=> $row->t_name,
+        //             'sessImg' => $path,
+        //             'sessRole'=> "TPO",
+        //             'sessPrivilege'=> $t_privilege,
+        //         );
 
-                $array = array(
-                    'sessUser'=> $row->a_email,
-                    'sessID'  => $row->a_ID,
-                    'sessName'=> $row->a_name,
-                    'sessImg' => $path,
-                    'sessRole'=> "ADMIN",
-                    'sessPrivilege'=> $a_privilege,
-                );
+        //         $this->session->set_userdata( $array );
 
-                $this->session->set_userdata( $array );
+        //         return "TRUE";
 
-                return "TRUE";
+        //     }
 
-            }
-
-            // If the previous process did not validate
-            // then return false.
-            return "FALSE";
-        }
+        //     // If the previous process did not validate
+        //     // then return false.
+        //     return "FALSE";
+        // }
     }
-
-    /* Login Admin Ends*/
+    /* Login Students Ends*/
 
     /*===============================================================================================================*/
 
-    /* List TPO */
-    public function getListTpoM()
+    /* List Admin */
+    public function getListAdminM()
     {
         $where = array(
 
         );
 
         $this->db->select('*');
-        $this->db->from('tbl_tpo');
+        $this->db->from('tbl_Admin');
         $this->db->where($where);
 
         $query = $this->db->get();
@@ -273,8 +404,7 @@ class PlacementM extends CI_Model {
         }
         return "FALSE";
     }
-
-    /* List TPO Ends*/
+    /* List Admin Ends*/
 
     /*===============================================================================================================*/
 
@@ -297,22 +427,20 @@ class PlacementM extends CI_Model {
         }
         return "FALSE";
     }
-
     /* List Company Ends*/
 
     /*===============================================================================================================*/
 
-    /* Profile TPO Model */
-    public function profileTpoM($id)
+    /* List TPO */
+    public function getListTpoM()
     {
         $where = array(
-            't_ID' => $id,
+
         );
 
-        $this->db->select('tbl_tpo.*, tbl_admin.a_ID, tbl_admin.a_name, tbl_admin.a_profile_img');
+        $this->db->select('*');
         $this->db->from('tbl_tpo');
         $this->db->where($where);
-        $this->db->join('tbl_admin', 'tbl_admin.a_ID = tbl_tpo.t_approved_by_admin_ID', 'left');
 
         $query = $this->db->get();
 
@@ -322,8 +450,78 @@ class PlacementM extends CI_Model {
         }
         return "FALSE";
     }
+    /* List TPO Ends*/
 
-    /* Profile TPO Model Ends*/
+    /*===============================================================================================================*/
+
+    /* List Student */
+    public function getListStdM()
+    {
+        // $where = array(
+
+        // );
+
+        // $this->db->select('*');
+        // $this->db->from('tbl_students');
+        // $this->db->where($where);
+
+        // $query = $this->db->get();
+
+        // if($query->num_rows() > 0)
+        // {
+        //     return $query->result();
+        // }
+        // return "FALSE";
+    }
+    /* List Student Ends*/
+
+    /*===============================================================================================================*/
+
+    /* Profile Admin Model */
+    public function profileAdminM($id)
+    {
+        $where = array(
+            'a_ID' => $id,
+        );
+
+        $result = $res = $query1 = $res1 = array();
+
+        $this->db->select('*');
+        $this->db->from('tbl_admin');
+        $this->db->where($where);
+
+        $query = $this->db->get();
+        if($query->num_rows() > 0)
+        {
+            $res = $query->result();
+            $x = $res[0]->a_created_by;
+            if ( $x != 0 )
+            {
+                $where = array(
+                    'a_ID' => $x,
+                );
+
+                $this->db->select('a_ID as cre_ID, a_name as cre_name, a_profile_img as cre_img');
+                $this->db->from('tbl_admin');
+                $this->db->where($where);
+
+                if($query->num_rows() > 0)
+                {
+                    $query = $this->db->get();
+                }
+                
+                $res1 = $query->result();
+                $result = array_merge($res, $res1);
+
+                return $result;
+            }
+
+            return $res;
+        }
+
+        return "FALSE";
+    }
+    /* Profile Admin Model Ends*/
 
     /*===============================================================================================================*/
 
@@ -347,7 +545,54 @@ class PlacementM extends CI_Model {
         }
         return "FALSE";
     }
+    /* Profile Company Model Ends*/
 
+    /*===============================================================================================================*/
+
+    /* Profile TPO Model */
+    public function profileTpoM($id)
+    {
+        $where = array(
+            't_ID' => $id,
+        );
+
+        $this->db->select('tbl_tpo.*, tbl_admin.a_ID, tbl_admin.a_name, tbl_admin.a_profile_img');
+        $this->db->from('tbl_tpo');
+        $this->db->where($where);
+        $this->db->join('tbl_admin', 'tbl_admin.a_ID = tbl_tpo.t_approved_by_admin_ID', 'left');
+
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        return "FALSE";
+    }
+    /* Profile TPO Model Ends*/
+
+    /*===============================================================================================================*/
+
+    /* Profile Company Model */
+    public function profileStdM($id)
+    {
+        // $where = array(
+        //     'c_ID' => $id,
+        // );
+
+        // $this->db->select('tbl_company.*, tbl_admin.a_ID, tbl_admin.a_name, tbl_admin.a_profile_img');
+        // $this->db->from('tbl_company');
+        // $this->db->where($where);
+        // $this->db->join('tbl_admin', 'tbl_admin.a_ID = tbl_company.c_approved_by_admin_ID', 'left');
+
+        // $query = $this->db->get();
+
+        // if($query->num_rows() > 0)
+        // {
+        //     return $query->result();
+        // }
+        // return "FALSE";
+    }
     /* Profile Company Model Ends*/
 
     /*===============================================================================================================*/

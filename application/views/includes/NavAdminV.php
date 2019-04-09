@@ -24,18 +24,25 @@
                         <a href="<?= base_url('/placement/dashboardAdminF')?>"><i class="fas fa-home"></i>&nbsp;&nbsp;Home </a>
                     </li>
 
-                    <li><a><i class="fas fa-user-plus"></i>&nbsp;&nbsp;College Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
+                    <li><a><i class="fas fa-university"></i>&nbsp;&nbsp;College Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="<?= base_url('/placement/RegTpoF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;Add College</a></li>
+                            <li><a href="<?= base_url('/placement/RegTpoF')?>"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add College</a></li>
                             <li><a href="<?= base_url('/placement/listTpoF')?>"><i class="fas fa-university"></i>&nbsp;&nbsp;List College</a></li>
                         </ul>
                     </li>
 
                     <li class="<?php echo ($active=="RegComF" && $active=="listComF") ? "active" :  ""; ?>">
-                        <a><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Company Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
+                        <a><i class="fas fa-industry"></i>&nbsp;&nbsp;Company Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="<?= base_url('/placement/RegComF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;Add Company</a></li>
-                            <li><a href="<?= base_url('/placement/listComF')?>"><i class="fas fa-university"></i>&nbsp;&nbsp;List Company</a></li>
+                            <li><a href="<?= base_url('/placement/RegComF')?>"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Company</a></li>
+                            <li><a href="<?= base_url('/placement/listComF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;List Company</a></li>
+                        </ul>
+                    </li>
+                    <li class="<?php echo ($active=="RegComF" && $active=="listAdminF") ? "active" :  ""; ?>">
+                        <a><i class="fas fa-user-cog"></i>&nbsp;&nbsp;Admin Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="<?= base_url('/placement/RegAdminF')?>"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Admin</a></li>
+                            <li><a href="<?= base_url('/placement/listAdminF')?>"><i class="fas fa-users-cog"></i>&nbsp;&nbsp;List Admin</a></li>
                         </ul>
                     </li>
 
