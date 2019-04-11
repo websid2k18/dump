@@ -41,7 +41,7 @@
                     <li class="<?php echo ($active=="RegComF" && $active=="listAdminF") ? "active" :  ""; ?>">
                         <a><i class="fas fa-user-cog"></i>&nbsp;&nbsp;Admin Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
                         <ul class="nav child_menu">
-                            
+
                             <?php if( $this->session->userdata('sessMaster') == 'MasterAdmin' ) { ?>
                                 <li><a href="<?= base_url('/placement/RegAdminF')?>"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Admin</a></li>
                             <?php } ?>
@@ -79,7 +79,7 @@
                         <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right">
-                        <li><a href="javascript:;"> Profile</a></li>
+                        <li><a href="<?= base_url('/placement/profileAdminF')?>"> Profile</a></li>
                         <li>
                             <a href="javascript:;">
                                 <span class="badge bg-red pull-right">50%</span>

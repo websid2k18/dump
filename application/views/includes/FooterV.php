@@ -125,6 +125,11 @@
             codeListTable.buttons().container().appendTo('#exportBtn');
         } ); 
 
+        /* for file upload Image */
+        $(document).ready(function() {
+            $('.file-upload').file_upload();
+        });
+
     </script>
 </body>
 </html>

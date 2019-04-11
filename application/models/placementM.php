@@ -640,7 +640,7 @@ class PlacementM extends CI_Model {
 
     /*===============================================================================================================*/
 
-    /* Block Unvlock Company Model Ends */
+    /* Block Unvlock Company Model */
     public function editBlockUnblockComM($action, $id)
     {
         $where = array(
@@ -676,7 +676,7 @@ class PlacementM extends CI_Model {
 
     /*===============================================================================================================*/
 
-    /* Block Unvlock Company Model Ends */
+    /* Block Unvlock TPO Model */
     public function editBlockUnblockTpoM($action, $id)
     {
         $where = array(
@@ -708,7 +708,81 @@ class PlacementM extends CI_Model {
 
         return "FALSE";
     }
-    /* Block Unvlock Company Model Ends */
+    /* Block Unvlock TPO Model Ends */
+
+    /*===============================================================================================================*/
+
+    /* Block Unvlock Student Model */
+    public function editBlockUnblockStdM($action, $id)
+    {
+        // $where = array(
+        //     't_ID' => $id,
+        // );
+        // if($action == 'block')
+        // {
+        //     $data = array(
+        //         't_approved_by_admin_ID' => $this->session->userdata('sessID'),
+        //         't_status' => '0'
+        //     );
+        // }
+        // if($action == 'unblock' || $action == 'Approve')
+        // {
+        //     $data = array(
+        //         't_approved_by_admin_ID' => $this->session->userdata('sessID'),
+        //         't_status' => '1'
+        //     );
+        // }
+
+        // $this->db->set($data);
+        // $this->db->where($where);
+        // $this->db->update('tbl_tpo');
+
+        // if($this->db->affected_rows() >=0)
+        // {
+        //     return "TRUE";
+        // }
+
+        // return "FALSE";
+    }
+    /* Block Unvlock Student Model Ends */
+
+    /*===============================================================================================================*/
+
+    /* Edit Profile Admin Model */
+    public function editProfileAdminM($action, $id)
+    {
+        $where = array(
+            'a_ID' => $id,
+        );
+        if($action == 'block')
+        {
+            $data = array(
+                'a_created_by' => $this->session->userdata('sessID'),
+                'a_status' => '0'
+            );
+        }
+        if($action == 'unblock')
+        {
+            $data = array(
+                'a_created_by' => $this->session->userdata('sessID'),
+                'a_status' => '1'
+            );
+        }
+
+        $this->db->set($data);
+        $this->db->where($where);
+        $this->db->update('tbl_admin');
+
+        if($this->db->affected_rows() >=0)
+        {
+            return "TRUE";
+        }
+
+        return "FALSE";
+    }
+    /* Edit Profile Admin Model Ends */
+
+    /*===============================================================================================================*/
 }
 
 /* End of file placementM.php */

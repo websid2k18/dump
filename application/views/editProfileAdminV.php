@@ -5,25 +5,25 @@
             <div class="x_panel">
                 <div class="x_title">
                     <h2>Admin Profile</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                        <?php 
-                        if( $this->session->userdata('sessRole') == 'ADMIN' && $this->session->userdata('sessID') ) {
-                            if( $result[0]->a_status == 1 && $this->session->userdata('sessID') == $result[0]->a_ID) { ?>
-                                <button type="button" class="btn btn-info" onclick="location.href='<?php echo base_url('/placement/editProfileAdminF/'); ?>'"><i class="fa fa-edit m-right-xs"></i> Edit Profile</button>
-                            <?php }
-                            elseif( $result[0]->a_status == 0 && $this->session->userdata('sessMaster') == 'MasterAdmin' ) { ?>
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#UnblockModal"><i class="fa fa-edit m-right-xs"></i> Unblock</button>
-                            <?php }
-                            elseif( $result[0]->a_status == 1 && $this->session->userdata('sessMaster') == 'MasterAdmin' ) { ?>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#BlockModal"><i class="fa fa-edit m-right-xs"></i> Block</button>
-                            <?php }
-                        } ?>
-                    </ul>
                     <div class="clearfix"></div>
                 </div>
                 <?php 
                 $a_profile_img = (empty($result[0]->a_profile_img)) ? base_url("assets/images/Admin/user.png") : base_url("assets/images/Admin/" . $result[0]->a_profile_img) ;
-                $cre_img = (empty($result[1]->cre_img)) ? base_url("assets/images/Admin/user.png") : base_url("assets/images/Admin/" . $result[1]->cre_img) ;?>
+                $cre_img = (empty($result[1]->cre_img)) ? base_url("assets/images/Admin/user.png") : base_url("assets/images/Admin/" . $result[1]->cre_img) ;
+
+                echo form_open( base_url('/placement/editProfileAdminF/'), 'id="demo-form" data-parsley-validate class="form-horizontal form-label-left" method="post"');
+
+                if (!empty($errorMsg) OR !empty(form_error())) { ?>
+                    <div class="col-md-12 no-padding">
+                        <div class="form-group">
+                            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+                                </button>
+                                <strong><?php echo form_error(); echo($errorMsg); ?></strong>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
                 <div class="x_content">
                     <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
                         <div class="profile_img">
@@ -33,6 +33,13 @@
                             </div>
                         </div>
                         <ul class="list-unstyled user_data">
+                            <li class="text-center" style="padding-top: 10px;">
+                                <div class="form-group">
+                                    <label class="file-upload btn btn-primary">
+                                        Edit Image<input type="file" class="hidden" />
+                                    </label>
+                                </div>
+                            </li>
                             <?php 
                             if( $this->session->userdata('sessRole') == 'ADMIN' && $this->session->userdata('sessRole') ) { ?>
                                 <?php 
@@ -91,11 +98,18 @@
 
                         <ul class="list-unstyled user_data">
                             <li>
-                                <h4 style="font-weight: 600;">Name :  <span style="font-weight: 100;"><?php echo $result[0]->a_name ?></span></h4>
+                                <h4 style="font-weight: 600;">Email :  <span style="font-weight: 100;"><?php echo $result[0]->a_email ?></span></h4>
                             </li>
                             <hr style="margin-top: 10px; margin-bottom: 10px;">
                             <li>
-                                <h4 style="font-weight: 600;">Email :  <span style="font-weight: 100;"><?php echo $result[0]->a_email ?></span></h4>
+                                <div class="form-group">
+                                    <h4 style="font-weight: 600;">Name : </h4>
+                                    <input type="text" name="aName" value="<?= $result[0]->a_name ?>" id="aNameId" required="required" placeholder="Collage Name" class="form-control col-md-12 col-xs-12">
+                                    <ul class="parsley-errors-list filled" id="parsley-id-4">
+                                        <li class="parsley-required">
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <hr style="margin-top: 10px; margin-bottom: 10px;">
                             <li>
@@ -110,6 +124,7 @@
 
                     </div>
                 </div>
+                <?= form_close(); ?>
             </div>
         </div>
     </div>

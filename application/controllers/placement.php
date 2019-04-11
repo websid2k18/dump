@@ -631,6 +631,13 @@ class Placement extends CI_Controller {
         $this->headers($page);
         $data = array();
 
+        if ($this->session->userdata('sessRole') == 'ADMIN' && $id == NULL) {
+            $id = $this->session->userdata('sessID');
+        }
+        elseif ($this->session->userdata('sessRole') != 'ADMIN' && $id == NULL) {
+            redirect('/placement/listAdminF','refresh');
+        }
+
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileAdminM($id);
         
@@ -648,6 +655,12 @@ class Placement extends CI_Controller {
         $this->headers($page);
         $data = array();
 
+        if ($this->session->userdata('sessRole') == 'COMPANY' && $id == NULL) {
+            $id = $this->session->userdata('sessID');
+        }
+        elseif ($this->session->userdata('sessRole') != 'COMPANY' && $id == NULL) {
+            redirect('/placement/listComF','refresh');
+        }
         
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileComM($id);
@@ -666,6 +679,13 @@ class Placement extends CI_Controller {
 
         $this->headers($page);
         $data = array();
+
+        if ($this->session->userdata('sessRole') == 'TPO' && $id == NULL) {
+            $id = $this->session->userdata('sessID');
+        }
+        elseif ($this->session->userdata('sessRole') != 'TPO' && $id == NULL) {
+            redirect('/placement/listTpoF','refresh');
+        }
 
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileTpoM($id);
@@ -765,6 +785,24 @@ class Placement extends CI_Controller {
         $this->footers();
     }
     /* Block Unvlock TPO Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Edit Profile Admin Page */
+    public function editProfileAdminF($page='editProfileAdminF')
+    {
+        $this->headers($page);
+        $data = array();
+        $id = $this->session->userdata('sessID');
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->profileAdminM($id);
+        
+        $this->load->view('editProfileAdminV', $data);
+
+        $this->footers();
+    }
+    /* Edit Profile Admin Page Ends*/
 }
 
 /* End of file placement.php */
