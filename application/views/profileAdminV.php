@@ -11,11 +11,11 @@
                             if( $result[0]->a_status == 1 && $this->session->userdata('sessID') == $result[0]->a_ID) { ?>
                                 <a class="btn btn-info" style="color: #ffffff;"><i class="fa fa-edit m-right-xs"></i> Edit Profile</a>
                             <?php }
-                            elseif( $result[0]->a_status == 0 ) { ?>
-                                <a class="btn btn-success" style="color: #ffffff;"><i class="fa fa-edit m-right-xs"></i> Unblock</a>
+                            elseif( $result[0]->a_status == 0 && $this->session->userdata('sessMaster') == 'MasterAdmin' ) { ?>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#UnblockModal"><i class="fa fa-edit m-right-xs"></i> Unblock</button>
                             <?php }
-                            elseif( $result[0]->a_status == 1 && $this->session->userdata('sessRole') !== $result[0]->a_ID) { ?>
-                                <a class="btn btn-danger"><i class="fa fa-edit m-right-xs"></i> Block</a>
+                            elseif( $result[0]->a_status == 1 && $this->session->userdata('sessMaster') == 'MasterAdmin' ) { ?>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#BlockModal"><i class="fa fa-edit m-right-xs"></i> Block</button>
                             <?php }
                         } ?>
                     </ul>
@@ -109,6 +109,46 @@
                         </ul>
 
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="BlockModal" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered" style="border-radius: 10px;">
+            <div class="modal-content">
+                <div class="modal-header label-danger" style="color: #fff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Block Admin</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="font-size: 60px;" class="danger text-center text-danger"><i class="far fa-times-circle"></i></div>
+                    <h4>Are you sure you want to Block this Admin?</h4>
+                    <p>Blocked Admin will not be able to login on this site.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <!-- <button type="button" formaction="<?php echo base_url('/placement/blockUnblockAdminF/' . $result[0]->a_ID); ?>" class="btn btn-danger">Yse</button> -->
+                    <a href="<?php echo base_url('/placement/blockUnblockAdminF/block/' . $result[0]->a_ID); ?>" title="Block Admin" class="btn btn-danger">Yse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="UnblockModal" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered" style="border-radius: 10px;">
+            <div class="modal-content">
+                <div class="modal-header label-success" style="color: #fff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Block Admin</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="font-size: 60px;" class="success text-center text-success"><i class="far fa-times-circle"></i></div>
+                    <h4>Are you sure you want to Unblock this Admin?</h4>
+                    <p>Unblocked Admin will be able to login and use this site.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <!-- <button type="button" formaction="<?php echo base_url('/placement/blockUnblockAdminF/' . $result[0]->a_ID); ?>" class="btn btn-success">Yse</button> -->
+                    <a href="<?php echo base_url('/placement/blockUnblockAdminF/unblock/' . $result[0]->a_ID); ?>" title="Block Admin" class="btn btn-success">Yse</a>
                 </div>
             </div>
         </div>

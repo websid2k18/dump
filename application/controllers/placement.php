@@ -696,6 +696,75 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
+    /* Block Unvlock Admin Page */
+    public function blockUnblockAdminF($action, $id = NULL, $page='blockUnblockAdminF')
+    {
+        $this->checkIsAdminF();
+
+        $this->headers($page);
+        $data = array();
+
+        if ($this->session->userdata('sessMaster') == 'MasterAdmin' && $id != NULL) {
+            $this->load->model('placementM');
+            $data['result'] = $this->placementM->editBlockUnblockAdminM($action, $id);
+            
+            redirect('placement/profileAdminF/' . $id,'refresh');
+        }
+        else {
+            redirect('placement/profileAdminF/' . $id,'refresh');
+        }
+
+        $this->footers();
+    }
+    /* Block Unvlock Admin Page Ends*/
+
+    /*===============================================================================================================*/
+
+    /* Block Unvlock Company Page */
+    public function blockUnblockComF($action, $id = NULL, $page='blockUnblockComF')
+    {
+        $this->checkIsAdminF();
+
+        $this->headers($page);
+        $data = array();
+
+        if ($this->session->userdata('sessRole') == 'ADMIN' && $id != NULL) {
+            $this->load->model('placementM');
+            $data['result'] = $this->placementM->editBlockUnblockComM($action, $id);
+            
+            redirect('placement/profileComF/' . $id,'refresh');
+        }
+        else {
+            redirect('placement/profileComF/' . $id,'refresh');
+        }
+
+        $this->footers();
+    }
+    /* Block Unvlock Company Page Ends*/
+
+    /*===============================================================================================================*/
+
+    /* Block Unvlock TPO Page */
+    public function blockUnblockTpoF($action, $id = NULL, $page='blockUnblockTpoF')
+    {
+        $this->checkIsAdminF();
+
+        $this->headers($page);
+        $data = array();
+
+        if ($this->session->userdata('sessRole') == 'ADMIN' && $id != NULL) {
+            $this->load->model('placementM');
+            $data['result'] = $this->placementM->editBlockUnblockTpoM($action, $id);
+            
+            redirect('placement/profileTpoF/' . $id,'refresh');
+        }
+        else {
+            redirect('placement/profileTpoF/' . $id,'refresh');
+        }
+
+        $this->footers();
+    }
+    /* Block Unvlock TPO Page Ends */
 }
 
 /* End of file placement.php */

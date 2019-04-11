@@ -10,13 +10,13 @@
                         <?php 
                         if( $this->session->userdata('sessRole') == 'ADMIN' && $this->session->userdata('sessID') ) {
                             if( $result[0]->c_status == 1) { ?>
-                                <a class="btn btn-danger"><i class="fa fa-edit m-right-xs"></i> Block</a>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#BlockModal"><i class="fa fa-edit m-right-xs"></i> Block</button>
                             <?php }
                             elseif( $result[0]->c_status == 0  && $result[0]->c_approved_by_admin_ID == NULL ) { ?>
-                                <a class="btn btn-success" style="color: #ffffff;"><i class="fa fa-edit m-right-xs"></i> Approve</a>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ApproveModal"><i class="fa fa-edit m-right-xs"></i> Approve</button>
                             <?php }
                             elseif( $result[0]->c_status == 0) { ?>
-                                <a class="btn btn-success" style="color: #ffffff;"><i class="fa fa-edit m-right-xs"></i> Unblock</a>
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#UnblockModal"><i class="fa fa-edit m-right-xs"></i> Unblock</button>
                             <?php }
                         }
                         elseif ( $this->session->userdata('sessRole') == 'Company' && $this->session->userdata('sessRole') == $result[0]->c_ID ) {
@@ -141,6 +141,63 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="BlockModal" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered" style="border-radius: 10px;">
+            <div class="modal-content">
+                <div class="modal-header label-danger" style="color: #fff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Block Company</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="font-size: 60px;" class="danger text-center text-danger"><i class="far fa-times-circle"></i></div>
+                    <h4>Are you sure you want to Block this Company?</h4>
+                    <p>Blocked Company will not be able to login on this site.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <a href="<?php echo base_url('/placement/blockUnblockComF/block/' . $result[0]->c_ID); ?>" title="Block Admin" class="btn btn-danger">Yse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="UnblockModal" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered" style="border-radius: 10px;">
+            <div class="modal-content">
+                <div class="modal-header label-success" style="color: #fff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Block Company</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="font-size: 60px;" class="success text-center text-success"><i class="far fa-times-circle"></i></div>
+                    <h4>Are you sure you want to Unblock this Company?</h4>
+                    <p>Unblocked Company will be able to login and use this site.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <a href="<?php echo base_url('/placement/blockUnblockComF/unblock/' . $result[0]->c_ID); ?>" title="Block Admin" class="btn btn-success">Yse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ApproveModal" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered" style="border-radius: 10px;">
+            <div class="modal-content">
+                <div class="modal-header label-success" style="color: #fff;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Approve Company</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="font-size: 60px;" class="success text-center text-success"><i class="far fa-times-circle"></i></div>
+                    <h4>Are you sure you want to Approve this Company?</h4>
+                    <p>Approve Company will be able to login and use this site.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <a href="<?php echo base_url('/placement/blockUnblockComF/unblock/' . $result[0]->c_ID); ?>" title="Block Admin" class="btn btn-success">Yse</a>
                 </div>
             </div>
         </div>

@@ -41,7 +41,11 @@
                     <li class="<?php echo ($active=="RegComF" && $active=="listAdminF") ? "active" :  ""; ?>">
                         <a><i class="fas fa-user-cog"></i>&nbsp;&nbsp;Admin Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="<?= base_url('/placement/RegAdminF')?>"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Admin</a></li>
+                            
+                            <?php if( $this->session->userdata('sessMaster') == 'MasterAdmin' ) { ?>
+                                <li><a href="<?= base_url('/placement/RegAdminF')?>"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Add Admin</a></li>
+                            <?php } ?>
+
                             <li><a href="<?= base_url('/placement/listAdminF')?>"><i class="fas fa-users-cog"></i>&nbsp;&nbsp;List Admin</a></li>
                         </ul>
                     </li>

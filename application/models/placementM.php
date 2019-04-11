@@ -220,6 +220,10 @@ class PlacementM extends CI_Model {
                     'sessPrivilege'=> $a_privilege,
                 );
 
+                if($row->a_created_by == '0') {
+                    $array = array_merge($array, array('sessMaster' => 'MasterAdmin'));
+                }
+
                 $this->session->set_userdata( $array );
 
                 return "TRUE";
@@ -395,6 +399,7 @@ class PlacementM extends CI_Model {
         $this->db->select('*');
         $this->db->from('tbl_Admin');
         $this->db->where($where);
+        $this->db->order_by('tbl_Admin.a_ID', 'DESC');
 
         $query = $this->db->get();
 
@@ -418,6 +423,7 @@ class PlacementM extends CI_Model {
         $this->db->select('*');
         $this->db->from('tbl_Company');
         $this->db->where($where);
+        $this->db->order_by('tbl_Company.c_ID', 'DESC');
 
         $query = $this->db->get();
 
@@ -441,6 +447,7 @@ class PlacementM extends CI_Model {
         $this->db->select('*');
         $this->db->from('tbl_tpo');
         $this->db->where($where);
+        $this->db->order_by('tbl_tpo.t_ID', 'DESC');
 
         $query = $this->db->get();
 
@@ -596,6 +603,112 @@ class PlacementM extends CI_Model {
     /* Profile Company Model Ends*/
 
     /*===============================================================================================================*/
+
+    /* Block Unvlock Company Model */
+    public function editBlockUnblockAdminM($action, $id)
+    {
+        $where = array(
+            'a_ID' => $id,
+        );
+        if($action == 'block')
+        {
+            $data = array(
+                'a_created_by' => $this->session->userdata('sessID'),
+                'a_status' => '0'
+            );
+        }
+        if($action == 'unblock')
+        {
+            $data = array(
+                'a_created_by' => $this->session->userdata('sessID'),
+                'a_status' => '1'
+            );
+        }
+
+        $this->db->set($data);
+        $this->db->where($where);
+        $this->db->update('tbl_admin');
+
+        if($this->db->affected_rows() >=0)
+        {
+            return "TRUE";
+        }
+
+        return "FALSE";
+    }
+    /* Block Unvlock Company Model Ends */
+
+    /*===============================================================================================================*/
+
+    /* Block Unvlock Company Model Ends */
+    public function editBlockUnblockComM($action, $id)
+    {
+        $where = array(
+            'c_ID' => $id,
+        );
+        if($action == 'block')
+        {
+            $data = array(
+                'c_approved_by_admin_ID' => $this->session->userdata('sessID'),
+                'c_status' => '0'
+            );
+        }
+        if($action == 'unblock' || $action == 'Approve')
+        {
+            $data = array(
+                'c_approved_by_admin_ID' => $this->session->userdata('sessID'),
+                'c_status' => '1'
+            );
+        }
+
+        $this->db->set($data);
+        $this->db->where($where);
+        $this->db->update('tbl_Company');
+
+        if($this->db->affected_rows() >=0)
+        {
+            return "TRUE";
+        }
+
+        return "FALSE";
+    }
+    /* Block Unvlock Company Model Ends */
+
+    /*===============================================================================================================*/
+
+    /* Block Unvlock Company Model Ends */
+    public function editBlockUnblockTpoM($action, $id)
+    {
+        $where = array(
+            't_ID' => $id,
+        );
+        if($action == 'block')
+        {
+            $data = array(
+                't_approved_by_admin_ID' => $this->session->userdata('sessID'),
+                't_status' => '0'
+            );
+        }
+        if($action == 'unblock' || $action == 'Approve')
+        {
+            $data = array(
+                't_approved_by_admin_ID' => $this->session->userdata('sessID'),
+                't_status' => '1'
+            );
+        }
+
+        $this->db->set($data);
+        $this->db->where($where);
+        $this->db->update('tbl_tpo');
+
+        if($this->db->affected_rows() >=0)
+        {
+            return "TRUE";
+        }
+
+        return "FALSE";
+    }
+    /* Block Unvlock Company Model Ends */
 }
 
 /* End of file placementM.php */
