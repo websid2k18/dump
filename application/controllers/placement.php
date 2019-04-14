@@ -851,9 +851,10 @@ class Placement extends CI_Controller {
                 redirect('placement/profileComF/','refresh');
             }
             else {
-                if (!empty($_FILES['aImg']['name']))
+                if (!empty($_FILES['cImg']['name']) || !empty($_FILES['hImg']['name']) )
                 {
                     $this->load->library('image_lib');
+                    $this->load->library('upload', $config);
                     $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
                     $data['errorMsg'] .= $this->image_lib->display_errors();
                 }
@@ -861,13 +862,59 @@ class Placement extends CI_Controller {
             }
         }
         else {
-            echo "string";echo validation_errors();
+            // echo validation_errors();
             $this->load->view('company/editProfileComV', $data);
         }
 
         $this->footers();
     }
     /* Edit Profile Com Page Ends*/
+
+    /*===============================================================================================================*/
+
+    /* Edit Profile TPO Page */
+    public function editProfileTpoF($page='editProfileTpoF')
+    {
+        $this->checkIsTpoF();
+        $this->headers($page);
+        $data = array();
+        $id = $this->session->userdata('sessID');
+        $result = FALSE;
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->profileTpoM($id);
+        $data['dept'] = $this->placementM->getListdepM($data['result'][0]->t_departments, 'NOT_IN');
+        // echo "<pre>";
+        // print_r ($data);
+        // echo "</pre>";
+        // exit;
+        if ($this->form_validation->run('tProfileEdit')) 
+        {
+            $result = $this->placementM->editProfileTpoM($id);
+
+            if ($result == TRUE) {
+                $data['result'] = $this->placementM->profileTpoM($id);
+                redirect('placement/profileTpoF/','refresh');
+            }
+            else {
+                if (!empty($_FILES['tImg']['name']) || !empty($_FILES['tpoImg']['name']))
+                {
+                    $this->load->library('image_lib');
+                    $this->load->library('upload');
+                    $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
+                    $data['errorMsg'] .= $this->image_lib->display_errors();
+                }
+                $this->load->view('tpo/editProfileTpoV', $data);
+            }
+        }
+        else {
+            // echo validation_errors();
+            $this->load->view('tpo/editProfileTpoV', $data);
+        }
+
+        $this->footers();
+    }
+    /* Edit Profile TPO Page Ends*/
 
 }
 

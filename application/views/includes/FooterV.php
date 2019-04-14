@@ -11,11 +11,7 @@
         <div class="clearfix"></div>
     </footer>
     <!-- /footer content -->
-
-    <!-- jQuery -->
-    <script src="<?= base_url('assets/plugins/jquery/dist/jquery.min.js'); ?>"></script>
-    <!-- Bootstrap -->
-    <script src="<?= base_url('assets/plugins/bootstrap/dist/js/bootstrap.min.js'); ?>"></script>
+    
     <!-- FastClick -->
     <script src="<?= base_url('assets/plugins/fastclick/lib/fastclick.js'); ?>"></script>
     <!-- NProgress -->

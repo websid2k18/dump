@@ -63,20 +63,20 @@ class PlacementM extends CI_Model {
         }
 
         $data = array(
-            'c_email'       => strtolower($this->input->post('cEmail')),
-            'c_password'    => hash ( "sha256", $this->input->post('cPassword')),
-            'c_name'        => $this->input->post('cName'),
-            'c_description' => $this->input->post('cDescription'),
-            'c_address'     => $this->input->post('cAddress'),
-            'c_contact_no'  => $this->input->post('cMobileNo'),
-            'c_website'     => $this->input->post('cWebSite'),
-            'c_status'      => $c_status,
-            //'c_img'       => $this->input->post('cImg'),
-            //'c_hr_img'    => $this->input->post('hImg'),
-            'c_hr_name'     => $this->input->post('hName'),
-            'c_hr_no'       => $this->input->post('hMobileNo'),
+            'c_email'                => strtolower($this->input->post('cEmail')),
+            'c_password'             => hash ( "sha256", $this->input->post('cPassword')),
+            'c_name'                 => $this->input->post('cName'),
+            'c_description'          => $this->input->post('cDescription'),
+            'c_address'              => $this->input->post('cAddress'),
+            'c_contact_no'           => $this->input->post('cMobileNo'),
+            'c_website'              => $this->input->post('cWebSite'),
+            'c_status'               => $c_status,
+            //'c_img'                => $this->input->post('cImg'),
+            //'c_hr_img'             => $this->input->post('hImg'),
+            'c_hr_name'              => $this->input->post('hName'),
+            'c_hr_no'                => $this->input->post('hMobileNo'),
             'c_approved_by_admin_ID' => $c_approved_by_admin_ID,
-            // 't_privilege'          => json_encode($privilege)
+            // 't_privilege'         => json_encode($privilege)
         );
 
         $query = $this->db->insert('tbl_company', $data);
@@ -109,21 +109,21 @@ class PlacementM extends CI_Model {
         }
 
         $data = array(
-            't_email'              => strtolower($this->input->post('tEmail')),
-            't_password'           => hash ( "sha256", $this->input->post('tPassword')),
-            't_name'               => $this->input->post('tName'),
-            //'t_collage_code'     => $data['tCollageCode'],
-            't_description'        => $this->input->post('tDescription'),
-            't_address'            => $this->input->post('tAddress'),
-            't_contact_number'     => $this->input->post('tMobileNo'),
-            't_website'            => $this->input->post('tWebSite'),
-            't_status'             => $t_status,
-            //'t_img'              => $this->input->post('tImg'),
-            //'t_tpo_img'          => $this->input->post('tpoImg'),
-            't_tpo_name'           => $this->input->post('tpoName'),
-            't_tpo_contact_number' => $this->input->post('tpoMobileNo'),
+            't_email'                => strtolower($this->input->post('tEmail')),
+            't_password'             => hash ( "sha256", $this->input->post('tPassword')),
+            't_name'                 => $this->input->post('tName'),
+            //'t_collage_code'       => $data['tCollageCode'],
+            't_description'          => $this->input->post('tDescription'),
+            't_address'              => $this->input->post('tAddress'),
+            't_contact_number'       => $this->input->post('tMobileNo'),
+            't_website'              => $this->input->post('tWebSite'),
+            't_status'               => $t_status,
+            //'t_img'                => $this->input->post('tImg'),
+            //'t_tpo_img'            => $this->input->post('tpoImg'),
+            't_tpo_name'             => $this->input->post('tpoName'),
+            't_tpo_contact_number'   => $this->input->post('tpoMobileNo'),
             't_approved_by_admin_ID' => $t_approved_by_admin_ID,
-            // 't_privilege'          => json_encode($privilege)
+            // 't_privilege'         => json_encode($privilege)
         );
 
         $query = $this->db->insert('tbl_tpo', $data);
@@ -155,21 +155,21 @@ class PlacementM extends CI_Model {
         // }
 
         // $data = array(
-        //     's_email'              => strtolower($this->input->post('tEmail')),
-        //     's_password'           => hash ( "sha256", $this->input->post('tPassword')),
-        //     's_name'               => $this->input->post('tName'),
-        //     //'s_collage_code'     => $data['tCollageCode'],
-        //     's_description'        => $this->input->post('tDescription'),
-        //     's_address'            => $this->input->post('tAddress'),
-        //     's_contact_number'     => $this->input->post('tMobileNo'),
-        //     's_website'            => $this->input->post('tWebSite'),
-        //     's_status'             => $s_status,
-        //     //'s_img'              => $this->input->post('tImg'),
-        //     //'s_tpo_img'          => $this->input->post('tpoImg'),
-        //     's_tpo_name'           => $this->input->post('tpoName'),
-        //     's_tpo_contact_number' => $this->input->post('tpoMobileNo'),
+        //     's_email'                => strtolower($this->input->post('tEmail')),
+        //     's_password'             => hash ( "sha256", $this->input->post('tPassword')),
+        //     's_name'                 => $this->input->post('tName'),
+        //     //'s_collage_code'       => $data['tCollageCode'],
+        //     's_description'          => $this->input->post('tDescription'),
+        //     's_address'              => $this->input->post('tAddress'),
+        //     's_contact_number'       => $this->input->post('tMobileNo'),
+        //     's_website'              => $this->input->post('tWebSite'),
+        //     's_status'               => $s_status,
+        //     //'s_img'                => $this->input->post('tImg'),
+        //     //'s_tpo_img'            => $this->input->post('tpoImg'),
+        //     's_tpo_name'             => $this->input->post('tpoName'),
+        //     's_tpo_contact_number'   => $this->input->post('tpoMobileNo'),
         //     's_approved_by_admin_ID' => $t_approved_by_admin_ID,
-        //     // 't_privilege'          => json_encode($privilege)
+        //     // 't_privilege'         => json_encode($privilege)
         // );
 
         // $query = $this->db->insert('tbl_tpo', $data);
@@ -213,12 +213,12 @@ class PlacementM extends CI_Model {
                 $a_privilege = json_decode($row->a_privilege);
 
                 $array = array(
-                    'sessUser'=> $row->a_email,
-                    'sessID'  => $row->a_ID,
-                    'sessName'=> $row->a_name,
-                    'sessImg' => $path,
-                    'sessRole'=> "ADMIN",
-                    'sessPrivilege'=> $a_privilege,
+                    'sessUser'      => $row->a_email,
+                    'sessID'        => $row->a_ID,
+                    'sessName'      => $row->a_name,
+                    'sessImg'       => $path,
+                    'sessRole'      => "ADMIN",
+                    'sessPrivilege' => $a_privilege,
                 );
 
                 if($row->a_created_by == '0') {
@@ -244,8 +244,8 @@ class PlacementM extends CI_Model {
     public function getLogComM()
     {
         $where = array(
-            'c_email'   => trim(strtolower($this->input->post('Email'))),
-            'c_password'=> hash ( "sha256", $this->input->post('Password'))
+            'c_email'    => trim(strtolower($this->input->post('Email'))),
+            'c_password' => hash ( "sha256", $this->input->post('Password'))
         );
         $this->db->select('*');
         $this->db->from('tbl_company');
@@ -262,20 +262,20 @@ class PlacementM extends CI_Model {
 
             if($row->c_status == 1)
             {
-                $path = (empty($row->c_img)) ? base_url("assets/images/company/user.png") : base_url("assets/images/company/" . $row->C_img);
-                $path1 = (empty($row->c_hr_img)) ? base_url("assets/images/company/user.png") : base_url("assets/images/company/" . $row->C_hr_img);
+                $path = (empty($row->c_img)) ? base_url("assets/images/company/user.png") : base_url("assets/images/company/" . $row->c_img);
+                $path1 = (empty($row->c_hr_img)) ? base_url("assets/images/company/user.png") : base_url("assets/images/company/" . $row->c_hr_img);
 
                 $c_privilege = json_decode($row->c_privilege);
 
                 $array = array(
-                    'sessUser'=> $row->c_email,
-                    'sessID'  => $row->c_ID,
-                    'sessName'=> $row->c_name,
-                    'sessImg' => $path,
-                    'sessHrImg' => $path1,
-                    'sessHrName'=> $row->c_hr_name,
-                    'sessRole'=> "COMPANY",
-                    'sessPrivilege'=> $c_privilege,
+                    'sessUser'      => $row->c_email,
+                    'sessID'        => $row->c_ID,
+                    'sessName'      => $row->c_name,
+                    'sessImg'       => $path,
+                    'sessHrName'    => $row->c_hr_name,
+                    'sessHrImg'     => $path1,
+                    'sessRole'      => "COMPANY",
+                    'sessPrivilege' => $c_privilege,
                 );
 
                 $this->session->set_userdata( $array );
@@ -297,8 +297,8 @@ class PlacementM extends CI_Model {
     public function getLogTpoM()
     {
         $where = array(
-            't_email'   => trim(strtolower($this->input->post('Email'))),
-            't_password'=> hash ( "sha256", $this->input->post('Password'))
+            't_email'    => trim(strtolower($this->input->post('Email'))),
+            't_password' => hash ( "sha256", $this->input->post('Password'))
         );
         $this->db->select('*');
         $this->db->from('tbl_tpo');
@@ -316,16 +316,19 @@ class PlacementM extends CI_Model {
             if($row->t_status == 1)
             {
                 $path = (empty($row->t_img)) ? base_url("assets/images/tpo/user.png") : base_url("assets/images/tpo/" . $row->t_img);
+                $path1 = (empty($row->t_tpo_img)) ? base_url("assets/images/tpo/user.png") : base_url("assets/images/tpo/" . $row->t_tpo_img);
                 
                 $t_privilege = json_decode($row->t_privilege);
 
                 $array = array(
-                    'sessUser'=> $row->t_email,
-                    'sessID'  => $row->t_ID,
-                    'sessName'=> $row->t_name,
-                    'sessImg' => $path,
-                    'sessRole'=> "TPO",
-                    'sessPrivilege'=> $t_privilege,
+                    'sessUser'      => $row->t_email,
+                    'sessID'        => $row->t_ID,
+                    'sessName'      => $row->t_name,
+                    'sessImg'       => $path,
+                    'sessTpoName'   => $row->t_tpo_name,
+                    'sessTpoImg'    => $path1,
+                    'sessRole'      => "TPO",
+                    'sessPrivilege' => $t_privilege,
                 );
 
                 $this->session->set_userdata( $array );
@@ -347,8 +350,8 @@ class PlacementM extends CI_Model {
     public function getLogStdM()
     {
         // $where = array(
-        //     't_email'   => trim(strtolower($this->input->post('Email'))),
-        //     't_password'=> hash ( "sha256", $this->input->post('Password'))
+        //     't_email'    => trim(strtolower($this->input->post('Email'))),
+        //     't_password' => hash ( "sha256", $this->input->post('Password'))
         // );
         // $this->db->select('*');
         // $this->db->from('tbl_tpo');
@@ -370,12 +373,12 @@ class PlacementM extends CI_Model {
         //         $t_privilege = json_decode($row->t_privilege);
 
         //         $array = array(
-        //             'sessUser'=> $row->t_email,
-        //             'sessID'  => $row->t_ID,
-        //             'sessName'=> $row->t_name,
-        //             'sessImg' => $path,
-        //             'sessRole'=> "TPO",
-        //             'sessPrivilege'=> $t_privilege,
+        //             'sessUser'      => $row->t_email,
+        //             'sessID'        => $row->t_ID,
+        //             'sessName'      => $row->t_name,
+        //             'sessImg'       => $path,
+        //             'sessRole'      => "TPO",
+        //             'sessPrivilege' => $t_privilege,
         //         );
 
         //         $this->session->set_userdata( $array );
@@ -464,6 +467,36 @@ class PlacementM extends CI_Model {
     /* List TPO Ends*/
 
     /*===============================================================================================================*/
+
+    /* List department */
+    public function getListdepM($where = array(), $type = 'IN')
+    {
+        $this->db->select('d_ID, d_name');
+        $this->db->from('tbl_department');
+
+        if(!empty($where) && $type == "IN"){
+            $where = explode("|", $where);
+            $this->db->where_in('d_ID', $where);
+        }
+        if(!empty($where) && $type == "NOT_IN"){
+            $where = explode("|", $where);
+            $this->db->where_not_in('d_ID', $where);
+        }
+
+        $this->db->order_by('tbl_department.d_ID');
+
+        $query = $this->db->get();
+
+        if($query->num_rows() > 0)
+        {
+            return $query->result();
+        }
+        return FALSE;
+    }
+    /* List department Ends*/
+
+    /*===============================================================================================================*/
+
 
     /* List Student */
     public function getListStdM()
@@ -573,10 +606,13 @@ class PlacementM extends CI_Model {
         $this->db->join('tbl_admin', 'tbl_admin.a_ID = tbl_tpo.t_approved_by_admin_ID', 'left');
 
         $query = $this->db->get();
+        $data = $query->result();
+
+        $data[1] = $this->getListdepM($data[0]->t_departments,"IN");
 
         if($query->num_rows() > 0)
         {
-            return $query->result();
+            return $data;
         }
         return FALSE;
     }
@@ -618,14 +654,14 @@ class PlacementM extends CI_Model {
         {
             $data = array(
                 'a_created_by' => $this->session->userdata('sessID'),
-                'a_status' => '0'
+                'a_status'     => '0'
             );
         }
         if($action == 'unblock')
         {
             $data = array(
                 'a_created_by' => $this->session->userdata('sessID'),
-                'a_status' => '1'
+                'a_status'     => '1'
             );
         }
 
@@ -654,14 +690,14 @@ class PlacementM extends CI_Model {
         {
             $data = array(
                 'c_approved_by_admin_ID' => $this->session->userdata('sessID'),
-                'c_status' => '0'
+                'c_status'               => '0'
             );
         }
         if($action == 'unblock' || $action == 'Approve')
         {
             $data = array(
                 'c_approved_by_admin_ID' => $this->session->userdata('sessID'),
-                'c_status' => '1'
+                'c_status'               => '1'
             );
         }
 
@@ -690,14 +726,14 @@ class PlacementM extends CI_Model {
         {
             $data = array(
                 't_approved_by_admin_ID' => $this->session->userdata('sessID'),
-                't_status' => '0'
+                't_status'               => '0'
             );
         }
         if($action == 'unblock' || $action == 'Approve')
         {
             $data = array(
                 't_approved_by_admin_ID' => $this->session->userdata('sessID'),
-                't_status' => '1'
+                't_status'               => '1'
             );
         }
 
@@ -726,14 +762,14 @@ class PlacementM extends CI_Model {
         // {
         //     $data = array(
         //         't_approved_by_admin_ID' => $this->session->userdata('sessID'),
-        //         't_status' => '0'
+        //         't_status'               => '0'
         //     );
         // }
         // if($action == 'unblock' || $action == 'Approve')
         // {
         //     $data = array(
         //         't_approved_by_admin_ID' => $this->session->userdata('sessID'),
-        //         't_status' => '1'
+        //         't_status'               => '1'
         //     );
         // }
 
@@ -761,9 +797,9 @@ class PlacementM extends CI_Model {
                 'a_ID' => $id,
             );
             $data = array(
-                'a_name'        => $this->input->post('aName'),
-                'a_address'     => $this->input->post('aAddress'),
-                'a_contact_no'  => $this->input->post('aMobileNo'),
+                'a_name'       => $this->input->post('aName'),
+                'a_address'    => $this->input->post('aAddress'),
+                'a_contact_no' => $this->input->post('aMobileNo'),
             );
 
             if (!empty($_FILES['aImg']['name']))
@@ -802,7 +838,7 @@ class PlacementM extends CI_Model {
 
             if($this->db->affected_rows() >=0)
             {
-                $path = base_url("assets/images/admin/" . $uploadData['orig_name']);
+                $path = (empty($_FILES['aImg']['name'])) ? $this->session->userdata("sessImg") : base_url("assets/images/admin/" . $uploadData['orig_name']);
                 $array = array(
                     'sessName'=> $data['a_name'],
                     'sessImg' => $path,
@@ -908,8 +944,8 @@ class PlacementM extends CI_Model {
 
             if($this->db->affected_rows() >=0)
             {
-                $path = base_url("assets/images/company/" . $data['c_img']);
-                $path1 = base_url("assets/images/company/" . $data['c_hr_img']);
+                $path = (empty($_FILES['cImg']['name'])) ? $this->session->userdata("sessImg") : base_url("assets/images/company/" . $data['c_img']);
+                $path1 = (empty($_FILES['hImg']['name'])) ? $this->session->userdata("sessHrImg") : base_url("assets/images/company/" . $data['c_hr_img']);
                 $array = array(
                     'sessName'   => $data['c_name'],
                     'sessImg'    => $path,
@@ -927,6 +963,115 @@ class PlacementM extends CI_Model {
         }
     }
     /* Edit Profile Company Model Ends */
+
+    /*===============================================================================================================*/
+    
+    /* Edit Profile TPO Model */
+    public function editProfileTpoM($id)
+    {
+        if($this->session->userdata('sessRole') == 'TPO'){
+            $where = array(
+                't_ID' => $id,
+            );
+            $t_departments = implode("|", $this->input->post('tDepartment'));
+            $data = array(
+                't_name'        => $this->input->post('tName'),
+                't_description' => $this->input->post('tDescription'),
+                't_address'     => $this->input->post('tAddress'),
+                't_contact_number'  => $this->input->post('tMobileNo'),
+                't_website'     => $this->input->post('tWebSite'),
+                't_tpo_name'     => $this->input->post('tpoName'),
+                't_tpo_contact_number'       => $this->input->post('tpoMobileNo'),
+                't_departments' => $t_departments
+            );
+            if (!empty($_FILES['tImg']['name']))
+            {
+
+                /* File Selected */
+                /* for image upload */
+                $config['upload_path']      = 'assets/images/tpo/';
+                $config['allowed_types']    = 'jpg|png|jpeg';
+                $config['file_name']        = 't_img_' . $id;
+                $config['file_ext_tolower'] = TRUE;
+                $config['overwrite']        = TRUE;
+                $config['max_size']         = 2048;
+
+                $this->load->helper('file');
+                if ($this->session->userdata("sessImg") != base_url("assets/images/tpo/user.png"))
+                {
+                    $file = basename($this->session->userdata("sessImg"));
+                    unlink(FCPATH . 'assets/images/tpo/' . $file);
+                }
+
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if($this->upload->do_upload('tImg'))
+                {
+                    $uploadData = $this->upload->data();
+                    $data['t_img'] = $uploadData["orig_name"];
+                }
+                else {
+                    return FALSE;
+                }
+            }
+
+            if (!empty($_FILES['tpoImg']['name']))
+            {
+
+                /* File Selected */
+                /* for image upload */
+                $config['upload_path']      = 'assets/images/tpo/';
+                $config['allowed_types']    = 'jpg|png|jpeg';
+                $config['file_name']        = 't_tpo_img_' . $id;
+                $config['file_ext_tolower'] = TRUE;
+                $config['overwrite']        = TRUE;
+                $config['max_size']         = 2048;
+
+                $this->load->helper('file');
+                if ($this->session->userdata("sessTpoImg") != base_url("assets/images/tpo/user.png"))
+                {
+                    $file = basename($this->session->userdata("sessTpoImg"));
+                    unlink(FCPATH . 'assets/images/tpo/' . $file);
+                }
+
+                $this->upload->initialize($config);
+
+                if($this->upload->do_upload('tpoImg'))
+                {
+                    $uploadData = $this->upload->data();
+                    $data['t_tpo_img'] = $uploadData["orig_name"];
+                }
+                else {
+                    return FALSE;
+                }
+            }
+            
+            $this->db->set($data);
+            $this->db->where($where);
+            $this->db->update('tbl_tpo');
+
+            if($this->db->affected_rows() >=0)
+            {
+                $path = (empty($_FILES['tImg']['name'])) ? $this->session->userdata("sessImg") : base_url("assets/images/tpo/" . $data['t_img']);
+                $path1 = (empty($_FILES['tpoImg']['name'])) ? $this->session->userdata("sessImg") : base_url("assets/images/tpo/" . $data['t_tpo_img']);
+                $array = array(
+                    'sessName'   => $data['t_name'],
+                    'sessImg'    => $path,
+                    'sessTpoName' => $data['t_tpo_name'],
+                    'sessTpoImg'  => $path1,
+                );
+                $this->session->set_userdata( $array );
+                return TRUE;
+            }
+            return False;
+        }
+        else {
+            /* You are not TPO*/
+            return FALSE;
+        }
+    }
+    /* Edit Profile TPO Model Ends */
 
     /*===============================================================================================================*/
 }

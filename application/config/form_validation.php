@@ -242,5 +242,37 @@ $config = array(
     /* Admin edir profile Validation Ends */
 
     /*===============================================================================================================*/
+
+    /* Admin edir profile Registration */
+    'tProfileEdit' => array(
+
+        array(
+            'field' => 'tMobileNo',
+            'label' => 'Contact No',
+            'rules' => 'xss_clean|trim|required|min_length[10]|max_length[10]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        ),
+        array(
+            'field' => 'tWebsite',
+            'label' => 'Contact No',
+            'rules' => 'xss_clean|trim|valid_url',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        ),
+        array(
+            'field' => 'tpoMobileNo',
+            'label' => 'Mobile No',
+            'rules' => 'xss_clean|trim|required|min_length[10]|max_length[10]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        )
+    ),
+    /* Admin edir profile Validation Ends */
+
+    /*===============================================================================================================*/
 );
 ?>

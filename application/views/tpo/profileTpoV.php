@@ -19,9 +19,9 @@
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#UnblockModal"><i class="fa fa-edit m-right-xs"></i> Unblock</button>
                             <?php }
                         }
-                        elseif ( $this->session->userdata('sessRole') == 'TPO' && $this->session->userdata('sessRole') == $result[0]->t_ID ) {
+                        elseif ( $this->session->userdata('sessRole') == 'TPO' && $result[0]->t_status == 1 && $this->session->userdata('sessID') == $result[0]->t_ID) {
                             ?>
-                            <a class="btn btn-info" style="color: #ffffff;"><i class="fa fa-edit m-right-xs"></i> Edit Profile</a>
+                            <button type="button" class="btn btn-info" onclick="location.href='<?php echo base_url('/placement/editProfileTpoF/'); ?>'"><i class="fa fa-edit m-right-xs"></i> Edit Profile</button>
                         <?php } ?>
                     </ul>
                     <div class="clearfix"></div>
@@ -42,6 +42,16 @@
                             <li>
                                 <h4 style="font-weight: 600;"><i class="fa fa-map-marker user-profile-icon"></i> Address :</h4>
                                 <p><?php echo $result[0]->t_address ?></p>
+                            </li>
+                            <hr>
+                            <li>
+                                <h4 style="font-weight: 600;"><i class="fa fa-map-marker user-profile-icon"></i> Contact No :</h4>
+                                <p><?php echo $result[0]->t_contact_number ?></p>
+                            </li>
+                            <hr>
+                            <li>
+                                <h4 style="font-weight: 600;"><i class="fa fa-map-marker user-profile-icon"></i> Web Site :</h4>
+                                <p><?php echo $result[0]->t_website ?></p>
                             </li>
                             <hr>
                             <?php 
@@ -98,10 +108,10 @@
                         <div class="" role="tabpanel" data-example-id="togglable-tabs">
                             <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
                                 <li role="presentation" class="display-sm-block active">
-                                    <a href="#OfficerInfo" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Officer Information</a>
+                                    <a href="#OfficerInfo" id="home-tab" role="tab" data-toggle="tab" aria-expanded="false">Officer Information</a>
                                 </li>
                                 <li role="presentation" class="">
-                                    <a href="#Departments" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Departments</a>
+                                    <a href="#Departments" role="tab" id="Departments-tab" data-toggle="tab" aria-expanded="true">Departments</a>
                                 </li>
                             </ul>
                             <div id="myTabContent" class="tab-content">
@@ -134,13 +144,32 @@
 
                                 </div>
 
-                                <div role="tabpanel" class="tab-pane fade" id="Departments" aria-labelledby="profile-tab">
-                                    <ul class="list-unstyled user_data">
-                                        <li>
-                                            <h4 style="font-weight: 600;"><?php echo $result[0]->t_departments ?></h4>
-                                        </li>
-                                        <hr style="margin-top: 10px; margin-bottom: 10px;">
-                                    </ul>
+                                <div role="tabpanel" class="tab-pane fade" id="Departments" aria-labelledby="Departments-tab">
+                                    <div class="x_panel">
+                                        <div class="x_content">
+
+                                            <table class="table table table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Department</th>
+                                                        <th class="text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php foreach ($result[1] as $key => $value) { ?>
+
+                                                        <tr>
+                                                            <th scope="row"><?php echo $value->d_ID ?></th>
+                                                            <td><?php echo $value->d_name ?></td>
+                                                            <td class="text-center"><a href="<?php echo base_url('/placement/listStdF/unblock/' . $result[0]->t_ID); ?>" title="Block Admin" class="btn btn-sm btn-info">Student List</a></td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

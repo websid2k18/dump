@@ -53,6 +53,10 @@
     <!-- Custom Theme Style -->
     <?= link_tag('assets/css/custom.css'); ?>
 
+    <!-- jQuery -->
+    <script src="<?= base_url('assets/plugins/jquery/dist/jquery.min.js'); ?>"></script>
+    <!-- Bootstrap -->
+    <script src="<?= base_url('assets/plugins/bootstrap/dist/js/bootstrap.min.js'); ?>"></script>
 </head>
 <body class="nav-md">
     <div class="container body">
