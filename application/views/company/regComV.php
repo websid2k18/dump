@@ -66,7 +66,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cNameId">Company Name <span class="required">*</span>
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <?php echo form_input('cName', set_value('cName'), 'id="cNameId" required="required" placeholder="Company Name" class="form-control col-md-7 col-xs-12"');; ?>
+                                <?php echo form_input('cName', set_value('cName'), 'id="cNameId" required="required" placeholder="Company Name" class="form-control col-md-7 col-xs-12"'); ?>
                             </div>
                             <ul class="parsley-errors-list filled" id="parsley-id-4">
                                 <li class="parsley-required">

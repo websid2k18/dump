@@ -188,8 +188,7 @@ $config = array(
 
     /*===============================================================================================================*/
 
-    /* Admin Registration */
-
+    /* Admin edir profile Registration */
     'aProfileEdit' => array(
         array(
             'field' => 'aMobileNo',
@@ -208,7 +207,39 @@ $config = array(
         //     ),
         // )
     ),
-    /* Admin Validation Ends */
+    /* Admin edir profile Validation Ends */
+
+    /*===============================================================================================================*/
+
+    /* Admin edir profile Registration */
+    'cProfileEdit' => array(
+
+        array(
+            'field' => 'cMobileNo',
+            'label' => 'Contact No',
+            'rules' => 'xss_clean|trim|required|min_length[10]|max_length[10]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        ),
+        array(
+            'field' => 'cWebsite',
+            'label' => 'Contact No',
+            'rules' => 'xss_clean|trim|valid_url',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        ),
+        array(
+            'field' => 'hMobileNo',
+            'label' => 'Mobile No',
+            'rules' => 'xss_clean|trim|required|min_length[10]|max_length[10]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        )
+    ),
+    /* Admin edir profile Validation Ends */
 
     /*===============================================================================================================*/
 );

@@ -19,9 +19,9 @@
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#UnblockModal"><i class="fa fa-edit m-right-xs"></i> Unblock</button>
                             <?php }
                         }
-                        elseif ( $this->session->userdata('sessRole') == 'Company' && $this->session->userdata('sessRole') == $result[0]->c_ID ) {
+                        elseif ( $this->session->userdata('sessRole') == 'COMPANY' && $result[0]->c_status == 1 && $this->session->userdata('sessID') == $result[0]->c_ID) {
                             ?>
-                            <a class="btn btn-success" style="color: #ffffff;"><i class="fa fa-edit m-right-xs"></i> Edit Profile</a>
+                            <button type="button" class="btn btn-info" onclick="location.href='<?php echo base_url('/placement/editProfileComF/'); ?>'"><i class="fa fa-edit m-right-xs"></i> Edit Profile</button>
                         <?php } ?>
                     </ul>
                     <div class="clearfix"></div>
@@ -43,6 +43,16 @@
                             <li>
                                 <h4 style="font-weight: 600;"><i class="fa fa-map-marker user-profile-icon"></i> Address :</h4>
                                 <p><?php echo $result[0]->c_address ?></p>
+                            </li>
+                            <hr>
+                            <li>
+                                <h4 style="font-weight: 600;"><i class="fa fa-map-marker user-profile-icon"></i> Contact No :</h4>
+                                <p><?php echo $result[0]->c_contact_no ?></p>
+                            </li>
+                            <hr>
+                            <li>
+                                <h4 style="font-weight: 600;"><i class="fa fa-map-marker user-profile-icon"></i> Web Site :</h4>
+                                <p><?php echo $result[0]->c_website ?></p>
                             </li>
                             <hr>
                             <?php 

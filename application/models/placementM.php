@@ -105,6 +105,7 @@ class PlacementM extends CI_Model {
         }
         else{
             $t_status = '0';
+            $t_approved_by_admin_ID = NULL;
         }
 
         $data = array(
@@ -261,7 +262,8 @@ class PlacementM extends CI_Model {
 
             if($row->c_status == 1)
             {
-                $path = (empty($row->t_img)) ? base_url("assets/images/company/user.png") : base_url("assets/images/company/" . $row->t_img);
+                $path = (empty($row->c_img)) ? base_url("assets/images/company/user.png") : base_url("assets/images/company/" . $row->C_img);
+                $path1 = (empty($row->c_hr_img)) ? base_url("assets/images/company/user.png") : base_url("assets/images/company/" . $row->C_hr_img);
 
                 $c_privilege = json_decode($row->c_privilege);
 
@@ -270,6 +272,8 @@ class PlacementM extends CI_Model {
                     'sessID'  => $row->c_ID,
                     'sessName'=> $row->c_name,
                     'sessImg' => $path,
+                    'sessHrImg' => $path1,
+                    'sessHrName'=> $row->c_hr_name,
                     'sessRole'=> "COMPANY",
                     'sessPrivilege'=> $c_privilege,
                 );
@@ -786,8 +790,6 @@ class PlacementM extends CI_Model {
                 {
                     $uploadData = $this->upload->data();
                     $data['a_profile_img'] = $uploadData["orig_name"];
-                    $path = base_url("assets/images/admin/" . $uploadData['orig_name']);
-                    $this->session->set_userdata( "sessImg", $path );
                 }
                 else {
                     return FALSE;
@@ -797,8 +799,15 @@ class PlacementM extends CI_Model {
             $this->db->set($data);
             $this->db->where($where);
             $this->db->update('tbl_admin');
+
             if($this->db->affected_rows() >=0)
             {
+                $path = base_url("assets/images/admin/" . $uploadData['orig_name']);
+                $array = array(
+                    'sessName'=> $data['a_name'],
+                    'sessImg' => $path,
+                );
+                $this->session->set_userdata( $array );
                 return TRUE;
             }
             return False;
@@ -809,6 +818,115 @@ class PlacementM extends CI_Model {
         }
     }
     /* Edit Profile Admin Model Ends */
+
+    /*===============================================================================================================*/
+
+    /* Edit Profile Company Model */
+    public function editProfileComM($id)
+    {
+
+        if($this->session->userdata('sessRole') == 'COMPANY'){
+            $where = array(
+                'c_ID' => $id,
+            );
+            $data = array(
+                'c_name'        => $this->input->post('cName'),
+                'c_description' => $this->input->post('cDescription'),
+                'c_address'     => $this->input->post('cAddress'),
+                'c_contact_no'  => $this->input->post('cMobileNo'),
+                'c_website'     => $this->input->post('cWebSite'),
+                'c_hr_name'     => $this->input->post('hName'),
+                'c_hr_no'       => $this->input->post('hMobileNo'),
+            );
+
+            if (!empty($_FILES['cImg']['name']))
+            {
+
+                /* File Selected */
+                /* for image upload */
+                $config['upload_path']      = 'assets/images/company/';
+                $config['allowed_types']    = 'jpg|png|jpeg';
+                $config['file_name']        = 'c_img_' . $id;
+                $config['file_ext_tolower'] = TRUE;
+                $config['overwrite']        = TRUE;
+                $config['max_size']         = 2048;
+
+                $this->load->helper('file');
+                if ($this->session->userdata("sessImg") != base_url("assets/images/company/user.png"))
+                {
+                    $file = basename($this->session->userdata("sessImg"));
+                    unlink(FCPATH . 'assets/images/company/' . $file);
+                }
+
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if($this->upload->do_upload('cImg'))
+                {
+                    $uploadData = $this->upload->data();
+                    $data['c_img'] = $uploadData["orig_name"];
+                }
+                else {
+                    return FALSE;
+                }
+            }
+
+            if (!empty($_FILES['hImg']['name']))
+            {
+
+                /* File Selected */
+                /* for image upload */
+                $config['upload_path']      = 'assets/images/company/';
+                $config['allowed_types']    = 'jpg|png|jpeg';
+                $config['file_name']        = 'c_hr_img_' . $id;
+                $config['file_ext_tolower'] = TRUE;
+                $config['overwrite']        = TRUE;
+                $config['max_size']         = 2048;
+
+                $this->load->helper('file');
+                if ($this->session->userdata("sessHrImg") != base_url("assets/images/company/user.png"))
+                {
+                    $file = basename($this->session->userdata("sessHrImg"));
+                    unlink(FCPATH . 'assets/images/company/' . $file);
+                }
+
+                $this->upload->initialize($config);
+
+                if($this->upload->do_upload('hImg'))
+                {
+                    $uploadData = $this->upload->data();
+                    $data['c_hr_img'] = $uploadData["orig_name"];
+                }
+                else {
+                    return FALSE;
+                }
+            }
+
+            $this->db->set($data);
+            $this->db->where($where);
+            $this->db->update('tbl_company');
+
+            if($this->db->affected_rows() >=0)
+            {
+                $path = base_url("assets/images/company/" . $data['c_img']);
+                $path1 = base_url("assets/images/company/" . $data['c_hr_img']);
+                $array = array(
+                    'sessName'   => $data['c_name'],
+                    'sessImg'    => $path,
+                    'sessHrName' => $data['c_hr_name'],
+                    'sessHrImg'  => $path1,
+                );
+                $this->session->set_userdata( $array );
+                return TRUE;
+            }
+            return False;
+        }
+        else {
+            /* You are not Company*/
+            return FALSE;
+        }
+    }
+    /* Edit Profile Company Model Ends */
 
     /*===============================================================================================================*/
 }

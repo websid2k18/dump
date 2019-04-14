@@ -260,11 +260,11 @@ class Placement extends CI_Controller {
                 redirect('placement/listAdminF');
             }
             else {
-                $this->load->view('regAdminV');
+                $this->load->view('admin/regAdminV');
             }
         }
         else {
-            $this->load->view('regAdminV', $data);
+            $this->load->view('admin/regAdminV', $data);
         }
 
         $this->footers();
@@ -294,11 +294,11 @@ class Placement extends CI_Controller {
                 }   
             }
             else {
-                $this->load->view('regComV');
+                $this->load->view('company/regComV');
             }
         }
         else {
-            $this->load->view('regComV', $data);
+            $this->load->view('company/regComV', $data);
         }
 
         $this->footers();
@@ -328,11 +328,11 @@ class Placement extends CI_Controller {
                 }
             }
             else {
-                $this->load->view('regTpoV');
+                $this->load->view('tpo/regTpoV');
             }
         }
         else {
-            $this->load->view('regTpoV', $data);
+            $this->load->view('tpo/regTpoV', $data);
         }
 
         $this->footers();
@@ -518,7 +518,7 @@ class Placement extends CI_Controller {
         $this->headers($page);
         $data = array();
 
-        $this->load->view('admin/dashboardComV', $data);
+        $this->load->view('company/dashboardComV', $data);
 
         $this->footers();
     }
@@ -533,7 +533,7 @@ class Placement extends CI_Controller {
         $this->headers($page);
         $data = array();
 
-        $this->load->view('admin/dashboardTpoV', $data);
+        $this->load->view('tpo/dashboardTpoV', $data);
 
         $this->footers();
     }
@@ -543,13 +543,13 @@ class Placement extends CI_Controller {
 
     /* Dashboard Student Page */
 
-    public function dashboardStdF($page='dashboardStdF')
+    public function dashboardStdF($page='dashboardStdF')    
     {
         $this->checkIsStdF();
         $this->headers($page);
         $data = array();
 
-        $this->load->view('admin/dashboardStdV', $data);
+        $this->load->view('dashboardStdV', $data);
 
         $this->footers();
     }
@@ -567,7 +567,7 @@ class Placement extends CI_Controller {
         $this->load->model('placementM');
         $data['result'] = $this->placementM->getListAdminM();
         
-        $this->load->view('listAdminV', $data);
+        $this->load->view('admin/listAdminV', $data);
 
         $this->footers();
     }
@@ -584,7 +584,7 @@ class Placement extends CI_Controller {
         $this->load->model('placementM');
         $data['result'] = $this->placementM->getListComM();
         
-        $this->load->view('listComV', $data);
+        $this->load->view('company/listComV', $data);
 
         $this->footers();
     }
@@ -601,7 +601,7 @@ class Placement extends CI_Controller {
         $this->load->model('placementM');
         $data['result'] = $this->placementM->getListTpoM();
         
-        $this->load->view('listTpoV', $data);
+        $this->load->view('tpo/listTpoV', $data);
 
         $this->footers();
     }
@@ -620,7 +620,7 @@ class Placement extends CI_Controller {
         $this->load->model('placementM');
         $data['result'] = $this->placementM->getListStdM();
         
-        $this->load->view('listComV', $data);
+        $this->load->view('company/listComV', $data);
 
         $this->footers();
     }
@@ -644,7 +644,7 @@ class Placement extends CI_Controller {
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileAdminM($id);
         
-        $this->load->view('profileAdminV', $data);
+        $this->load->view('admin/profileAdminV', $data);
 
         $this->footers();
     }
@@ -668,7 +668,7 @@ class Placement extends CI_Controller {
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileComM($id);
 
-        $this->load->view('profileComV', $data);
+        $this->load->view('company/profileComV', $data);
 
         $this->footers();
     }
@@ -693,7 +693,7 @@ class Placement extends CI_Controller {
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileTpoM($id);
         
-        $this->load->view('profileTpoV', $data);
+        $this->load->view('tpo/profileTpoV', $data);
 
         $this->footers();
     }
@@ -818,16 +818,57 @@ class Placement extends CI_Controller {
                     $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
                     $data['errorMsg'] .= $this->image_lib->display_errors();
                 }
-                $this->load->view('editProfileAdminV', $data);
+                $this->load->view('admin/editProfileAdminV', $data);
             }
         }
         else {
-            $this->load->view('editProfileAdminV', $data);
+            $this->load->view('admin/editProfileAdminV', $data);
         }
 
         $this->footers();
     }
     /* Edit Profile Admin Page Ends*/
+
+    /*===============================================================================================================*/
+
+    /* Edit Profile Com Page */
+    public function editProfileComF($page='editProfileComF')
+    {
+        $this->checkIscomF();
+        $this->headers($page);
+        $data = array();
+        $id = $this->session->userdata('sessID');
+        $result = FALSE;
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->profileComM($id);
+        if ($this->form_validation->run('cProfileEdit')) 
+        {
+            $result = $this->placementM->editProfileComM($id);
+
+            if ($result == TRUE) {
+                $data['result'] = $this->placementM->profileComM($id);
+                redirect('placement/profileComF/','refresh');
+            }
+            else {
+                if (!empty($_FILES['aImg']['name']))
+                {
+                    $this->load->library('image_lib');
+                    $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
+                    $data['errorMsg'] .= $this->image_lib->display_errors();
+                }
+                $this->load->view('company/editProfileComV', $data);
+            }
+        }
+        else {
+            echo "string";echo validation_errors();
+            $this->load->view('company/editProfileComV', $data);
+        }
+
+        $this->footers();
+    }
+    /* Edit Profile Com Page Ends*/
+
 }
 
 /* End of file placement.php */

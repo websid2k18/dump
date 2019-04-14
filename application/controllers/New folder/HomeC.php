@@ -91,12 +91,12 @@ class HomeC extends CI_Controller {
 			}
 			else {
 				$data['errorMsg'] = "User Name or Password is Wrong";
-				$this->load->view('LoginTpoV',$data);
+				$this->load->view('tpo/LoginTpoV',$data);
 			}
 		}
 		else
 		{
-			$this->load->view('LoginTpoV');
+			$this->load->view('tpo/LoginTpoV');
 		}
 		$this->load->view('includes/ScriptV');
 		$this->load->view('includes/FooterV');
