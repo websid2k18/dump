@@ -8,4 +8,7 @@ class MY_Form_validation extends CI_Form_validation {
 		return $this->is_unique($str, $field) === FALSE;
 	}
 
+	// public function file_check($str, $max_size, $allowed_types, $field){
+
+	// }
 } 

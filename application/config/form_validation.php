@@ -187,5 +187,29 @@ $config = array(
     /* Company Validation Ends */    
 
     /*===============================================================================================================*/
+
+    /* Admin Registration */
+
+    'aProfileEdit' => array(
+        array(
+            'field' => 'aMobileNo',
+            'label' => 'Password',
+            'rules' => 'xss_clean|trim|required|min_length[10]|max_length[10]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        ),
+        // array(
+        //     'field' => 'aImg',
+        //     'label' => 'Profile Image',
+        //     'rules' => 'xss_clean|trim|file_check["gif|jpg|png|jpeg",]',
+        //     'errors' => array(
+        //         'regex_match' => "You must enter total 10 number no other character"
+        //     ),
+        // )
+    ),
+    /* Admin Validation Ends */
+
+    /*===============================================================================================================*/
 );
 ?>

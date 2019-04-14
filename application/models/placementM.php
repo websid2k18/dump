@@ -232,7 +232,7 @@ class PlacementM extends CI_Model {
 
             // If the previous process did not validate
             // then return false.
-            return "FALSE";
+            return FALSE;
         }
     }
     /* Login Admin Ends*/
@@ -282,7 +282,7 @@ class PlacementM extends CI_Model {
 
             // If the previous process did not validate
             // then return false.
-            return "FALSE";
+            return FALSE;
         }
     }
     /* Login Company Ends*/
@@ -332,7 +332,7 @@ class PlacementM extends CI_Model {
 
             // If the previous process did not validate
             // then return false.
-            return "FALSE";
+            return FALSE;
         }
     }
     /* Login TPO Ends*/
@@ -382,7 +382,7 @@ class PlacementM extends CI_Model {
 
         //     // If the previous process did not validate
         //     // then return false.
-        //     return "FALSE";
+        //     return FALSE;
         // }
     }
     /* Login Students Ends*/
@@ -407,7 +407,7 @@ class PlacementM extends CI_Model {
         {
             return $query->result();
         }
-        return "FALSE";
+        return FALSE;
     }
     /* List Admin Ends*/
 
@@ -431,7 +431,7 @@ class PlacementM extends CI_Model {
         {
             return $query->result();
         }
-        return "FALSE";
+        return FALSE;
     }
     /* List Company Ends*/
 
@@ -455,7 +455,7 @@ class PlacementM extends CI_Model {
         {
             return $query->result();
         }
-        return "FALSE";
+        return FALSE;
     }
     /* List TPO Ends*/
 
@@ -478,7 +478,7 @@ class PlacementM extends CI_Model {
         // {
         //     return $query->result();
         // }
-        // return "FALSE";
+        // return FALSE;
     }
     /* List Student Ends*/
 
@@ -526,7 +526,7 @@ class PlacementM extends CI_Model {
             return $res;
         }
 
-        return "FALSE";
+        return FALSE;
     }
     /* Profile Admin Model Ends*/
 
@@ -550,7 +550,7 @@ class PlacementM extends CI_Model {
         {
             return $query->result();
         }
-        return "FALSE";
+        return FALSE;
     }
     /* Profile Company Model Ends*/
 
@@ -574,7 +574,7 @@ class PlacementM extends CI_Model {
         {
             return $query->result();
         }
-        return "FALSE";
+        return FALSE;
     }
     /* Profile TPO Model Ends*/
 
@@ -598,7 +598,7 @@ class PlacementM extends CI_Model {
         // {
         //     return $query->result();
         // }
-        // return "FALSE";
+        // return FALSE;
     }
     /* Profile Company Model Ends*/
 
@@ -634,7 +634,7 @@ class PlacementM extends CI_Model {
             return "TRUE";
         }
 
-        return "FALSE";
+        return FALSE;
     }
     /* Block Unvlock Company Model Ends */
 
@@ -670,7 +670,7 @@ class PlacementM extends CI_Model {
             return "TRUE";
         }
 
-        return "FALSE";
+        return FALSE;
     }
     /* Block Unvlock Company Model Ends */
 
@@ -706,7 +706,7 @@ class PlacementM extends CI_Model {
             return "TRUE";
         }
 
-        return "FALSE";
+        return FALSE;
     }
     /* Block Unvlock TPO Model Ends */
 
@@ -742,43 +742,71 @@ class PlacementM extends CI_Model {
         //     return "TRUE";
         // }
 
-        // return "FALSE";
+        // return FALSE;
     }
     /* Block Unvlock Student Model Ends */
 
     /*===============================================================================================================*/
 
     /* Edit Profile Admin Model */
-    public function editProfileAdminM($action, $id)
+    public function editProfileAdminM($id)
     {
-        $where = array(
-            'a_ID' => $id,
-        );
-        if($action == 'block')
-        {
-            $data = array(
-                'a_created_by' => $this->session->userdata('sessID'),
-                'a_status' => '0'
+
+        if($this->session->userdata('sessRole') == 'ADMIN'){
+            $where = array(
+                'a_ID' => $id,
             );
-        }
-        if($action == 'unblock')
-        {
             $data = array(
-                'a_created_by' => $this->session->userdata('sessID'),
-                'a_status' => '1'
+                'a_name'        => $this->input->post('aName'),
+                'a_address'     => $this->input->post('aAddress'),
+                'a_contact_no'  => $this->input->post('aMobileNo'),
             );
+
+            if (!empty($_FILES['aImg']['name']))
+            {
+
+                /* File Selected */
+                /* for image upload */
+                $config['upload_path']      = 'assets/images/admin/';
+                $config['allowed_types']    = 'jpg|png|jpeg';
+                $config['file_name']        = 'a_img_' . $id;
+                $config['file_ext_tolower'] = TRUE;
+                $config['overwrite']        = TRUE;
+                $config['max_size']         = 2048;
+
+                $this->load->helper('file');
+                if ($this->session->userdata("sessImg") != base_url("assets/images/admin/user.png"))
+                {
+                    $file = basename($this->session->userdata("sessImg"));
+                    unlink(FCPATH . 'assets/images/admin/' . $file);
+                }
+                $this->load->library('upload', $config);
+
+                if($this->upload->do_upload('aImg'))
+                {
+                    $uploadData = $this->upload->data();
+                    $data['a_profile_img'] = $uploadData["orig_name"];
+                    $path = base_url("assets/images/admin/" . $uploadData['orig_name']);
+                    $this->session->set_userdata( "sessImg", $path );
+                }
+                else {
+                    return FALSE;
+                }
+            }
+
+            $this->db->set($data);
+            $this->db->where($where);
+            $this->db->update('tbl_admin');
+            if($this->db->affected_rows() >=0)
+            {
+                return TRUE;
+            }
+            return False;
         }
-
-        $this->db->set($data);
-        $this->db->where($where);
-        $this->db->update('tbl_admin');
-
-        if($this->db->affected_rows() >=0)
-        {
-            return "TRUE";
+        else {
+            /* You are not Admin*/
+            return FALSE;
         }
-
-        return "FALSE";
     }
     /* Edit Profile Admin Model Ends */
 

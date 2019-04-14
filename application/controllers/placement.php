@@ -11,13 +11,16 @@ class Placement extends CI_Controller {
 
     public function test($page='')
     {
-        $this->headers($page);
-
-        $data['method'] = "regStuF";
-
-        $this->load->view('thankYouV', $data);
-
-        $this->footers();
+        $this->checkIsAdminF();
+        $this->load->helper('file');
+        if ($this->session->userdata("sessImg") != base_url("assets/images/admin/user.png"))
+        {
+            echo $this->session->userdata("sessImg");
+            $file = basename($this->session->userdata("sessImg"));
+            echo "<pre>";
+            print_r ($file);
+            echo "</pre>";
+        }
     }
 
     /*===============================================================================================================*/
@@ -150,7 +153,7 @@ class Placement extends CI_Controller {
     public function logOutF() {
 
         $type = $this->session->userdata('sessRole');
-        
+
         $this->session->sess_destroy();
 
         if($type == "ADMIN") {
@@ -791,14 +794,36 @@ class Placement extends CI_Controller {
     /* Edit Profile Admin Page */
     public function editProfileAdminF($page='editProfileAdminF')
     {
+        $this->checkIsAdminF();
         $this->headers($page);
         $data = array();
         $id = $this->session->userdata('sessID');
+        $result = FALSE;
 
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileAdminM($id);
-        
-        $this->load->view('editProfileAdminV', $data);
+
+        if ($this->form_validation->run('aProfileEdit')) 
+        {
+            $result = $this->placementM->editProfileAdminM($id);
+
+            if ($result == TRUE) {
+                $data['result'] = $this->placementM->profileAdminM($id);
+                redirect('placement/profileAdminF/','refresh');
+            }
+            else {
+                if (!empty($_FILES['aImg']['name']))
+                {
+                    $this->load->library('image_lib');
+                    $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
+                    $data['errorMsg'] .= $this->image_lib->display_errors();
+                }
+                $this->load->view('editProfileAdminV', $data);
+            }
+        }
+        else {
+            $this->load->view('editProfileAdminV', $data);
+        }
 
         $this->footers();
     }

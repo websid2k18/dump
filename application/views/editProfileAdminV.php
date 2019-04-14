@@ -11,7 +11,7 @@
                 $a_profile_img = (empty($result[0]->a_profile_img)) ? base_url("assets/images/Admin/user.png") : base_url("assets/images/Admin/" . $result[0]->a_profile_img) ;
                 $cre_img = (empty($result[1]->cre_img)) ? base_url("assets/images/Admin/user.png") : base_url("assets/images/Admin/" . $result[1]->cre_img) ;
 
-                echo form_open( base_url('/placement/editProfileAdminF/'), 'id="demo-form" data-parsley-validate class="form-horizontal form-label-left" method="post"');
+                echo form_open_multipart( base_url('/placement/editProfileAdminF/'), 'id="demo-form" data-parsley-validate class="form-horizontal form-label-left" method="post"');
 
                 if (!empty($errorMsg) OR !empty(form_error())) { ?>
                     <div class="col-md-12 no-padding">
@@ -36,7 +36,7 @@
                             <li class="text-center" style="padding-top: 10px;">
                                 <div class="form-group">
                                     <label class="file-upload btn btn-primary">
-                                        Edit Image<input type="file" class="hidden" />
+                                        Edit Image<?php echo form_upload('aImg', set_value('aImg') ,'class="hide"'); ?>
                                     </label>
                                 </div>
                             </li>
@@ -104,24 +104,46 @@
                             <li>
                                 <div class="form-group">
                                     <h4 style="font-weight: 600;">Name : </h4>
-                                    <input type="text" name="aName" value="<?= $result[0]->a_name ?>" id="aNameId" required="required" placeholder="Collage Name" class="form-control col-md-12 col-xs-12">
+                                    <?php echo form_input('aName', set_value('aName', $result[0]->a_name), 'id="aNameId" required="required" placeholder="Collage Name" class="form-control col-md-7 col-xs-12"'); ?>
+                                    <ul class="parsley-errors-list filled" id="parsley-id-4">
+                                        <li class="parsley-required">
+                                            <?php echo form_error('aName'); ?>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="form-group">
+                                    <h4 style="font-weight: 600;">Address : </h4>
+                                    <?php echo form_textarea('aAddress', set_value('aAddress', $result[0]->a_address), 'class="form-control" id="aAddressID" style="resize : none; height:100px;" placeholder="Address"'); ?>
                                     <ul class="parsley-errors-list filled" id="parsley-id-4">
                                         <li class="parsley-required">
                                         </li>
                                     </ul>
                                 </div>
                             </li>
-                            <hr style="margin-top: 10px; margin-bottom: 10px;">
                             <li>
-                                <h4 style="font-weight: 600;">Address :  <span style="font-weight: 100;"><?php echo $result[0]->a_address ?></span></h4>
+                                <div class="form-group">
+                                    <h4 style="font-weight: 600;">Mobile No : </h4>
+                                    <?php echo form_input('aMobileNo', set_value('aMobileNo', $result[0]->a_contact_no), 'type="number" id="aMobileNo" required="required" minlength="10" maxlength="10" placeholder="Mobile No" class="form-control col-md-7 col-xs-12"'); ?>
+                                    <ul class="parsley-errors-list filled" id="parsley-id-4">
+                                        <li class="parsley-required">
+                                            <?php echo form_error('aMobileNo'); ?>
+                                            <?php echo validation_errors(); ?>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                             <hr style="margin-top: 10px; margin-bottom: 10px;">
-                            <li>
-                                <h4 style="font-weight: 600;">Mobile No :  <span style="font-weight: 100;"><?php echo $result[0]->a_contact_no ?></span></h4>
+                            <li>    
+                                <div class="form-group">
+                                    <div class="float-right pull-right">
+                                        <button class="btn btn-danger" type="reset">Reset</button>
+                                        <button class="btn btn-success" type="submit">Edit</button>
+                                    </div>
+                                </div>
                             </li>
-                            <hr style="margin-top: 10px; margin-bottom: 10px;">
                         </ul>
-
                     </div>
                 </div>
                 <?= form_close(); ?>
@@ -169,4 +191,4 @@
         </div>
     </div>
 </div>
-<!-- /page content
+<!-- /page content -->
