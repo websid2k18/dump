@@ -12,7 +12,7 @@
 				<h3>Please Conatact Admin To Unblock Your Account</h3>
 			<?php } ?>
 
-			<?php if($method == 'logStuF') { ?>
+			<?php if($method == 'logStdF') { ?>
 				<h1>Thank You For Registration</h1>
 				<h3>Please Conatact College To approve Your Account</h3>
 			<?php } ?>

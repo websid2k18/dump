@@ -72,6 +72,29 @@ $config = array(
 
     /*===============================================================================================================*/
 
+    /* Company Login */
+    'sLogin' => array(
+        array(
+            'field'     => 'Email',
+            'label'     => 'Username',
+            'rules'     => 'xss_clean|trim|required|min_length[6]|max_length[255]|valid_email|is_exists[tbl_student.s_email]',
+            'errors'    => array(
+                'is_exists' => "You are not Register yet!"
+            ),
+        ),
+        array(
+            'field'     => 'Password',
+            'label'     => 'Password',
+            'rules'     => 'xss_clean|trim|required|min_length[6]|max_length[255]|regex_match["^(?=[a-zA-Z0-9#@$?]{6,64}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*"]',
+            'errors'    => array(
+                'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
+            ),
+        )
+    ),
+    /* Company Login Ends */
+
+    /*===============================================================================================================*/
+
     /* Admin Registration */
 
     'aRegister' => array(
@@ -186,6 +209,68 @@ $config = array(
     ),
     /* Company Validation Ends */    
 
+    /*===============================================================================================================*/    
+
+    /* student Registration */
+    'sRegister' => array(
+        array(
+            'field' => 'sEmail',
+            'label' => 'Username',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|valid_email|is_unique[tbl_student.s_email]',
+            'errors' => array(
+            ),
+        ),
+        array(
+            'field' => 'sPassword',
+            'label' => 'Password',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|regex_match["^(?=[a-zA-Z0-9#@$?]{6,64}$)(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9]).*"]',
+            'errors' => array(
+                'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
+            ),
+        ),
+        array(
+            'field' => 'sPasswordConfirm',
+            'label' => 'Confirm Password',
+            'rules' => 'xss_clean|trim|required|min_length[6]|max_length[255]|matches[sPassword]',
+            'errors' => array(
+                'regex_match' => "You must enter at least one uppercase letter, one lowercase letter, one number, one special character, minimum 4 character and maximum 64 character"
+            ),
+        ),
+        array(
+            'field' => 'sMobileNo',
+            'label' => 'Mobile No',
+            'rules' => 'xss_clean|trim|required|min_length[10]|max_length[10]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        ),
+        array(
+            'field' => 'sEnrollNo',
+            'label' => 'Enrollment No',
+            'rules' => 'xss_clean|trim|required|min_length[12]|max_length[12]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        ),
+        array(
+            'field' => 'sTpoNameId',
+            'label' => 'Enrollment No',
+            'rules' => 'xss_clean|trim|required',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        ),
+        array(
+            'field' => 'sDept',
+            'label' => 'Enrollment No',
+            'rules' => 'xss_clean|trim|required',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        )
+    ),
+    /* student Validation Ends */    
+
     /*===============================================================================================================*/
 
     /* Admin edir profile Registration */
@@ -274,5 +359,5 @@ $config = array(
     /* Admin edir profile Validation Ends */
 
     /*===============================================================================================================*/
-);
+); 
 ?>

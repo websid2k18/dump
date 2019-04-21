@@ -12,10 +12,11 @@
 				<h3>Please Conatact Admin To approve Your Account</h3>
 			<?php } ?>
 
-			<?php if($method == 'regStuF') { ?>
+			<?php if($method == 'regStdF') { ?>
 				<h1>Thank You For Registration</h1>
 				<h3>Please Conatact College To approve Your Account</h3>
 			<?php } ?>
+
 		</div>
 	</div>
 	<div class="clearfix"></div>

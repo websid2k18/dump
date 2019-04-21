@@ -9,14 +9,14 @@
                 </div>
                 <div class="x_content">
                     <br />
-                    <?php echo form_open('/placement/regTpoF', 'id="demo-form2" action="<?= base_url(); ?>tpoCtrl/registerFun" data-parsley-validate class="form-horizontal form-label-left" method="post"'); ?>
+                    <?php echo form_open('/placement/regTpoF', 'id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post"'); ?>
 
                     <div class="col-md-12 no-padding">
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tEmailId">Email <span class="required">*</span>
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <?php echo form_input('tEmail', set_value('tEmail'), 'type="email" id="tEmailId" onchange="unique(this.value);" required="required" maxlength="250" placeholder="Company Email" class="form-control col-md-7 col-xs-12"'); ?>
+                                <?php echo form_input('tEmail', set_value('tEmail'), 'type="email" id="tEmailId" onchange="unique(this.value);" required="required" maxlength="250" placeholder="Collage Email" class="form-control col-md-7 col-xs-12"'); ?>
                                 <ul class="parsley-errors-list filled" id="parsley-id-1">
                                     <li class="parsley-required">
                                         <?php echo form_error('tEmail'); ?>

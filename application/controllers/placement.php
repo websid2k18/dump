@@ -11,16 +11,7 @@ class Placement extends CI_Controller {
 
     public function test($page='')
     {
-        $this->checkIsAdminF();
-        $this->load->helper('file');
-        if ($this->session->userdata("sessImg") != base_url("assets/images/admin/user.png"))
-        {
-            echo $this->session->userdata("sessImg");
-            $file = basename($this->session->userdata("sessImg"));
-            echo "<pre>";
-            print_r ($file);
-            echo "</pre>";
-        }
+        echo hash ( "sha256", "Admin@123");
     }
 
     /*===============================================================================================================*/
@@ -28,38 +19,28 @@ class Placement extends CI_Controller {
     /* Header For all User */
     public function headers($page = "")
     {
-
+        $data = array();
         if ($page != "") {
             $data['active'] = $page;
-        } else {
-
+        }
+        else {
             $data['active'] = "index";
         }
+        $data['con'] = $this;
 
-        // echo $this->session->userdata('sessRole');
         $this->load->view('includes/HeadV',$data);
-        if($this->session->userdata('sessRole')){
-            $type = $this->session->userdata('sessRole');
-        }
-        else{
-            $type = "";
-        }
 
-        if($type == "ADMIN") {
-            $this->checkIsAdminF();
-            $this->load->view('includes/NavAdminV', $data);
+        if ($this->checkIsStdF()) {
+            $this->load->view('includes/NavStdV', $data);
         }
-        elseif ($type == "COMPANY") {
-            $this->checkIsComF();
-            $this->load->view('includes/NavComV', $data);
-        }
-        elseif ($type == "TPO") {
-            $this->checkIsTpoF();
+        elseif ($this->checkIsTpoF()) {
             $this->load->view('includes/NavTpoV', $data);
         }
-        elseif ($type == "STUDENT") {
-            $this->checkIsStdF();
-            $this->load->view('includes/NavStdV', $data);
+        elseif ($this->checkIsComF()) {
+            $this->load->view('includes/NavComV', $data);
+        }
+        elseif ($this->checkIsAdminF()) {
+            $this->load->view('includes/NavAdminV', $data);
         }
         else {
             $this->load->view('includes/NavV', $data);
@@ -69,18 +50,52 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
-    /* Footer For all User */
-    public function footers() {
+    public function fetch_department($tID)
+    {
+        if ($this->input->post('tID')) {
+            $tID = $this->input->post('tID');
+        }
 
-        if($this->session->userdata('sessRole')){
+        if ($tID) {
+            $where = array(
+                't_ID' => $tID,
+            );
+            $this->load->model('placementM');
+
+            $this->db->select('tbl_tpo.t_departments');
+            $this->db->from('tbl_tpo');
+            $this->db->where($where);
+
+            $query = $this->db->get();
+            $data = $query->result();
+
+            $data[1] = $this->placementM->getListdepM($data[0]->t_departments,"IN");
+
+            if ($query->num_rows() > 0) {
+                $output = '<option value="">Select Department</option>';
+                foreach ($data[1] as $key => $value) {
+                    $output .= '<option value="' . $value->d_ID. '"' . set_select("sTpoName", $value->d_ID) . ">" . $value->d_name . '</option>';
+                }
+                echo $output;
+            }
+            return "FALSE";
+        }
+    }
+
+    /*===============================================================================================================*/
+
+    /* Footer For all User */
+    public function footers() 
+    {
+        if ($this->session->userdata('sessRole')) {
             $type = $this->session->userdata('sessRole');
         }
-        else{
+        else {
             $type = "";
         }
 
         if ($type == "ADMIN" || $type == "STUDENT" || $type == "COMPANY" || $type == "TPO") {
-            $data['session']=$this->session->all_userdata();
+            $data['session'] = $this->session->all_userdata();
         }
 
         $this->load->view('includes/FooterV');
@@ -94,13 +109,13 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Check is Admin For all User */
-    public function checkIsAdminF() {
-
-        if( $this->session->userdata('sessRole') == 'ADMIN' && $this->session->userdata('sessRole') ) {
+    public function checkIsAdminF() 
+    {
+        if ( $this->session->userdata('sessRole') == 'ADMIN' && $this->session->userdata('sessID') ) {
             return TRUE;
         }
-        else{
-            $this->logOutF();
+        else {
+            return FALSE;
         }
     }
     /* Check is Admin For all User Ends */
@@ -108,13 +123,13 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Check is Admin For all User */
-    public function checkIsComF() {
-
-        if( $this->session->userdata('sessRole') == 'COMPANY' && $this->session->userdata('sessRole') ) {
+    public function checkIsComF() 
+    {
+        if ( $this->session->userdata('sessRole') == 'COMPANY' && $this->session->userdata('sessID') ) {
             return TRUE;
         }
-        else{
-            $this->logOutF();
+        else {
+            return FALSE;
         }
     }
     /* Check is Admin For all User Ends */
@@ -122,13 +137,13 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Check is Admin For all User */
-    public function checkIsTpoF() {
-
-        if( $this->session->userdata('sessRole') == 'TPO' && $this->session->userdata('sessRole') ) {
+    public function checkIsTpoF() 
+    {
+        if ( $this->session->userdata('sessRole') == 'TPO' && $this->session->userdata('sessID') ) {
             return TRUE;
         }
-        else{
-            $this->logOutF();
+        else {
+            return FALSE;
         }
     }
     /* Check is Admin For all User Ends */
@@ -136,13 +151,13 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Check is Admin For all User */
-    public function checkIsStdF() {
-
-        if( $this->session->userdata('sessRole') == 'STUDENT' && $this->session->userdata('sessRole') ) {
+    public function checkIsStdF() 
+    {
+        if ( $this->session->userdata('sessRole') == 'STUDENT' && $this->session->userdata('sessID') ) {
             return TRUE;
         }
-        else{
-            $this->logOutF();
+        else {
+            return FALSE;
         }
     }
     /* Check is Admin For all User Ends */
@@ -150,13 +165,13 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* Log Out For all User */
-    public function logOutF() {
-
+    public function logOutF() 
+    {
         $type = $this->session->userdata('sessRole');
 
         $this->session->sess_destroy();
 
-        if($type == "ADMIN") {
+        if ($type == "ADMIN") {
             $type = '';
             redirect('placement/');
         }
@@ -176,7 +191,6 @@ class Placement extends CI_Controller {
             $type = '';
             redirect('placement/');
         }
-
     }
     /* Log Out For all User Ends */
 
@@ -189,28 +203,22 @@ class Placement extends CI_Controller {
 
 
     /* Home Page */
-    public function index($page = "index") {
+    public function index($page = "index") 
+    {
         $this->headers();
         $data = "";
 
-        if($this->session->userdata('sessRole')){
-            $type = $this->session->userdata('sessRole');
-        }
-        else{
-            $type = "";
-        }
-
-        if($type == "ADMIN") {
-            redirect('/placement/dashboardAdminF','refresh');
-        }
-        elseif ($type == "STUDENT") {
+        if ($this->checkIsStdF()) {
             redirect('/placement/dashboardStdF','refresh');
         }
-        elseif ($type == "COMPANY") {
+        elseif ($this->checkIsTpoF()) {
+            redirect('/placement/dashboardTpoF','refresh');
+        }
+        elseif ($this->checkIsComF()) {
             redirect('/placement/dashboardComF','refresh');
         }
-        elseif ($type == "TPO") {
-            redirect('/placement/dashboardTpoF','refresh');
+        elseif ($this->checkIsAdminF()) {
+            redirect('/placement/dashboardAdminF','refresh');
         }
         else {
             $this->load->view('homeV', $data);
@@ -247,27 +255,30 @@ class Placement extends CI_Controller {
     /* Registration Admin Page */
     public function regAdminF($page='regAdminF')
     {
-        $this->checkIsAdminF();
-        $this->headers($page);
-        $data[''] = array();
+        if ($this->checkIsAdminF()) {
+            $this->headers($page);
+            $data[''] = array();
 
-        if ($this->form_validation->run('aRegister')) 
-        {
-            $this->load->model('placementM');
-            $result = $this->placementM->setRegAdminM();
+            if ($this->form_validation->run('aRegister')) {
+                $this->load->model('placementM');
+                $result = $this->placementM->setRegAdminM();
 
-            if ($result == TRUE) {
-                redirect('placement/listAdminF');
+                if ($result == TRUE) {
+                    redirect('placement/listAdminF');
+                }
+                else {
+                    $this->load->view('admin/regAdminV');
+                }
             }
             else {
-                $this->load->view('admin/regAdminV');
+                $this->load->view('admin/regAdminV', $data);
             }
+
+            $this->footers();
         }
         else {
-            $this->load->view('admin/regAdminV', $data);
+            $this->logOutF();
         }
-
-        $this->footers();
     }
     /* Registration Admin Page Ends */
 
@@ -279,17 +290,16 @@ class Placement extends CI_Controller {
         $this->headers($page);
         $data[''] = array();
 
-        if ($this->form_validation->run('cRegister')) 
-        {
+        if ($this->form_validation->run('cRegister')) {
             $this->load->model('placementM');
             $result = $this->placementM->setRegComM();
 
             if ($result == TRUE) {
                 $data['method'] = "regComF";
-                if($this->session->userdata('sessRole') == 'ADMIN'){
+                if ($this->session->userdata('sessRole') == 'ADMIN') {
                     redirect('placement/listComF');
                 }
-                else{
+                else {
                     $this->load->view('thankYouV', $data);
                 }   
             }
@@ -313,17 +323,16 @@ class Placement extends CI_Controller {
         $this->headers($page);
         $data[''] = array();
 
-        if ($this->form_validation->run('tRegister')) 
-        {
+        if ($this->form_validation->run('tRegister')) {
             $this->load->model('placementM');
             $result = $this->placementM->setRegTpoM();
 
             if ($result == TRUE) {
                 $data['method'] = "regTpoF";
-                if($this->session->userdata('sessRole') == 'ADMIN'){
+                if ($this->session->userdata('sessRole') == 'ADMIN') {
                     redirect('placement/listTpoF');
                 }
-                else{
+                else {
                     $this->load->view('thankYouV', $data);
                 }
             }
@@ -344,27 +353,37 @@ class Placement extends CI_Controller {
     /* Registration Std Page */
     public function regStdF($page='regStdF')
     {
-        // $this->headers($page);
-        // $data[''] = "";
+        $this->headers($page);
+        $data[''] = array();
 
-        // if ($this->form_validation->run('sRegister'))
-        // {
-        //     $this->load->model('placementM');
-        //     $result = $this->placementM->setRegStdM();
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->getListTpoM( NULL, "t_ID, t_name, t_departments");
+        $data['result1'] = $this->placementM->getListdepM();
 
-        //     if ($result == TRUE) {
-        //         $data['method'] = "regStdF";
-        //         $this->load->view('thankYouV', $data);
-        //     }
-        //     else {
-        //         $this->load->view('regStdV');
-        //     }
-        // }
-        // else {
-        //     $this->load->view('regStdV', $data);
-        // }
+        if ($this->form_validation->run('sRegister')) 
+        {
+            $this->load->model('placementM');
+            $result = $this->placementM->setRegStdM();
 
-        // $this->footers();
+            if ($result == TRUE) {
+                $data['method'] = "regStdF";
+                if($this->session->userdata('sessRole') == 'TPO'){
+                    redirect('placement/listStdF');
+                }
+                else{
+                    $data['method'] = "regStdF";
+                    $this->load->view('thankYouV', $data);
+                }
+            }
+            else {
+                $this->load->view('Std/regStdV', $data);
+            }
+        }
+        else {
+            $this->load->view('std/regStdV', $data);
+        }
+
+        $this->footers();
     }
     /* Registration Std Page Ends */
 
@@ -375,8 +394,7 @@ class Placement extends CI_Controller {
     {
         $data['method'] = "admin_login";
 
-        if ($this->form_validation->run('aLogin') == TRUE)
-        {
+        if ($this->form_validation->run('aLogin') == TRUE) {
             $this->load->model('placementM');
             $result = $this->placementM->getLogAdminM();
             if ($result == "BLOCKED") {
@@ -390,8 +408,7 @@ class Placement extends CI_Controller {
                 $this->load->view('admin/LoginAdminV', $data);
             }
         }
-        else
-        {
+        else {
             $this->load->view('admin/LoginAdminV', $data);
         }
     }
@@ -405,8 +422,7 @@ class Placement extends CI_Controller {
         $this->headers($page);
         $data['method'] = "logComF";
 
-        if ($this->form_validation->run('cLogin') == TRUE)
-        {
+        if ($this->form_validation->run('cLogin') == TRUE) {
             $this->load->model('placementM');
             $result = $this->placementM->getLogComM();
             if ($result == "BLOCKED") {
@@ -420,8 +436,7 @@ class Placement extends CI_Controller {
                 $this->load->view('LoginV', $data);
             }
         }
-        else
-        {
+        else {
             $this->load->view('LoginV', $data);
         }
 
@@ -437,8 +452,7 @@ class Placement extends CI_Controller {
         $this->headers($page);
         $data['method'] = "logTpoF";
 
-        if ($this->form_validation->run('tLogin') == TRUE)
-        {
+        if ($this->form_validation->run('tLogin') == TRUE) {
             $this->load->model('placementM');
             $result = $this->placementM->getLogTpoM();
             if ($result == "BLOCKED") {
@@ -452,8 +466,7 @@ class Placement extends CI_Controller {
                 $this->load->view('LoginV', $data);
             }
         }
-        else
-        {
+        else {
             $this->load->view('LoginV', $data);
         }
 
@@ -469,26 +482,23 @@ class Placement extends CI_Controller {
         $this->headers($page);
         $data['method'] = "logStdF";
 
-        // if ($this->form_validation->run('tLogin') == TRUE)
-        // {
-        //     $this->load->model('placementM');
-        //     $result = $this->placementM->getLogStdM();
-        //     if ($result == "BLOCKED") {
-        //         $this->load->view('contactToV', $data);
-        //     }
-        //     elseif ($result == "TRUE") {
-        //         redirect('/placement/dashboardStdF','refresh');
-        //     }
-        //     else {
-        //         $data['errorMsg'] = "User Name or Password is Wrong";
-        //         $this->load->view('LoginV', $data);
-        //     }
-        // }
-        // else
-        // {
-        //     echo "s";
-        $this->load->view('LoginV', $data);
-        // }
+        if ($this->form_validation->run('sLogin') == TRUE) {
+            $this->load->model('placementM');
+            $result = $this->placementM->getLogStdM();
+            if ($result == "BLOCKED") {
+                $this->load->view('contactToV', $data);
+            }
+            elseif ($result == "TRUE") {
+                redirect('/placement/dashboardStdF','refresh');
+            }
+            else {
+                $data['errorMsg'] = "User Name or Password is Wrong";
+                $this->load->view('LoginV', $data);
+            }
+        }
+        else {
+            $this->load->view('LoginV', $data);
+        }
 
         $this->footers();
     }
@@ -499,13 +509,17 @@ class Placement extends CI_Controller {
     /* Dashboard Admin Page */
     public function dashboardAdminF($page='dashboardAdminF')
     {
-        $this->checkIsAdminF();
-        $this->headers($page);
-        $data = array();
+        if ($this->checkIsAdminF()) {
+            $this->headers($page);
+            $data = array();
 
-        $this->load->view('admin/dashboardAdminV', $data);
+            $this->load->view('admin/dashboardAdminV', $data);
 
-        $this->footers();
+            $this->footers();
+        }
+        else {
+            $this->logOutF();
+        }
     }
     /* Dashboard Admin Page Ends */
 
@@ -514,13 +528,17 @@ class Placement extends CI_Controller {
     /* Dashboard Company Page */
     public function dashboardComF($page='dashboardComF')
     {
-        $this->checkIsComF();
-        $this->headers($page);
-        $data = array();
+        if ($this->checkIsComF()) {
+            $this->headers($page);
+            $data = array();
 
-        $this->load->view('company/dashboardComV', $data);
+            $this->load->view('company/dashboardComV', $data);
 
-        $this->footers();
+            $this->footers();
+        }
+        else {
+            $this->logOutF();
+        }
     }
     /* Dashboard Company Page Ends */
 
@@ -529,29 +547,36 @@ class Placement extends CI_Controller {
     /* Dashboard TPO Page */
     public function dashboardTpoF($page='dashboardTpoF')
     {
-        $this->checkIsTpoF();
-        $this->headers($page);
-        $data = array();
+        if ($this->checkIsTpoF()) {
+            $this->headers($page);
+            $data = array();
 
-        $this->load->view('tpo/dashboardTpoV', $data);
+            $this->load->view('tpo/dashboardTpoV', $data);
 
-        $this->footers();
+            $this->footers();
+        }
+        else {
+            $this->logOutF();
+        }
     }
     /* Dashboard TPO Page Ends */
 
     /*===============================================================================================================*/
 
     /* Dashboard Student Page */
-
     public function dashboardStdF($page='dashboardStdF')    
     {
-        $this->checkIsStdF();
-        $this->headers($page);
-        $data = array();
+        if ($this->checkIsStdF()) {
+            $this->headers($page);
+            $data = array();
 
-        $this->load->view('dashboardStdV', $data);
+            $this->load->view('std/dashboardStdV', $data);
 
-        $this->footers();
+            $this->footers();
+        }
+        else {
+            $this->logOutF();
+        }
     }
     /* Dashboard Student Page Ends */
 
@@ -560,16 +585,23 @@ class Placement extends CI_Controller {
     /* List Admin Page */
     public function listAdminF($page='listAdminF')
     {
-        $this->checkIsAdminF();
-        $this->headers($page);
-        $data = array();
+        if ($this->checkIsAdminF()) {
+            $this->headers($page);
+            $data = array();
 
-        $this->load->model('placementM');
-        $data['result'] = $this->placementM->getListAdminM();
-        
-        $this->load->view('admin/listAdminV', $data);
+            if ($this->input->post('Email')) {
+                echo "string";
+            }
+            $this->load->model('placementM');
+            $data['result'] = $this->placementM->getListAdminM();
 
-        $this->footers();
+            $this->load->view('admin/listAdminV', $data);
+
+            $this->footers();
+        }
+        else {
+            $this->logOutF();
+        }
     }
     /* List Admin Page Ends */
 
@@ -583,7 +615,7 @@ class Placement extends CI_Controller {
 
         $this->load->model('placementM');
         $data['result'] = $this->placementM->getListComM();
-        
+
         $this->load->view('company/listComV', $data);
 
         $this->footers();
@@ -600,7 +632,6 @@ class Placement extends CI_Controller {
 
         $this->load->model('placementM');
         $data['result'] = $this->placementM->getListTpoM();
-        
         $this->load->view('tpo/listTpoV', $data);
 
         $this->footers();
@@ -612,15 +643,19 @@ class Placement extends CI_Controller {
     /* List Students Page */
     public function listStdF($page='listStdF')
     {
-        $this->checkIsAdminF();
-
         $this->headers($page);
         $data = array();
-
+        $this->fetch_department($this->session->userdata('sessID'));
         $this->load->model('placementM');
+
+        if ($this->session->userdata('sessRole') == 'TPO' && $this->session->userdata('sessID')) {
+            $college = $this->session->userdata('sessID');
+            $dept = "dept";
+        }
+
         $data['result'] = $this->placementM->getListStdM();
-        
-        $this->load->view('company/listComV', $data);
+
+        $this->load->view('std/listStdV', $data);
 
         $this->footers();
     }
@@ -643,7 +678,7 @@ class Placement extends CI_Controller {
 
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileAdminM($id);
-        
+
         $this->load->view('admin/profileAdminV', $data);
 
         $this->footers();
@@ -664,7 +699,7 @@ class Placement extends CI_Controller {
         elseif ($this->session->userdata('sessRole') != 'COMPANY' && $id == NULL) {
             redirect('/placement/listComF','refresh');
         }
-        
+
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileComM($id);
 
@@ -692,7 +727,7 @@ class Placement extends CI_Controller {
 
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileTpoM($id);
-        
+
         $this->load->view('tpo/profileTpoV', $data);
 
         $this->footers();
@@ -710,7 +745,7 @@ class Placement extends CI_Controller {
 
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileStdM($id);
-        
+
         $this->load->view('profileStdV', $data);
 
         $this->footers();
@@ -730,7 +765,7 @@ class Placement extends CI_Controller {
         if ($this->session->userdata('sessMaster') == 'MasterAdmin' && $id != NULL) {
             $this->load->model('placementM');
             $data['result'] = $this->placementM->editBlockUnblockAdminM($action, $id);
-            
+
             redirect('placement/profileAdminF/' . $id,'refresh');
         }
         else {
@@ -754,7 +789,7 @@ class Placement extends CI_Controller {
         if ($this->session->userdata('sessRole') == 'ADMIN' && $id != NULL) {
             $this->load->model('placementM');
             $data['result'] = $this->placementM->editBlockUnblockComM($action, $id);
-            
+
             redirect('placement/profileComF/' . $id,'refresh');
         }
         else {
@@ -778,7 +813,7 @@ class Placement extends CI_Controller {
         if ($this->session->userdata('sessRole') == 'ADMIN' && $id != NULL) {
             $this->load->model('placementM');
             $data['result'] = $this->placementM->editBlockUnblockTpoM($action, $id);
-            
+
             redirect('placement/profileTpoF/' . $id,'refresh');
         }
         else {
@@ -803,8 +838,7 @@ class Placement extends CI_Controller {
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileAdminM($id);
 
-        if ($this->form_validation->run('aProfileEdit')) 
-        {
+        if ($this->form_validation->run('aProfileEdit')) {
             $result = $this->placementM->editProfileAdminM($id);
 
             if ($result == TRUE) {
@@ -812,8 +846,7 @@ class Placement extends CI_Controller {
                 redirect('placement/profileAdminF/','refresh');
             }
             else {
-                if (!empty($_FILES['aImg']['name']))
-                {
+                if (!empty($_FILES['aImg']['name'])) {
                     $this->load->library('image_lib');
                     $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
                     $data['errorMsg'] .= $this->image_lib->display_errors();
@@ -842,8 +875,7 @@ class Placement extends CI_Controller {
 
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileComM($id);
-        if ($this->form_validation->run('cProfileEdit')) 
-        {
+        if ($this->form_validation->run('cProfileEdit')) {
             $result = $this->placementM->editProfileComM($id);
 
             if ($result == TRUE) {
@@ -865,7 +897,6 @@ class Placement extends CI_Controller {
             // echo validation_errors();
             $this->load->view('company/editProfileComV', $data);
         }
-
         $this->footers();
     }
     /* Edit Profile Com Page Ends*/
@@ -884,12 +915,8 @@ class Placement extends CI_Controller {
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileTpoM($id);
         $data['dept'] = $this->placementM->getListdepM($data['result'][0]->t_departments, 'NOT_IN');
-        // echo "<pre>";
-        // print_r ($data);
-        // echo "</pre>";
-        // exit;
-        if ($this->form_validation->run('tProfileEdit')) 
-        {
+
+        if ($this->form_validation->run('tProfileEdit')) {
             $result = $this->placementM->editProfileTpoM($id);
 
             if ($result == TRUE) {
@@ -897,8 +924,7 @@ class Placement extends CI_Controller {
                 redirect('placement/profileTpoF/','refresh');
             }
             else {
-                if (!empty($_FILES['tImg']['name']) || !empty($_FILES['tpoImg']['name']))
-                {
+                if (!empty($_FILES['tImg']['name']) || !empty($_FILES['tpoImg']['name'])) {
                     $this->load->library('image_lib');
                     $this->load->library('upload');
                     $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
