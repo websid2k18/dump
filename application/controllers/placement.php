@@ -50,15 +50,18 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
-    public function fetch_department($tID)
+    public function fetch_department()
     {
-        if ($this->input->post('tID')) {
-            $tID = $this->input->post('tID');
+        if ($this->input->post('sTpoName')) {
+            $sTpoName = $this->input->post('sTpoName');
+        }
+        else {
+            $sTpoName = '0';
         }
 
-        if ($tID) {
+        if ($sTpoName) {
             $where = array(
-                't_ID' => $tID,
+                't_ID' => $sTpoName,
             );
             $this->load->model('placementM');
 
@@ -354,11 +357,9 @@ class Placement extends CI_Controller {
     public function regStdF($page='regStdF')
     {
         $this->headers($page);
-        $data[''] = array();
 
         $this->load->model('placementM');
         $data['result'] = $this->placementM->getListTpoM( NULL, "t_ID, t_name, t_departments");
-        $data['result1'] = $this->placementM->getListdepM();
 
         if ($this->form_validation->run('sRegister')) 
         {

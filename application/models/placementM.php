@@ -490,7 +490,7 @@ class PlacementM extends CI_Model {
             );
             $this->db->where($where);
         }
-        
+
         $query = $this->db->get();
 
         if ($query->num_rows() > 0) {
@@ -505,12 +505,38 @@ class PlacementM extends CI_Model {
     /* List Company */
     public function getListComM()
     {
-        $where = array();
-
         $this->db->select('*');
         $this->db->from('tbl_Company');
-        $this->db->where($where);
         $this->db->order_by('tbl_Company.c_ID', 'DESC');
+
+        if ($this->checkIsAdminF()) {
+            if ($this->input->post('status') == 'New') {
+                $where = array(
+                    'c_status' => "0",
+                    'c_approved_by_admin_ID' => NULL,
+                );
+                $this->db->where($where);
+            }
+            if ($this->input->post('status') == 'Blocked') {
+                $where = array(
+                    'c_status' => "0",
+                );
+                $this->db->where($where);
+            }
+            elseif ($this->input->post('status') == 'Unblocked') {
+                $where = array(
+                    'c_status' => "1",
+                );
+                $this->db->where($where);
+            }
+        }
+
+        if ($this->checkIsTpoF()) {
+            $where = array(
+                'c_status' => "1",
+            );
+            $this->db->where($where);
+        }
 
         $query = $this->db->get();
 
@@ -530,8 +556,36 @@ class PlacementM extends CI_Model {
 
         $this->db->select($select);
         $this->db->from('tbl_tpo');
-        $this->db->where($where);
         $this->db->order_by('tbl_tpo.t_ID', 'DESC');
+
+        if ($this->checkIsAdminF()) {
+            if ($this->input->post('status') == 'New') {
+                $where = array(
+                    't_status' => "0",
+                    't_approved_by_admin_ID' => NULL,
+                );
+                $this->db->where($where);
+            }
+            if ($this->input->post('status') == 'Blocked') {
+                $where = array(
+                    't_status' => "0",
+                );
+                $this->db->where($where);
+            }
+            elseif ($this->input->post('status') == 'Unblocked') {
+                $where = array(
+                    't_status' => "1",
+                );
+                $this->db->where($where);
+            }
+        }
+
+        if ($this->checkIsTpoF()) {
+            $where = array(
+                't_status' => "1",
+            );
+            $this->db->where($where);
+        }
 
         $query = $this->db->get();
 

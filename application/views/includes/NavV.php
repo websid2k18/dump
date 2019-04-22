@@ -27,7 +27,7 @@
                         <a><i class="fas fa-user"></i>&nbsp;&nbsp;Log In <span class="fas fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="<?= base_url('/placement/logComF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;Company</a></li>
-                            <li><a href="<?= base_url('/placement/logTpoF')?>"><i class="fas fa-university"></i>&nbsp;&nbsp;TPO</a></li>
+                            <li><a href="<?= base_url('/placement/logTpoF')?>"><i class="fas fa-university"></i>&nbsp;&nbsp;College</a></li>
                             <li><a href="<?= base_url('/placement/logStdF')?>"><i class="fas fa-user-graduate"></i>&nbsp;&nbsp;Student</a></li>
                         </ul>
                     </li>

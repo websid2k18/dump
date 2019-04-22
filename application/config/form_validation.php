@@ -253,14 +253,6 @@ $config = array(
             ),
         ),
         array(
-            'field' => 'sTpoNameId',
-            'label' => 'Enrollment No',
-            'rules' => 'xss_clean|trim|required',
-            'errors' => array(
-                'regex_match' => "You must enter total 10 number no other character"
-            ),
-        ),
-        array(
             'field' => 'sDept',
             'label' => 'Enrollment No',
             'rules' => 'xss_clean|trim|required',

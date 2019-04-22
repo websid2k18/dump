@@ -49,20 +49,21 @@
                         <tbody>
                             <?php
                             $odd = "odd";
+                            if (!empty($result)) {
+                                foreach ($result as $key) {
+                                    $a_profile_img = (empty($key->a_profile_img)) ? base_url("assets/images/admin/user.png") : base_url("assets/images/admin/" . $key->a_profile_img) ;
+                                    $odd = ($odd == 'odd') ? "even" : "odd" ; ?>
 
-                            foreach ($result as $key) {
-                                $a_profile_img = (empty($key->a_profile_img)) ? base_url("assets/images/admin/user.png") : base_url("assets/images/admin/" . $key->a_profile_img) ;
-                                $odd = ($odd == 'odd') ? "even" : "odd" ; ?>
+                                    <tr class="pointer text-center <?php echo $odd . " "; echo ($key->a_status == '0') ? "danger" : "" ?>">
+                                        <td><img src="<?php echo $a_profile_img ?>" alt="College Logo" class="hw-40"></td>
+                                        <td><?php echo $key->a_name ?></td>
+                                        <td><?php echo $key->a_email ?></td>
+                                        <td><?php echo $key->a_contact_no ?></td>
+                                        <td><a href="<?php echo base_url('/placement/profileAdminF/' . $key->a_ID); ?>" title="View Profile" class="btn btn-info">Info</a></td>
+                                    </tr>
 
-                                <tr class="pointer text-center <?php echo $odd . " "; echo ($key->a_status == '0') ? "danger" : "" ?>">
-                                    <td><img src="<?php echo $a_profile_img ?>" alt="College Logo" class="hw-40"></td>
-                                    <td><?php echo $key->a_name ?></td>
-                                    <td><?php echo $key->a_email ?></td>
-                                    <td><?php echo $key->a_contact_no ?></td>
-                                    <td><a href="<?php echo base_url('/placement/profileAdminF/' . $key->a_ID); ?>" title="View Profile" class="btn btn-info">Info</a></td>
-                                </tr>
-
-                            <?php } ?>
+                                <?php } 
+                            } ?>
                         </tbody>
                     </table>
                 </div>
