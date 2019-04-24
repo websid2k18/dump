@@ -449,7 +449,7 @@ class PlacementM extends CI_Model {
                 return "BLOCKED";
 
             if ($row->s_status == 1) {
-                $path = (empty($row->s_img)) ? base_url("assets/images/tpo/user.png") : base_url("assets/images/tpo/" . $row->s_img);
+                $path = (empty($row->s_img)) ? base_url("assets/images/student/user.png") : base_url("assets/images/student/" . $row->s_img);
 
                 $array = array(
                     'sessUser'      => $row->s_email,
@@ -749,7 +749,7 @@ class PlacementM extends CI_Model {
             's_ID' => $id,
         );
 
-        $this->db->select('tbl_student.*, tbl_tpo.t_ID, tbl_tpo.t_name, tbl_tpo.t_img');
+        $this->db->select('tbl_student.*, tbl_tpo.t_ID, tbl_tpo.t_name, tbl_tpo.t_img, tbl_tpo.t_email');
         $this->db->from('tbl_student');
         $this->db->where($where);
         $this->db->join('tbl_tpo', 'tbl_tpo.t_ID = tbl_student.s_created_by', 'left');
@@ -1197,6 +1197,103 @@ class PlacementM extends CI_Model {
         }
     }
     /* Edit Profile TPO Model Ends */
+
+    /*===============================================================================================================*/
+
+    /* Edit Profile Student Model */
+    public function editProfileStdM($id)
+    {
+        if($this->checkIsStdF()){
+            $where = array(
+                's_ID' => $id,
+            );
+            $data = array(  
+                's_name'        => $this->input->post('sName'),
+                's_description' => $this->input->post('sDescription'),
+                's_address'     => $this->input->post('sAddress'),
+                's_enroll_no'  => $this->input->post('sEnrollNo'),
+                's_contact_no'  => $this->input->post('sMobileNo'),
+            );
+            if (!empty($_FILES['sImg']['name']))
+            {
+                /* File Selected */
+                /* for image upload */
+                $config['upload_path']      = 'assets/images/student/';
+                $config['allowed_types']    = 'jpg|png|jpeg';
+                $config['file_name']        = 's_img_' . $id;
+                $config['file_ext_tolower'] = TRUE;
+                $config['overwrite']        = TRUE;
+                $config['max_size']         = 2048;
+
+                $this->load->helper('file');
+                if ($this->session->userdata("sessImg") != base_url("assets/images/student/user.png"))
+                {
+                    $file = basename($this->session->userdata("sessImg"));
+                    unlink(FCPATH . 'assets/images/student/' . $file);
+                }
+
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if($this->upload->do_upload('sImg'))
+                {
+                    $uploadData = $this->upload->data();
+                    $data['s_img_path'] = $uploadData["orig_name"];
+                }
+                else {
+                    return FALSE;
+                }
+            }
+
+            if (!empty($_FILES['sResume']['name']))
+            {
+
+                /* File Selected */
+                /* for image upload */
+                $config['upload_path']      = 'assets/resume/';
+                $config['allowed_types']    = 'pdf|doc|docx|odt';
+                $config['file_name']        = 't_res_' . $id;
+                $config['file_ext_tolower'] = TRUE;
+                $config['overwrite']        = TRUE;
+                $config['max_size']         = 102400;
+
+                $this->load->helper('file');
+
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if($this->upload->do_upload('sResume'))
+                {
+                    $uploadData = $this->upload->data();
+                    $data['s_resume'] = $uploadData["orig_name"];
+                }
+                else {
+                    return FALSE;
+                }
+            }
+
+            $this->db->set($data);
+            $this->db->where($where);
+            $this->db->update('tbl_student');
+
+            if($this->db->affected_rows() >=0)
+            {
+                $path = (empty($_FILES['sImg']['name'])) ? $this->session->userdata("sessImg") : base_url("assets/images/student/" . $data['s_img_path']);
+                $array = array(
+                    'sessName'   => $data['s_name'],
+                    'sessImg'    => $path,
+                );
+                $this->session->set_userdata( $array );
+                return TRUE;
+            }
+            return False;
+        }
+        else {
+            /* You are not TPO*/
+            return FALSE;
+        }
+    }
+    /* Edit Profile Student Model Ends */
 
     /*===============================================================================================================*/
 }

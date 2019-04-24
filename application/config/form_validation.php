@@ -265,7 +265,7 @@ $config = array(
 
     /*===============================================================================================================*/
 
-    /* Admin edir profile Registration */
+    /* Admin edit profile Registration */
     'aProfileEdit' => array(
         array(
             'field' => 'aMobileNo',
@@ -278,17 +278,17 @@ $config = array(
         // array(
         //     'field' => 'aImg',
         //     'label' => 'Profile Image',
-        //     'rules' => 'xss_clean|trim|file_check["gif|jpg|png|jpeg",]',
+        //     'rules' => 'xss_clean|trim|file_check["gif|jpg|png|jpeg"]',
         //     'errors' => array(
         //         'regex_match' => "You must enter total 10 number no other character"
         //     ),
         // )
     ),
-    /* Admin edir profile Validation Ends */
+    /* Admin edit profile Validation Ends */
 
     /*===============================================================================================================*/
 
-    /* Admin edir profile Registration */
+    /* Company edit profile Registration */
     'cProfileEdit' => array(
 
         array(
@@ -316,13 +316,12 @@ $config = array(
             ),
         )
     ),
-    /* Admin edir profile Validation Ends */
+    /* Company edit profile Validation Ends */
 
     /*===============================================================================================================*/
 
-    /* Admin edir profile Registration */
+    /* Tpo edit profile Registration */
     'tProfileEdit' => array(
-
         array(
             'field' => 'tMobileNo',
             'label' => 'Contact No',
@@ -348,7 +347,30 @@ $config = array(
             ),
         )
     ),
-    /* Admin edir profile Validation Ends */
+    /* Tpo edit profile Validation Ends */
+
+    /*===============================================================================================================*/
+
+    /* Student edit profile Registration */
+    'sProfileEdit' => array(
+        array(
+            'field' => 'sMobileNo',
+            'label' => 'Contact No',
+            'rules' => 'xss_clean|trim|required|min_length[10]|max_length[10]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        ),
+        array(
+            'field' => 'sEnrollNo',
+            'label' => 'Enrollment No',
+            'rules' => 'xss_clean|trim|required|min_length[12]|max_length[12]|regex_match["^\+?[0-9-]+$"]',
+            'errors' => array(
+                'regex_match' => "You must enter total 10 number no other character"
+            ),
+        ),
+    ),
+    /* Student edit profile Validation Ends */
 
     /*===============================================================================================================*/
 ); 

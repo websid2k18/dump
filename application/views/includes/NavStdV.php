@@ -24,6 +24,7 @@
 						<li class="<?php echo $active == "dashboardComF" ?  "active" :  ""; ?>">
 							<a href="<?= base_url('/placement/dashboardComF')?>"><i class="fas fa-home"></i>&nbsp;&nbsp;Home </a>
 						</li>
+						<li class="<?php echo $active == "profileStdF" ?  "active" :  ""; ?>"><a href="<?= base_url('/placement/profileStdF')?>"> <i class="fas fa-user"></i>&nbsp;&nbsp;Profile</a></li>
 						<li><a href="<?= base_url('/placement/listComF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;List Company</a></li>
 						<li class="<?php echo $active=="aboutUsF" ?  "active":  ""; ?>">
 							<a href="<?= base_url('/placement/aboutUsF')?>"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;About Us</a>

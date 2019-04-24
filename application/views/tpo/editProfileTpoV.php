@@ -81,7 +81,7 @@
                             <li>
                                 <div class="form-group">
                                     <h4 style="font-weight: 600;">Name : </h4>
-                                    <?php echo form_input('tName', set_value('tName', $result[0]->t_name), 'id="cNameId" required="required" placeholder="Company Name" class="form-control col-md-12 col-xs-12"'); ?>
+                                    <?php echo form_input('tName', set_value('tName', $result[0]->t_name), 'id="cNameId" required="required" placeholder="College Name" class="form-control"'); ?>
                                     <ul class="parsley-errors-list filled" id="parsley-id-4">
                                         <li class="parsley-required">
                                             <?php echo form_error('tName'); ?>

@@ -783,22 +783,25 @@ class Placement extends CI_Controller {
     /* Block Unvlock Admin Page */
     public function blockUnblockAdminF($action, $id = NULL, $page='blockUnblockAdminF')
     {
-        $this->checkIsAdminF();
+        if ($this->checkIsAdminF()) {
+            $this->headers($page);
+            $data = array();
 
-        $this->headers($page);
-        $data = array();
+            if ($this->session->userdata('sessMaster') == 'MasterAdmin' && $id != NULL) {
+                $this->load->model('placementM');
+                $data['result'] = $this->placementM->editBlockUnblockAdminM($action, $id);
 
-        if ($this->session->userdata('sessMaster') == 'MasterAdmin' && $id != NULL) {
-            $this->load->model('placementM');
-            $data['result'] = $this->placementM->editBlockUnblockAdminM($action, $id);
+                redirect('placement/profileAdminF/' . $id,'refresh');
+            }
+            else {
+                redirect('placement/profileAdminF/' . $id,'refresh');
+            }
 
-            redirect('placement/profileAdminF/' . $id,'refresh');
+            $this->footers();
         }
         else {
-            redirect('placement/profileAdminF/' . $id,'refresh');
+            $this->logOutF();
         }
-
-        $this->footers();
     }
     /* Block Unvlock Admin Page Ends*/
 
@@ -807,22 +810,26 @@ class Placement extends CI_Controller {
     /* Block Unvlock Company Page */
     public function blockUnblockComF($action, $id = NULL, $page='blockUnblockComF')
     {
-        $this->checkIsAdminF();
 
-        $this->headers($page);
-        $data = array();
+        if ($this->checkIsAdminF()) {
+            $this->headers($page);
+            $data = array();
 
-        if ($this->session->userdata('sessRole') == 'ADMIN' && $id != NULL) {
-            $this->load->model('placementM');
-            $data['result'] = $this->placementM->editBlockUnblockComM($action, $id);
+            if ($this->session->userdata('sessRole') == 'ADMIN' && $id != NULL) {
+                $this->load->model('placementM');
+                $data['result'] = $this->placementM->editBlockUnblockComM($action, $id);
 
-            redirect('placement/profileComF/' . $id,'refresh');
+                redirect('placement/profileComF/' . $id,'refresh');
+            }
+            else {
+                redirect('placement/profileComF/' . $id,'refresh');
+            }
+
+            $this->footers();
         }
         else {
-            redirect('placement/profileComF/' . $id,'refresh');
+            $this->logOutF();
         }
-
-        $this->footers();
     }
     /* Block Unvlock Company Page Ends*/
 
@@ -831,22 +838,25 @@ class Placement extends CI_Controller {
     /* Block Unvlock TPO Page */
     public function blockUnblockTpoF($action, $id = NULL, $page='blockUnblockTpoF')
     {
-        $this->checkIsAdminF();
+        if ($this->checkIsAdminF()) {
+            $this->headers($page);
+            $data = array();
 
-        $this->headers($page);
-        $data = array();
+            if ($this->session->userdata('sessRole') == 'ADMIN' && $id != NULL) {
+                $this->load->model('placementM');
+                $data['result'] = $this->placementM->editBlockUnblockTpoM($action, $id);
 
-        if ($this->session->userdata('sessRole') == 'ADMIN' && $id != NULL) {
-            $this->load->model('placementM');
-            $data['result'] = $this->placementM->editBlockUnblockTpoM($action, $id);
+                redirect('placement/profileTpoF/' . $id,'refresh');
+            }
+            else {
+                redirect('placement/profileTpoF/' . $id,'refresh');
+            }
 
-            redirect('placement/profileTpoF/' . $id,'refresh');
+            $this->footers();
         }
         else {
-            redirect('placement/profileTpoF/' . $id,'refresh');
+            $this->logOutF();
         }
-
-        $this->footers();
     }
     /* Block Unvlock TPO Page Ends */
 
@@ -855,36 +865,40 @@ class Placement extends CI_Controller {
     /* Edit Profile Admin Page */
     public function editProfileAdminF($page='editProfileAdminF')
     {
-        $this->checkIsAdminF();
-        $this->headers($page);
-        $data = array();
-        $id = $this->session->userdata('sessID');
-        $result = FALSE;
+        if ($this->checkIsAdminF()) {
+            $this->headers($page);
+            $data = array();
+            $id = $this->session->userdata('sessID');
+            $result = FALSE;
 
-        $this->load->model('placementM');
-        $data['result'] = $this->placementM->profileAdminM($id);
+            $this->load->model('placementM');
+            $data['result'] = $this->placementM->profileAdminM($id);
 
-        if ($this->form_validation->run('aProfileEdit')) {
-            $result = $this->placementM->editProfileAdminM($id);
+            if ($this->form_validation->run('aProfileEdit')) {
+                $result = $this->placementM->editProfileAdminM($id);
 
-            if ($result == TRUE) {
-                $data['result'] = $this->placementM->profileAdminM($id);
-                redirect('placement/profileAdminF/','refresh');
+                if ($result == TRUE) {
+                    $data['result'] = $this->placementM->profileAdminM($id);
+                    redirect('placement/profileAdminF/','refresh');
+                }
+                else {
+                    if (!empty($_FILES['aImg']['name'])) {
+                        $this->load->library('image_lib');
+                        $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
+                        $data['errorMsg'] .= $this->image_lib->display_errors();
+                    }
+                    $this->load->view('admin/editProfileAdminV', $data);
+                }
             }
             else {
-                if (!empty($_FILES['aImg']['name'])) {
-                    $this->load->library('image_lib');
-                    $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
-                    $data['errorMsg'] .= $this->image_lib->display_errors();
-                }
                 $this->load->view('admin/editProfileAdminV', $data);
             }
+
+            $this->footers();
         }
         else {
-            $this->load->view('admin/editProfileAdminV', $data);
+            $this->logOutF();
         }
-
-        $this->footers();
     }
     /* Edit Profile Admin Page Ends*/
 
@@ -893,37 +907,41 @@ class Placement extends CI_Controller {
     /* Edit Profile Com Page */
     public function editProfileComF($page='editProfileComF')
     {
-        $this->checkIscomF();
-        $this->headers($page);
-        $data = array();
-        $id = $this->session->userdata('sessID');
-        $result = FALSE;
+        if ($this->checkIscomF()) {
+            $this->headers($page);
+            $data = array();
+            $id = $this->session->userdata('sessID');
+            $result = FALSE;
 
-        $this->load->model('placementM');
-        $data['result'] = $this->placementM->profileComM($id);
-        if ($this->form_validation->run('cProfileEdit')) {
-            $result = $this->placementM->editProfileComM($id);
+            $this->load->model('placementM');
+            $data['result'] = $this->placementM->profileComM($id);
+            if ($this->form_validation->run('cProfileEdit')) {
+                $result = $this->placementM->editProfileComM($id);
 
-            if ($result == TRUE) {
-                $data['result'] = $this->placementM->profileComM($id);
-                redirect('placement/profileComF/','refresh');
+                if ($result == TRUE) {
+                    $data['result'] = $this->placementM->profileComM($id);
+                    redirect('placement/profileComF/','refresh');
+                }
+                else {
+                    if (!empty($_FILES['cImg']['name']) || !empty($_FILES['hImg']['name']) )
+                    {
+                        $this->load->library('image_lib');
+                        $this->load->library('upload', $config);
+                        $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
+                        $data['errorMsg'] .= $this->image_lib->display_errors();
+                    }
+                    $this->load->view('company/editProfileComV', $data);
+                }
             }
             else {
-                if (!empty($_FILES['cImg']['name']) || !empty($_FILES['hImg']['name']) )
-                {
-                    $this->load->library('image_lib');
-                    $this->load->library('upload', $config);
-                    $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
-                    $data['errorMsg'] .= $this->image_lib->display_errors();
-                }
+            // echo validation_errors();
                 $this->load->view('company/editProfileComV', $data);
             }
+            $this->footers();
         }
         else {
-            // echo validation_errors();
-            $this->load->view('company/editProfileComV', $data);
+            $this->logOutF();
         }
-        $this->footers();
     }
     /* Edit Profile Com Page Ends*/
 
@@ -932,41 +950,110 @@ class Placement extends CI_Controller {
     /* Edit Profile TPO Page */
     public function editProfileTpoF($page='editProfileTpoF')
     {
-        $this->checkIsTpoF();
-        $this->headers($page);
-        $data = array();
-        $id = $this->session->userdata('sessID');
-        $result = FALSE;
+        if ($this->checkIsTpoF()) {
+            $this->headers($page);
+            $data = array();
+            $id = $this->session->userdata('sessID');
+            $result = FALSE;
 
-        $this->load->model('placementM');
-        $data['result'] = $this->placementM->profileTpoM($id);
-        $data['dept'] = $this->placementM->getListdepM($data['result'][0]->t_departments, 'NOT_IN');
+            $this->load->model('placementM');
+            $data['result'] = $this->placementM->profileTpoM($id);
+            $data['dept'] = $this->placementM->getListdepM($data['result'][0]->t_departments, 'NOT_IN');
 
-        if ($this->form_validation->run('tProfileEdit')) {
-            $result = $this->placementM->editProfileTpoM($id);
+            if ($this->form_validation->run('tProfileEdit')) {
+                $result = $this->placementM->editProfileTpoM($id);
 
-            if ($result == TRUE) {
-                $data['result'] = $this->placementM->profileTpoM($id);
-                redirect('placement/profileTpoF/','refresh');
+                if ($result == TRUE) {
+                    $data['result'] = $this->placementM->profileTpoM($id);
+                    redirect('placement/profileTpoF/','refresh');
+                }
+                else {
+                    if (!empty($_FILES['tImg']['name']) || !empty($_FILES['tpoImg']['name'])) {
+                        $this->load->library('image_lib');
+                        $this->load->library('upload');
+                        $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
+                        $data['errorMsg'] .= $this->image_lib->display_errors();
+                    }
+                    $this->load->view('tpo/editProfileTpoV', $data);
+                }
             }
             else {
-                if (!empty($_FILES['tImg']['name']) || !empty($_FILES['tpoImg']['name'])) {
-                    $this->load->library('image_lib');
-                    $this->load->library('upload');
-                    $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
-                    $data['errorMsg'] .= $this->image_lib->display_errors();
-                }
+            // echo validation_errors();
                 $this->load->view('tpo/editProfileTpoV', $data);
             }
+
+            $this->footers();
         }
         else {
-            // echo validation_errors();
-            $this->load->view('tpo/editProfileTpoV', $data);
+            $this->logOutF();
         }
-
-        $this->footers();
     }
     /* Edit Profile TPO Page Ends*/
+
+    /*===============================================================================================================*/
+
+    /* Edit Profile Std Page */
+    public function editProfileStdF($page='editProfileStdF')
+    {
+        if ($this->checkIsStdF()) {
+            $this->headers($page);
+            $data = array();
+            $id = $this->session->userdata('sessID');
+            $result = FALSE;
+            $this->load->model('placementM');
+            $data['result'] = $this->placementM->profileStdM($id);
+
+            if ($this->form_validation->run('sProfileEdit')) {
+                $result = $this->placementM->editProfileStdM($id);
+                if ($result == TRUE) {
+                    $data['result'] = $this->placementM->profileStdM($id);
+                    redirect('placement/profileStdF/','refresh');
+                }
+                else {
+                    if (!empty($_FILES['sImg']['name']))
+                    {
+                        $this->load->library('image_lib');
+                        /* for image upload */
+                        $config['upload_path']      = 'assets/images/student/';
+                        $config['allowed_types']    = 'jpg|png|jpeg';
+                        $config['file_name']        = 's_img_' . $id;
+                        $config['file_ext_tolower'] = TRUE;
+                        $config['overwrite']        = TRUE;
+                        $config['max_size']         = 2048;
+
+                        $this->load->library('upload',$config);
+                        $data['errorMsg'] = $this->upload->display_errors("Image Must be Less then 2MB <br> Image type must be gif,jpg,png,jpeg <br>");
+                        $data['errorMsg'] .= $this->image_lib->display_errors();
+                    }
+                    if (!empty($_FILES['sResume']['name']))
+                    {
+                        $this->load->library('image_lib');
+                        /* for image upload */
+                        $config['upload_path']      = 'assets/resume/';
+                        $config['allowed_types']    = 'pdf|doc|docx|odt';
+                        $config['file_name']        = 't_res_' . $id;
+                        $config['file_ext_tolower'] = TRUE;
+                        $config['overwrite']        = TRUE;
+                        $config['max_size']         = 102400;
+
+                        $this->load->library('upload',$config);
+                        $data['errorMsg'] = $this->upload->display_errors("File Must be Less then 10MB <br> File type must be pdf,doc,docx,odt <br>");
+                    }
+                    $this->load->view('std/editProfileStdV', $data);
+                }
+            }
+            else {
+                echo "string";
+                echo validation_errors();
+                $this->load->view('std/editProfileStdV', $data);
+            }
+            $this->footers();
+        }
+        else {
+            $this->logOutF();
+        }
+    }
+    /* Edit Profile Std Page Ends*/
 
 }
 
