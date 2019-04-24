@@ -55,6 +55,9 @@ class Placement extends CI_Controller {
         if ($this->input->post('sTpoName')) {
             $sTpoName = $this->input->post('sTpoName');
         }
+        elseif ($this->checkIsTpoF()) {
+            $sTpoName = $this->session->userdata('sessID');
+        }
         else {
             $sTpoName = '0';
         }
@@ -646,15 +649,30 @@ class Placement extends CI_Controller {
     {
         $this->headers($page);
         $data = array();
-        $this->fetch_department($this->session->userdata('sessID'));
         $this->load->model('placementM');
 
-        if ($this->session->userdata('sessRole') == 'TPO' && $this->session->userdata('sessID')) {
-            $college = $this->session->userdata('sessID');
-            $dept = "dept";
-        }
+        $data['resultListTpo'] = $this->placementM->getListTpoM( NULL, "t_ID, t_name, t_departments");
 
-        $data['result'] = $this->placementM->getListStdM();
+        $where = array(
+            's_status' => '1',
+            's_college' => '0', 
+        );
+        $select = array('s_ID');
+
+        if ($this->input->post('sTpoName')) {
+            $where = array(
+                's_status' => '1',
+                's_college' => $this->input->post('sTpoName'),
+            );
+        }
+        if ($this->input->post('sTpoName') || $this->input->post('sTpoName')) {
+            $where = array(
+                's_status' => '1',
+                's_college' => $this->input->post('sTpoName'),
+                's_department' => $this->input->post('sDept'),
+            );
+        }
+        $data['resultListStd'] = $this->placementM->getListStdM($where, $select);
 
         $this->load->view('std/listStdV', $data);
 
@@ -740,16 +758,23 @@ class Placement extends CI_Controller {
     /* Profile Student Page */
     public function profileStdF($id = NULL, $page='profileStdF')
     {
-
         $this->headers($page);
         $data = array();
+
+        if ($this->checkIsStdF()) {
+            $id = $this->session->userdata('sessID');
+        }
+        elseif (!$this->checkIsStdF() != 'TPO' && $id == NULL) {
+            redirect('/placement/listStdF','refresh');
+        }
 
         $this->load->model('placementM');
         $data['result'] = $this->placementM->profileStdM($id);
 
-        $this->load->view('profileStdV', $data);
+        $this->load->view('std/profileStdV', $data);
 
         $this->footers();
+
     }
     /* Profile Student Page Ends */
 

@@ -1,32 +1,34 @@
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_content">
-                <?php echo form_open('/placement/listTpoF', 'id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post"'); ?>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="control-label" for="statusId">Status<span class="required">*</span>
-                        </label>
-                        <select name="status" id="statusId" class="form-control">
-                            <option value="ALL" <?php echo  set_select('status', 'ALL', true); ?>> All </option>
-                            <option value="New" <?php echo  set_select('status', 'New'); ?>> New </option>
-                            <option value="Blocked" <?php echo  set_select('status', 'Blocked'); ?>> Blocked </option>
-                            <option value="Unblocked" <?php echo  set_select('status', 'Unblocked'); ?>> Unblocked </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <div class="">
-                            <label class="control-label" for="sNameId">&nbsp;</label>
-                            <button class="btn btn-success form-control" type="submit">Search</button>
+        <?php if ($con->checkIsAdminF()) {  ?>
+            <div class="x_panel">
+                <div class="x_content">
+                    <?php echo form_open('/placement/listTpoF', 'id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post"'); ?>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="statusId">Status<span class="required">*</span>
+                            </label>
+                            <select name="status" id="statusId" class="form-control">
+                                <option value="ALL" <?php echo  set_select('status', 'ALL', true); ?>> All </option>
+                                <option value="New" <?php echo  set_select('status', 'New'); ?>> New </option>
+                                <option value="Blocked" <?php echo  set_select('status', 'Blocked'); ?>> Blocked </option>
+                                <option value="Unblocked" <?php echo  set_select('status', 'Unblocked'); ?>> Unblocked </option>
+                            </select>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <div class="">
+                                <label class="control-label" for="sNameId">&nbsp;</label>
+                                <button class="btn btn-success form-control" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <?php echo form_close(); ?>
                 </div>
-                <?php echo form_close(); ?>
             </div>
-        </div>
+        <?php } ?>
         <div class="x_panel">
             <div class="x_title">
                 <h2>College List</h2>

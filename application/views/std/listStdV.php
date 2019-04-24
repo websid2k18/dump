@@ -1,78 +1,76 @@
 <!-- page content -->
 <div class="right_col" role="main">
     <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            <div class="x_content">
-                <?php echo form_open('/placement/listStdF', 'id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post"'); ?>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label class="control-label" for="statusId">Status<span class="required">*</span></label>
-                        <select name="status" id="statusId" class="form-control">
-                            <option value="ALL" <?php echo  set_select('status', 'ALL', true); ?>> All </option>
-                            <option value="New" <?php echo  set_select('status', 'New'); ?>> New </option>
-                            <option value="Blocked" <?php echo  set_select('status', 'Blocked'); ?>> Blocked </option>
-                            <option value="Unblocked" <?php echo  set_select('status', 'Unblocked'); ?>> Unblocked </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <div class="">
-                            <label class="control-label" for="sNameId">&nbsp;</label>
-                            <button class="btn btn-success form-control" type="submit">Search</button>
+        <?php if ($con->checkIsTpoF() || $con->checkIsComF()) {  ?>
+            <div class="x_panel">
+                <div class="x_content">
+                    <?php echo form_open('/placement/listStdF', 'id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post"'); ?>
+                    <?php if ($con->checkIsTpoF()) { ?>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="statusId">Status</label>
+                                <select name="status" id="statusId" class="form-control">
+                                    <option value="ALL" <?php echo  set_select('status', 'ALL', true); ?>> All </option>
+                                    <option value="New" <?php echo  set_select('status', 'New'); ?>> New </option>
+                                    <option value="Blocked" <?php echo  set_select('status', 'Blocked'); ?>> Blocked </option>
+                                    <option value="Unblocked" <?php echo  set_select('status', 'Unblocked'); ?>> Unblocked </option>
+                                </select>
+                            </div>
+                        </div>
+                    <?php }
+                    if ($con->checkIsComF()) { ?>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label" for="sTpoNameId">Collage Name</label>
+                                <select name="sTpoName" id="sTpoNameId" onchange="dept(this.value);" required="required" placeholder="Collage Name" class="form-control">
+                                    <option value="" selected="select"> Select Collage</option>
+                                    <?php foreach ($resultListTpo as $key => $value) { ?>
+                                        <option value="<?php echo $value->t_ID; ?>" <?php echo  set_select('sTpoName', $value->t_ID); ?>><?php echo $value->t_name; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                    <?php } ?>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="control-label" for="statusId">Department</label>
+                            <select name="sDept" id="sDeptID" required="required" placeholder="Collage Name" class="form-control">
+                                <option value="" selected="select"> Select Department</option>
+                                <?php $con->fetch_department(); ?>
+                            </select>
+                            <ul class="parsley-errors-list filled" id="parsley-id-4">
+                                <li class="parsley-required">
+                                    <?php echo form_error('sDept'); ?>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <div class="">
+                                <label class="control-label" for="sNameId">&nbsp;</label>
+                                <button class="btn btn-success form-control"  type="submit">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <?php echo form_close(); ?>
                 </div>
-                <?php echo form_close(); ?>
             </div>
-        </div>
+        <?php } ?>
         <div class="x_panel">
             <div class="x_title">
-                <h2>College List</h2>
+                <h2>Student List</h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <div id="exportBtn"></div>
                 </ul>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <div class="col-md-12 no-padding">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sNameId">Collage Name <span class="required">*</span>
-                        </label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select name="sTpoName" id="sTpoNameId" onchange="dept(this.value);" required="required" placeholder="Collage Name" class="form-control col-md-7 col-xs-12">
-                                <option value="" selected="select"> Select Collage</option>
-                                <?php foreach ($result as $key => $value) { ?>
-                                    <option value="<?php echo $value->t_ID; ?>" <?php echo  set_select('sTpoName', $value->t_ID); ?>><?php echo $value->t_name; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <ul class="parsley-errors-list filled" id="parsley-id-4">
-                            <li class="parsley-required">
-                                <?php echo form_error('sTpoName'); ?>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-12 no-padding">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="sDeptID">Department <span class="required">*</span></label>
-                        <div class="col-md-9 col-sm-9 col-xs-12">
-                            <select name="sDept" id="sDeptID" required="required" placeholder="Collage Name" class="form-control col-md-7 col-xs-12">
-                                <option selected="select"> Select Department</option>
-                                <?php foreach ($result1 as $key => $value) { ?>
-                                    <option value="<?php echo $value->t_ID; ?>" <?php echo  set_select('sTpoName', $value->t_ID); ?>><?php echo $value->t_name; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
                 <div class="table-responsive">
                     <table class="table table-striped" id="MyTable">
                         <thead>
                             <tr class="headings">
-                                <th class="column-title"> Logo</th>
+                                <th class="column-title"> Image</th>
                                 <th class="column-title"> Name </th>
                                 <th class="column-title"> Contact Number </th>
                                 <th class="column-title"> Prof. Image </th>
@@ -87,8 +85,10 @@
                         <tbody>
                             <?php
                             $odd = "odd";
-
-                            foreach ($result as $key) {
+                            echo "<pre>";
+                            print_r ($resultListStd);
+                            echo "</pre>";
+                            foreach ($resultListStd as $key) {
                                 $s_img_path = (empty($key->s_img_path)) ? base_url("assets/images/stdstudent/user.png") : base_url("assets/images/stdstudent/" . $key->s_img_path);
 
                                 $odd = ($odd == 'odd') ? "even" : "odd" ; ?>
@@ -115,3 +115,15 @@
     <div class="clearfix"></div>
 </div>
 <!-- /page content -->
+<script>
+    function dept(id) {
+        $.ajax({
+            type:'POST',
+            url:'<?= base_url(); ?>Placement/fetch_department',
+            data:{'sTpoName': id},
+            success:function(data){
+                $('#sDeptID').html(data);
+            }
+        });
+    };
+</script>

@@ -31,18 +31,9 @@
                             </ul>
                         </li>
 
-                        <li><a><i class="fas fa-university"></i>&nbsp;&nbsp;College Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
-                            <ul class="nav child_menu">
-                                <li><a href="<?= base_url('/placement/listTpoF')?>"><i class="fas fa-university"></i>&nbsp;&nbsp;List College</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="<?php echo ($active=="RegComF" && $active=="listComF") ? "active" :  ""; ?>">
-                            <a><i class="fas fa-industry"></i>&nbsp;&nbsp;Company Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
-                            <ul class="nav child_menu">
-                                <li><a href="<?= base_url('/placement/listComF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;List Company</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="<?= base_url('/placement/liststdF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;List Students</a></li>
+                        <li><a href="<?= base_url('/placement/listTpoF')?>"><i class="fas fa-university"></i>&nbsp;&nbsp;List College</a></li>
+                        <li><a href="<?= base_url('/placement/listComF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;List Company</a></li>
 
                         <li class="<?php echo $active=="aboutUsF" ?  "active":  ""; ?>">
                             <a href="<?= base_url('/placement/aboutUsF')?>"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;About Us</a>

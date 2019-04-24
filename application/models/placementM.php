@@ -531,7 +531,7 @@ class PlacementM extends CI_Model {
             }
         }
 
-        if ($this->checkIsTpoF()) {
+        if ($this->checkIsTpoF() || $this->checkIsComF()) {
             $where = array(
                 'c_status' => "1",
             );
@@ -580,7 +580,7 @@ class PlacementM extends CI_Model {
             }
         }
 
-        if ($this->checkIsTpoF()) {
+        if ($this->checkIsTpoF() || $this->checkIsComF()) {
             $where = array(
                 't_status' => "1",
             );
@@ -629,24 +629,16 @@ class PlacementM extends CI_Model {
 
 
     /* List Student */
-    public function getListStdM($collage = NULL, $department = NULL)
+    public function getListStdM($where = array(), $select = '')
     {
-        $where = array(
-            's_college' => $collage,
-            's_department' => $department
-        );
 
-        $this->db->select('*');
+        $this->db->select($select);
         $this->db->from('tbl_student');
-        $this->db->where_in($where);
+        $this->db->order_by('tbl_student.S_ID', 'DESC');
+        $this->db->where($where);
         $query = $this->db->get();
-
-        // echo "<pre>";
-        // print_r ($query->result());
-        // echo "</pre>";
-
-        if($query->num_rows() > 0)
-        {
+        
+        if ($query->num_rows() > 0) {
             return $query->result();
         }
         return FALSE;
@@ -753,22 +745,25 @@ class PlacementM extends CI_Model {
     /* Profile Company Model */
     public function profileStdM($id)
     {
-        // $where = array(
-        //     'c_ID' => $id,
-        // );
+        $where = array(
+            's_ID' => $id,
+        );
 
-        // $this->db->select('tbl_company.*, tbl_admin.a_ID, tbl_admin.a_name, tbl_admin.a_profile_img');
-        // $this->db->from('tbl_company');
-        // $this->db->where($where);
-        // $this->db->join('tbl_admin', 'tbl_admin.a_ID = tbl_company.c_approved_by_admin_ID', 'left');
+        $this->db->select('tbl_student.*, tbl_tpo.t_ID, tbl_tpo.t_name, tbl_tpo.t_img');
+        $this->db->from('tbl_student');
+        $this->db->where($where);
+        $this->db->join('tbl_tpo', 'tbl_tpo.t_ID = tbl_student.s_created_by', 'left');
 
-        // $query = $this->db->get();
+        $query = $this->db->get();
+        $data = $query->result();
 
-        // if($query->num_rows() > 0)
-        // {
-        //     return $query->result();
-        // }
-        // return FALSE;
+        $data[1] = $this->getListdepM($data[0]->s_department,"IN");
+
+        if($query->num_rows() > 0)
+        {
+            return $data;
+        }
+        return FALSE;
     }
     /* Profile Company Model Ends*/
 
@@ -1095,7 +1090,7 @@ class PlacementM extends CI_Model {
     /* Edit Profile Company Model Ends */
 
     /*===============================================================================================================*/
-    
+
     /* Edit Profile TPO Model */
     public function editProfileTpoM($id)
     {
@@ -1176,7 +1171,7 @@ class PlacementM extends CI_Model {
                     return FALSE;
                 }
             }
-            
+
             $this->db->set($data);
             $this->db->where($where);
             $this->db->update('tbl_tpo');

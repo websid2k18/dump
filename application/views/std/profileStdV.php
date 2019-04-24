@@ -1,10 +1,10 @@
-<!-- page content -->
+x<!-- page content -->
 <div class="right_col" role="main">
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>College Profile</h2>
+                    <h2>Student Profile</h2>
                     <ul class="nav navbar-right panel_toolbox">
 
                         <?php 
@@ -19,7 +19,7 @@
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#UnblockModal"><i class="fa fa-edit m-right-xs"></i> Unblock</button>
                             <?php }
                         }
-                        elseif ( $this->session->userdata('sessRole') == 'TPO' && $result[0]->t_status == 1 && $this->session->userdata('sessID') == $result[0]->t_ID) {
+                        elseif ( $this->session->userdata('sessRole') == 'STUDENT' && $result[0]->t_status == 1 && $this->session->userdata('sessID') == $result[0]->t_ID) {
                             ?>
                             <button type="button" class="btn btn-info" onclick="location.href='<?php echo base_url('/placement/editProfileTpoF/'); ?>'"><i class="fa fa-edit m-right-xs"></i> Edit Profile</button>
                         <?php } ?>
