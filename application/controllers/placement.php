@@ -670,7 +670,11 @@ class Placement extends CI_Controller {
 
         $data['resultListTpo'] = $this->placementM->getListTpoM( NULL, "t_ID, t_name, t_departments");
 
-        $where = array( );
+        $where = array(
+            's_status' => '1',
+            's_college' => '0',
+            's_department' => '0',
+        );
 
         $select = array('*');
         if ($this->checkIsComF()) {
@@ -685,7 +689,10 @@ class Placement extends CI_Controller {
                         's_status'     => '1',
                         's_college'    => $this->input->post('sTpoName'),
                     );
-                    if ($this->input->post('sDept') != 'all') {
+                    if ($this->input->post('sDept') == 'all') {
+                        unset($where['s_department']);
+                    }
+                    else {
                         $where['s_department'] = $this->input->post('sDept');
                     }
                 }
@@ -702,14 +709,17 @@ class Placement extends CI_Controller {
             else {
                 if ($this->input->post('status') || $this->input->post('sDept')) {
                     $where['s_college'] = $this->session->userdata('sessID');
-                    if ($this->input->post('sDept') != 'all') {
+                    if ($this->input->post('sDept') == 'all') {
+                        unset($where['s_department']);
+                    }
+                    else {
                         $where['s_department'] = $this->input->post('sDept');
                     }
-                    if ($this->input->post('status') == 'unblock') { $where['s_status'] = '1'; }
-                    if ($this->input->post('status') == 'block')   { $where['s_status'] = '0'; }
-                    if ($this->input->post('status') == 'new')     { $where['s_status'] = '0'; $where['s_created_by'] = NULL; }
-                    if ($this->input->post('status') == 'all')     { $where['s_status in (0,1)'] = NULL; }
                 }
+                if ($this->input->post('status') == 'unblock') { $where['s_status'] = '1'; }
+                if ($this->input->post('status') == 'block')   { $where['s_status'] = '0'; }
+                if ($this->input->post('status') == 'new')     { $where['s_status'] = '0'; $where['s_created_by'] = NULL; }
+                if ($this->input->post('status') == 'all')     { unset($where['s_status']); $where['s_status in (0,1)'] = NULL; }
             }
         }
 
@@ -902,6 +912,33 @@ class Placement extends CI_Controller {
         }
     }
     /* Block Unvlock TPO Page Ends */
+
+    /*===============================================================================================================*/
+
+    /* Block Unvlock Student Page */
+    public function blockUnblockStdF($action, $id = NULL, $page='blockUnblockStdF')
+    {
+        if ($this->checkIsTpoF()) {
+            $this->headers($page);
+            $data = array();
+
+            if ($this->checkIsTpoF() && $id != NULL) {
+                $this->load->model('placementM');
+                $data['result'] = $this->placementM->editBlockUnblockStdM($action, $id);
+
+                redirect('placement/profileStdF/' . $id,'refresh');
+            }
+            else {
+                redirect('placement/profileStdF/' . $id,'refresh');
+            }
+
+            $this->footers();
+        }
+        else {
+            $this->logOutF();
+        }
+    }
+    /* Block Unvlock Student Page Ends */
 
     /*===============================================================================================================*/
 

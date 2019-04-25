@@ -876,7 +876,7 @@ class PlacementM extends CI_Model {
 
     /*===============================================================================================================*/
 
-    /* Block Unvlock TPO Model */
+    /* Block Unvlock student Model */
     public function editBlockUnblockStdM($action, $id)
     {
         $where = array(
@@ -908,7 +908,7 @@ class PlacementM extends CI_Model {
 
         return FALSE;
     }
-    /* Block Unvlock TPO Model Ends */
+    /* Block Unvlock student Model Ends */
 
     /*===============================================================================================================*/
 

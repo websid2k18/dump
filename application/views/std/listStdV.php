@@ -25,9 +25,6 @@
                                 <select name="sTpoName" id="sTpoNameId" onchange="dept(this.value);" required="required" placeholder="Collage Name" class="form-control">
                                     <option value="" selected="select"> Select Collage</option>
                                     <?php
-                                    echo "<pre>";
-                                    print_r ($resultListTpo);
-                                    echo "</pre>";
                                     foreach ($resultListTpo as $key => $value) { ?>
                                         <option value="<?php echo $value->t_ID; ?>" <?php echo  set_select('sTpoName', $value->t_ID); ?>><?php echo $value->t_name; ?></option>
                                     <?php } ?>

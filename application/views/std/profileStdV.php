@@ -59,7 +59,7 @@
                                 </li>
                                 <hr>
                                 <li>
-                                    <h4 style="font-weight: 600;">College Updated on :</h4>
+                                    <h4 style="font-weight: 600;">Student Updated on :</h4>
                                     <p><?php echo $result[0]->s_update_date ?></p>
                                 </li>
                                 <hr>
@@ -263,16 +263,16 @@
                     <div class="modal-content">
                         <div class="modal-header label-danger" style="color: #fff;">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Block College</h4>
+                            <h4 class="modal-title" id="myModalLabel">Block Student</h4>
                         </div>
                         <div class="modal-body">
                             <div style="font-size: 60px;" class="danger text-center text-danger"><i class="far fa-times-circle"></i></div>
-                            <h4>Are you sure you want to Block this College?</h4>
-                            <p>Blocked College will not be able to login on this site.</p>
+                            <h4>Are you sure you want to Block this Student?</h4>
+                            <p>Blocked Student will not be able to login on this site.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                            <a href="<?php echo base_url('/placement/blockUnblockTpoF/block/' . $result[0]->t_ID); ?>" title="Block Admin" class="btn btn-danger">Yse</a>
+                            <a href="<?php echo base_url('/placement/blockUnblockStdF/block/' . $result[0]->s_ID); ?>" title="Block Admin" class="btn btn-danger">Yse</a>
                         </div>
                     </div>
                 </div>
@@ -282,16 +282,16 @@
                     <div class="modal-content">
                         <div class="modal-header label-success" style="color: #fff;">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Block College</h4>
+                            <h4 class="modal-title" id="myModalLabel">Block Student</h4>
                         </div>
                         <div class="modal-body">
                             <div style="font-size: 60px;" class="success text-center text-success"><i class="far fa-times-circle"></i></div>
-                            <h4>Are you sure you want to Unblock this College?</h4>
-                            <p>Unblocked College will be able to login and use this site.</p>
+                            <h4>Are you sure you want to Unblock this Student?</h4>
+                            <p>Unblocked Student will be able to login and use this site.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                            <a href="<?php echo base_url('/placement/blockUnblockTpoF/unblock/' . $result[0]->t_ID); ?>" title="Block Admin" class="btn btn-success">Yse</a>
+                            <a href="<?php echo base_url('/placement/blockUnblockStdF/unblock/' . $result[0]->s_ID); ?>" title="Block Admin" class="btn btn-success">Yse</a>
                         </div>
                     </div>
                 </div>
@@ -301,16 +301,16 @@
                     <div class="modal-content">
                         <div class="modal-header label-success" style="color: #fff;">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Approve College</h4>
+                            <h4 class="modal-title" id="myModalLabel">Approve Student</h4>
                         </div>
                         <div class="modal-body">
                             <div style="font-size: 60px;" class="success text-center text-success"><i class="far fa-times-circle"></i></div>
-                            <h4>Are you sure you want to Approve this College?</h4>
-                            <p>Approve College will be able to login and use this site.</p>
+                            <h4>Are you sure you want to Approve this Student?</h4>
+                            <p>Approve Student will be able to login and use this site.</p>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                            <a href="<?php echo base_url('/placement/blockUnblockTpoF/unblock/' . $result[0]->t_ID); ?>" title="Block Admin" class="btn btn-success">Yse</a>
+                            <a href="<?php echo base_url('/placement/blockUnblockStdF/unblock/' . $result[0]->s_ID); ?>" title="Block Admin" class="btn btn-success">Yse</a>
                         </div>
                     </div>
                 </div>
