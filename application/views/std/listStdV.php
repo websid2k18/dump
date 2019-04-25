@@ -10,10 +10,10 @@
                             <div class="form-group">
                                 <label class="control-label" for="statusId">Status</label>
                                 <select name="status" id="statusId" class="form-control">
-                                    <option value="ALL" <?php echo  set_select('status', 'ALL', true); ?>> All </option>
-                                    <option value="New" <?php echo  set_select('status', 'New'); ?>> New </option>
-                                    <option value="Blocked" <?php echo  set_select('status', 'Blocked'); ?>> Blocked </option>
-                                    <option value="Unblocked" <?php echo  set_select('status', 'Unblocked'); ?>> Unblocked </option>
+                                    <option value="all" <?php echo  set_select('status', 'all', true); ?>> All </option>
+                                    <option value="new" <?php echo  set_select('status', 'new'); ?>> New </option>
+                                    <option value="block" <?php echo  set_select('status', 'block'); ?>> Blocked </option>
+                                    <option value="unblock" <?php echo  set_select('status', 'unblock'); ?>> Unblocked </option>
                                 </select>
                             </div>
                         </div>
@@ -24,7 +24,11 @@
                                 <label class="control-label" for="sTpoNameId">Collage Name</label>
                                 <select name="sTpoName" id="sTpoNameId" onchange="dept(this.value);" required="required" placeholder="Collage Name" class="form-control">
                                     <option value="" selected="select"> Select Collage</option>
-                                    <?php foreach ($resultListTpo as $key => $value) { ?>
+                                    <?php
+                                    echo "<pre>";
+                                    print_r ($resultListTpo);
+                                    echo "</pre>";
+                                    foreach ($resultListTpo as $key => $value) { ?>
                                         <option value="<?php echo $value->t_ID; ?>" <?php echo  set_select('sTpoName', $value->t_ID); ?>><?php echo $value->t_name; ?></option>
                                     <?php } ?>
                                 </select>
@@ -34,9 +38,10 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label" for="statusId">Department</label>
-                            <select name="sDept" id="sDeptID" required="required" placeholder="Collage Name" class="form-control">
-                                <option value="" selected="select"> Select Department</option>
+                            <select name="sDept" id="sDeptID" placeholder="Collage Name" class="form-control">
                                 <?php $con->fetch_department(); ?>
+                                <option value="all">ALL</option>}
+                                option
                             </select>
                             <ul class="parsley-errors-list filled" id="parsley-id-4">
                                 <li class="parsley-required">
@@ -73,11 +78,8 @@
                                 <th class="column-title"> Image</th>
                                 <th class="column-title"> Name </th>
                                 <th class="column-title"> Contact Number </th>
-                                <th class="column-title"> Prof. Image </th>
-                                <th class="column-title"> Prof. name </th>
                                 <th class="column-title"> Email </th>
-                                <th class="column-title"> Prof. Contact Number </th>
-                                <th class="column-title"> Website </th>
+                                <th class="column-title"> Enrollment No </th>
                                 <th class="column-title"> Action </th>
                             </tr>
                         </thead>
@@ -85,27 +87,23 @@
                         <tbody>
                             <?php
                             $odd = "odd";
-                            echo "<pre>";
-                            print_r ($resultListStd);
-                            echo "</pre>";
-                            foreach ($resultListStd as $key) {
-                                $s_img_path = (empty($key->s_img_path)) ? base_url("assets/images/stdstudent/user.png") : base_url("assets/images/stdstudent/" . $key->s_img_path);
+                            if (!empty($resultListStd)) {
+                                foreach ($resultListStd as $key) {
+                                    $s_img_path = (empty($key->s_img_path)) ? base_url("assets/images/student/user.png") : base_url("assets/images/student/" . $key->s_img_path);
 
-                                $odd = ($odd == 'odd') ? "even" : "odd" ; ?>
+                                    $odd = ($odd == 'odd') ? "even" : "odd" ; ?>
 
-                                <tr class="pointer text-center <?php echo $odd . " "; echo ($key->t_status == '0') ? "danger" : "" ?>">
-                                    <td><img src="<?php echo $t_img ?>" alt="College Logo" class="hw-40"></td>
-                                    <td><?php echo $key->t_name ?></td>
-                                    <td><?php echo $key->t_contact_number ?></td>
-                                    <td><img src="<?php echo $t_tpo_img ?>" alt="Profile Image" class="img-circle hw-40"></td>
-                                    <td><?php echo $key->t_tpo_name ?></td>
-                                    <td><?php echo $key->t_email ?></td>
-                                    <td><?php echo $key->t_tpo_contact_number ?></td>
-                                    <td><a href="https://<?php echo $key->t_website ?>"><?php echo $key->t_website ?></a></td>
-                                    <td><a href="<?php echo base_url('/placement/profileTpoF/' . $key->t_ID); ?>" title="View Profile" class="btn btn-info">Info</a></td>
-                                </tr>
+                                    <tr class="pointer text-center <?php echo $odd . " "; echo ($key->s_status == '0') ? "danger" : "" ?>">
+                                        <td><img src="<?php echo $s_img_path ?>" alt="Student Image" class="hw-40"></td>
+                                        <td><?php echo $key->s_name ?></td>
+                                        <td><?php echo $key->s_contact_no ?></td>
+                                        <td><?php echo $key->s_email ?></td>
+                                        <td><?php echo $key->s_enroll_no ?></td>
+                                        <td><a href="<?php echo base_url('/placement/profileStdF/' . $key->s_ID); ?>" title="View Profile" class="btn btn-info">Info</a></td>
+                                    </tr>
 
-                            <?php } ?>
+                                <?php }
+                            } ?>
                         </tbody>
                     </table>
                 </div>

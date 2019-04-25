@@ -170,6 +170,20 @@ class Placement extends CI_Controller {
 
     /*===============================================================================================================*/
 
+    /* Check is Admin For all User */
+    public function checkIsUser() 
+    {
+        if ($this->session->userdata('sessID') ) {
+            return TRUE;
+        }
+        else {
+            $this->logOutF();
+        }
+    }
+    /* Check is Admin For all User Ends */
+
+    /*===============================================================================================================*/
+
     /* Log Out For all User */
     public function logOutF() 
     {
@@ -614,6 +628,7 @@ class Placement extends CI_Controller {
     /* List Company Page */
     public function listComF($page='listComF')
     {
+        $this->checkIsUser();
         $this->headers($page);
         $data = array();
 
@@ -631,6 +646,7 @@ class Placement extends CI_Controller {
     /* List TPO Page */
     public function listTpoF($page='listTpoF')
     {
+        $this->checkIsUser();
         $this->headers($page);
         $data = array();
 
@@ -645,33 +661,58 @@ class Placement extends CI_Controller {
     /*===============================================================================================================*/
 
     /* List Students Page */
-    public function listStdF($page='listStdF')
+    public function listStdF($status = NULL, $college = NULL, $dept = NULL, $page='listStdF')
     {
+        $this->checkIsUser();
         $this->headers($page);
         $data = array();
         $this->load->model('placementM');
 
         $data['resultListTpo'] = $this->placementM->getListTpoM( NULL, "t_ID, t_name, t_departments");
 
-        $where = array(
-            's_status' => '1',
-            's_college' => '0', 
-        );
-        $select = array('s_ID');
+        $where = array( );
 
-        if ($this->input->post('sTpoName')) {
-            $where = array(
-                's_status' => '1',
-                's_college' => $this->input->post('sTpoName'),
-            );
+        $select = array('*');
+        if ($this->checkIsComF()) {
+            if ($status != NULL || $college != NULL || $dept != NULL) {
+                if ($status  == 'unblock') { $where['s_status'] = '1'; }
+                if ($college != NULL)      { $where['s_college'] = $college; }
+                if ($dept    != NULL)      { $where['s_department'] = $dept; }
+            }
+            else {
+                if ($this->input->post('sTpoName') || $this->input->post('sDept')) {
+                    $where = array(
+                        's_status'     => '1',
+                        's_college'    => $this->input->post('sTpoName'),
+                    );
+                    if ($this->input->post('sDept') != 'all') {
+                        $where['s_department'] = $this->input->post('sDept');
+                    }
+                }
+            }
         }
-        if ($this->input->post('sTpoName') || $this->input->post('sTpoName')) {
-            $where = array(
-                's_status' => '1',
-                's_college' => $this->input->post('sTpoName'),
-                's_department' => $this->input->post('sDept'),
-            );
+        if ($this->checkIsTpoF()) {
+            if ($status != NULL || $college != NULL || $dept != NULL) {
+                if ($status  == 'unblock') { $where['s_status'] = '1'; }
+                if ($status  == 'block')   { $where['s_status'] = '0'; }
+                if ($status  == 'new')     { $where['s_status'] = '0'; $where['s_created_by'] = '0'; }
+                if ($college != NULL)      { $where['s_college'] = $college; }
+                if ($dept    != NULL)      { $where['s_department'] = $dept; }
+            }
+            else {
+                if ($this->input->post('status') || $this->input->post('sDept')) {
+                    $where['s_college'] = $this->session->userdata('sessID');
+                    if ($this->input->post('sDept') != 'all') {
+                        $where['s_department'] = $this->input->post('sDept');
+                    }
+                    if ($this->input->post('status') == 'unblock') { $where['s_status'] = '1'; }
+                    if ($this->input->post('status') == 'block')   { $where['s_status'] = '0'; }
+                    if ($this->input->post('status') == 'new')     { $where['s_status'] = '0'; $where['s_created_by'] = NULL; }
+                    if ($this->input->post('status') == 'all')     { $where['s_status in (0,1)'] = NULL; }
+                }
+            }
         }
+
         $data['resultListStd'] = $this->placementM->getListStdM($where, $select);
 
         $this->load->view('std/listStdV', $data);
@@ -685,6 +726,7 @@ class Placement extends CI_Controller {
     /* Profile Admin Page */
     public function profileAdminF($id = NULL, $page='profileAdminF')
     {
+        $this->checkIsUser();
         $this->headers($page);
         $data = array();
 
@@ -709,6 +751,7 @@ class Placement extends CI_Controller {
     /* Profile Company Page */
     public function profileComF($id = NULL, $page='profileComF')
     {
+        $this->checkIsUser();
         $this->headers($page);
         $data = array();
 
@@ -733,7 +776,7 @@ class Placement extends CI_Controller {
     /* Profile TPO Page */
     public function profileTpoF($id = NULL, $page='profileTpoF')
     {
-
+        $this->checkIsUser();
         $this->headers($page);
         $data = array();
 
@@ -758,13 +801,14 @@ class Placement extends CI_Controller {
     /* Profile Student Page */
     public function profileStdF($id = NULL, $page='profileStdF')
     {
+        $this->checkIsUser();
         $this->headers($page);
         $data = array();
 
-        if ($this->checkIsStdF()) {
+        if ($this->checkIsStdF() && $id == NULL) {
             $id = $this->session->userdata('sessID');
         }
-        elseif (!$this->checkIsStdF() != 'TPO' && $id == NULL) {
+        elseif ($this->checkIsStdF() == FALSE && $id == NULL) {
             redirect('/placement/listStdF','refresh');
         }
 
@@ -774,7 +818,6 @@ class Placement extends CI_Controller {
         $this->load->view('std/profileStdV', $data);
 
         $this->footers();
-
     }
     /* Profile Student Page Ends */
 

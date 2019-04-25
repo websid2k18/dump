@@ -11,7 +11,7 @@
                             if( $result[0]->s_status == 1) { ?>
                                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#BlockModal"><i class="fa fa-edit m-right-xs"></i> Block</button>
                             <?php }
-                            elseif( $result[0]->s_status == 0  && $result[0]->s_approved_by_admin_ID == NULL ) { ?>
+                            elseif( $result[0]->s_status == 0  && $result[0]->s_created_by == NULL ) { ?>
                                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#ApproveModal"><i class="fa fa-edit m-right-xs"></i> Approve</button>
                             <?php }
                             elseif( $result[0]->s_status == 0) { ?>
@@ -26,7 +26,7 @@
                 </div>
                 <?php 
                 $s_img_path = (empty($result[0]->s_img_path)) ? base_url("assets/images/student/user.png") : base_url("assets/images/student/" . $result[0]->s_img_path) ;
-                $t_img = (empty($result[0]->t_img)) ? base_url("assets/images/student/user.png") : base_url("assets/images/student/" . $result[0]->t_img) ; ?>
+                $t_img = (empty($result[0]->t_img)) ? base_url("assets/images/tpo/user.png") : base_url("assets/images/tpo/" . $result[0]->t_img) ; ?>
                 <div class="x_content">
                     <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
                         <div class="profile_img">
@@ -54,35 +54,15 @@
                             <?php 
                             if( ($con->checkIsTpoF() || $con->checkIsAdminF()) && $this->session->userdata('sessID') ) { ?>
                                 <li>
-                                    <h4 style="font-weight: 600;">College Register on :</h4>
-                                    <p><?php echo $result[0]->t_create_date ?></p>
+                                    <h4 style="font-weight: 600;">Student Register on :</h4>
+                                    <p><?php echo $result[0]->s_create_date ?></p>
                                 </li>
                                 <hr>
                                 <li>
                                     <h4 style="font-weight: 600;">College Updated on :</h4>
-                                    <p><?php echo $result[0]->t_update_date ?></p>
+                                    <p><?php echo $result[0]->s_update_date ?></p>
                                 </li>
                                 <hr>
-                                <?php if($result[0]->t_status == 1) { ?>
-                                    <li>
-                                        <h4 style="font-weight: 600;">Approved by admin :</h4>
-                                        <a href="<?php echo base_url('/placement/profileAdminF/' . $result[0]->a_ID); ?>" class="user-profile">
-                                            <img src="<?php echo base_url('assets/images/admin/' . $result[0]->a_profile_img); ?>" alt="">
-                                            <?php echo $result[0]->a_name ?>
-                                        </a>
-                                    </li>
-                                    <hr>
-                                <?php }
-                                else { ?>
-                                    <li>
-                                        <h4 style="font-weight: 600;">Blocked by admin :</h4>
-                                        <a href="<?php echo base_url('/placement/profileAdminF/' . $result[0]->a_ID); ?>" class="user-profile">
-                                            <img src="<?php echo base_url('assets/images/admin/' . $result[0]->a_profile_img); ?>" alt="">
-                                            <?php echo $result[0]->a_name ?>
-                                        </a>
-                                    </li>
-                                    <hr>
-                                <?php } ?>
                             <?php } ?>
 
                         </ul>
@@ -102,9 +82,9 @@
                         </div>
                         <div class="" role="tabpanel" data-example-id="togglable-tabs">
                             <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="#EDUCATION" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">EDUCATION</a>
+                                <li role="presentation" class="active"><a href="#COLLEGEDETAIL" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">COLLEGE DETAIL</a>
                                 </li>
-                                <li role="presentation" class=""><a href="#COLLEGEDETAIL" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">COLLEGE DETAIL</a>
+                                <li role="presentation" class=""><a href="#EDUCATION" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">EDUCATION</a>
                                 </li>
                                 <li role="presentation" class=""><a href="#PROJECT" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">PROJECT</a>
                                 </li>

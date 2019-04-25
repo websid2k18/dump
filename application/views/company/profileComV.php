@@ -95,7 +95,7 @@
 
                         <div class="profile_title">
                             <div class="col-md-6">
-                                <h3><?php echo $result[0]->a_name ?></h3>
+                                <h3><?php echo $result[0]->c_name ?></h3>
                             </div>
                             <div class="col-md-6">
                             </div>

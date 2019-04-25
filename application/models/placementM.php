@@ -631,7 +631,6 @@ class PlacementM extends CI_Model {
     /* List Student */
     public function getListStdM($where = array(), $select = '')
     {
-
         $this->db->select($select);
         $this->db->from('tbl_student');
         $this->db->order_by('tbl_student.S_ID', 'DESC');
@@ -887,14 +886,14 @@ class PlacementM extends CI_Model {
         {
             $data = array(
                 's_created_by' => $this->session->userdata('sessID'),
-                't_status'               => '0'
+                's_status'     => '0'
             );
         }
         if($action == 'unblock' || $action == 'Approve')
         {
             $data = array(
                 's_created_by' => $this->session->userdata('sessID'),
-                't_status'               => '1'
+                's_status'               => '1'
             );
         }
 
@@ -917,7 +916,7 @@ class PlacementM extends CI_Model {
     public function editProfileAdminM($id)
     {
 
-        if($this->session->userdata('sessRole') == 'ADMIN'){
+        if($this->checkIsAdminF()){
             $where = array(
                 'a_ID' => $id,
             );
@@ -986,7 +985,7 @@ class PlacementM extends CI_Model {
     public function editProfileComM($id)
     {
 
-        if($this->session->userdata('sessRole') == 'COMPANY'){
+        if($this->checkIsComF()){
             $where = array(
                 'c_ID' => $id,
             );
@@ -1094,7 +1093,7 @@ class PlacementM extends CI_Model {
     /* Edit Profile TPO Model */
     public function editProfileTpoM($id)
     {
-        if($this->session->userdata('sessRole') == 'TPO'){
+        if($this->checkIsTpoF()){
             $where = array(
                 't_ID' => $id,
             );

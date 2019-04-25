@@ -162,7 +162,7 @@
                                                         <tr>
                                                             <th scope="row"><?php echo $value->d_ID ?></th>
                                                             <td><?php echo $value->d_name ?></td>
-                                                            <td class="text-center"><a href="<?php echo base_url('/placement/listStdF/unblock/' . $result[0]->t_ID); ?>" title="Block Admin" class="btn btn-sm btn-info">Student List</a></td>
+                                                            <td class="text-center"><a href="<?php echo base_url('/placement/listStdF/unblock/' . $result[0]->t_ID . '/' . $value->d_ID); ?>" title="Block Admin" class="btn btn-sm btn-info">Student List</a></td>
                                                         </tr>
                                                     <?php } ?>
                                                 </tbody>
