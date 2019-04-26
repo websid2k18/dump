@@ -50,6 +50,14 @@
                                 <li><a href="<?= base_url('/placement/listAdminF')?>"><i class="fas fa-users-cog"></i>&nbsp;&nbsp;List Admin</a></li>
                             </ul>
                         </li>
+                        
+                        <li class="<?php echo ($active=="RegComF" && $active=="listComF") ? "active" :  ""; ?>">
+                            <a><i class="fas fa-briefcase"></i>&nbsp;&nbsp;Placement Management<span class="fa"><i class="fas fa-chevron-down"></i></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="<?= base_url('/placement/createPlcF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;Add Placement</a></li>
+                                <li><a href="<?= base_url('/placement/listPlcF')?>"><i class="fas fa-industry"></i>&nbsp;&nbsp;List Placement</a></li>
+                            </ul>
+                        </li>
 
                         <li class="<?php echo $active=="aboutUsF" ?  "active":  ""; ?>">
                             <a href="<?= base_url('/placement/aboutUsF')?>"><i class="fas fa-info-circle"></i>&nbsp;&nbsp;About Us</a>

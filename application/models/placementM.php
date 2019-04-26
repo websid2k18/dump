@@ -505,11 +505,11 @@ class PlacementM extends CI_Model {
     /* List Company */
     public function getListComM()
     {
-        $this->db->select('*');
         $this->db->from('tbl_Company');
         $this->db->order_by('tbl_Company.c_ID', 'DESC');
 
         if ($this->checkIsAdminF()) {
+            $this->db->select('*');
             if ($this->input->post('status') == 'New') {
                 $where = array(
                     'c_status' => "0",
@@ -530,12 +530,17 @@ class PlacementM extends CI_Model {
                 $this->db->where($where);
             }
         }
-
-        if ($this->checkIsTpoF() || $this->checkIsComF()) {
+        elseif ($this->checkIsTpoF() || $this->checkIsComF()) {
+            $this->db->select('*');
             $where = array(
                 'c_status' => "1",
             );
             $this->db->where($where);
+        }
+        else {
+            $this->db->select('c_name, c_img, c_website');
+            $this->db->limit(5);
+            $where = array('c_status' => "1");
         }
 
         $query = $this->db->get();
@@ -553,12 +558,12 @@ class PlacementM extends CI_Model {
     public function getListTpoM($where = array(), $select = '*')
     {
         $where = array( );
-
-        $this->db->select($select);
+        
         $this->db->from('tbl_tpo');
         $this->db->order_by('tbl_tpo.t_ID', 'DESC');
 
         if ($this->checkIsAdminF()) {
+            $this->db->select($select);
             if ($this->input->post('status') == 'New') {
                 $where = array(
                     't_status' => "0",
@@ -579,12 +584,17 @@ class PlacementM extends CI_Model {
                 $this->db->where($where);
             }
         }
-
-        if ($this->checkIsTpoF() || $this->checkIsComF()) {
+        elseif ($this->checkIsTpoF() || $this->checkIsComF()) {
+            $this->db->select($select);
             $where = array(
                 't_status' => "1",
             );
             $this->db->where($where);
+        }
+        else {
+            $this->db->select('t_name, t_img, t_website');
+            $this->db->limit(5);
+            $where = array('c_status' => "1");
         }
 
         $query = $this->db->get();
@@ -1295,6 +1305,59 @@ class PlacementM extends CI_Model {
     /* Edit Profile Student Model Ends */
 
     /*===============================================================================================================*/
+
+    /* List Company */
+    public function getListPlcM()
+    {
+        $this->db->from('tbl_placement');
+        $this->db->order_by('tbl_placement.p_ID', 'DESC');
+
+        if ($this->checkIsAdminF()) {
+            $this->db->select('*');
+            if ($this->input->post('status') == 'New') {
+                $where = array(
+                    'p_status' => "0",
+                    'c_approved_by_admin_ID' => NULL,
+                );
+                $this->db->where($where);
+            }
+            if ($this->input->post('status') == 'open') {
+                $where = array(
+                    'p_status' => "0",
+                );
+                $this->db->where($where);
+            }
+            elseif ($this->input->post('status') == 'finished') {
+                $where = array(
+                    'p_status' => "1",
+                );
+                $this->db->where($where);
+            }
+        }
+        elseif ($this->checkIsTpoF() || $this->checkIsComF()) {
+            $this->db->select('*');
+            $where = array(
+                'c_status' => "1",
+            );
+            $this->db->where($where);
+        }
+        else {
+            $this->db->select('c_name, c_img, c_website');
+            $this->db->limit(5);
+            $where = array('c_status' => "1");
+        }
+
+        $query = $this->db->get();
+
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+        return FALSE;
+    }
+    /* List Company Ends*/
+
+    /*===============================================================================================================*/
+
 }
 
 /* End of file placementM.php */

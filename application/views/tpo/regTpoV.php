@@ -4,7 +4,7 @@
         <div class="col-md-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Collage Registrarion Form</h2>
+                    <h2>College Registrarion Form</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -16,7 +16,7 @@
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tEmailId">Email <span class="required">*</span>
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <?php echo form_input('tEmail', set_value('tEmail'), 'type="email" id="tEmailId" onchange="unique(this.value);" required="required" maxlength="250" placeholder="Collage Email" class="form-control col-md-7 col-xs-12"'); ?>
+                                <?php echo form_input('tEmail', set_value('tEmail'), 'type="email" id="tEmailId" onchange="unique(this.value);" required="required" maxlength="250" placeholder="College Email" class="form-control col-md-7 col-xs-12"'); ?>
                                 <ul class="parsley-errors-list filled" id="parsley-id-1">
                                     <li class="parsley-required">
                                         <?php echo form_error('tEmail'); ?>
@@ -63,10 +63,10 @@
 
                     <div class="col-md-12 no-padding">
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tNameId">Collage Name <span class="required">*</span>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="tNameId">College Name <span class="required">*</span>
                             </label>
                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                <?php echo form_input('tName', set_value('tName'), 'id="tNameId" required="required" placeholder="Collage Name" class="form-control col-md-7 col-xs-12"');; ?>
+                                <?php echo form_input('tName', set_value('tName'), 'id="tNameId" required="required" placeholder="College Name" class="form-control col-md-7 col-xs-12"');; ?>
                             </div>
                             <ul class="parsley-errors-list filled" id="parsley-id-4">
                                 <li class="parsley-required">

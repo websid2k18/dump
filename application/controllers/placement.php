@@ -11,7 +11,7 @@ class Placement extends CI_Controller {
 
     public function test($page='')
     {
-        echo hash ( "sha256", "Admin@123");
+        echo hash ( "sha256", "Admin3@123");
     }
 
     /*===============================================================================================================*/
@@ -226,7 +226,7 @@ class Placement extends CI_Controller {
     public function index($page = "index") 
     {
         $this->headers();
-        $data = "";
+        $data = array();
 
         if ($this->checkIsStdF()) {
             redirect('/placement/dashboardStdF','refresh');
@@ -241,6 +241,9 @@ class Placement extends CI_Controller {
             redirect('/placement/dashboardAdminF','refresh');
         }
         else {
+            $this->load->model('placementM');
+            $data['listcom'] = $this->placementM->getListComM();
+            $data['listtpo'] = $this->placementM->getListTpoM();
             $this->load->view('homeV', $data);
         }
 
@@ -1135,6 +1138,55 @@ class Placement extends CI_Controller {
     }
     /* Edit Profile Std Page Ends*/
 
+    /*===============================================================================================================*/
+
+    /* Create Placement Page */
+    public function createPlcF($page='createPlcF')
+    {
+        $this->headers($page);
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->getListTpoM( NULL, "t_ID, t_name, t_departments");
+
+        if ($this->form_validation->run('pCreate')) 
+        {
+            $this->load->model('placementM');
+            $result = $this->placementM->setCreatePlcM();
+
+            if ($result == TRUE) {
+                redirect('placement/listPlcF');
+            }
+            else {
+                $this->load->view('placement/createPlcV', $data);
+            }
+        }
+        else {
+            $this->load->view('placement/createPlcV', $data);
+        }
+
+        $this->footers();
+    }
+    /* Create Placement Page Ends */
+
+    /*===============================================================================================================*/
+    
+    /* List Placement Page */
+    public function listPlcF($page='listPlcF')
+    {
+        $this->checkIsUser();
+        $this->headers($page);
+        $data = array();
+
+        $this->load->model('placementM');
+        $data['result'] = $this->placementM->getListPlcM();
+
+        $this->load->view('placement/listPlcV', $data);
+
+        $this->footers();
+    }
+    /* Create Placement Page Ends */
+
+    /*===============================================================================================================*/
 }
 
 /* End of file placement.php */

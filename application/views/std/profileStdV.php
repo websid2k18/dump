@@ -94,7 +94,7 @@
                                 </li>
                             </ul>
                             <div id="myTabContent" class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade active in" id="EDUCATION" aria-labelledby="home-tab">
+                                <div role="tabpanel" class="tab-pane fade" id="EDUCATION" aria-labelledby="home-tab">
                                     <div class="">
                                         <div class="x_content">
                                             <ul class="list-unstyled timeline">
@@ -156,7 +156,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="COLLEGEDETAIL" aria-labelledby="profile-tab">
+                                <div role="tabpanel" class="tab-pane fade active in" id="COLLEGEDETAIL" aria-labelledby="profile-tab">
                                     <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
                                         <div class="profile_img">
                                             <div id="crop-avatar">

@@ -9,96 +9,27 @@
                 </div>
                 <div class="x_content">
                     <div class="row">
-                        <div class="col-md-55">
-                            <div class="thumbnail">
-                                <div class="image view view-first">
-                                    <img style="width: 100%; display: block;" src="<?php echo base_url(); ?>assets/images/company/ots2.png" alt="image" />
-                                    <div class="mask">
-                                        <p>It is a IT Company</p>
-                                        <div class="tools tools-bottom">
-                                            <a href="https://www.ordextechnology.com/"><i class="fa fa-link"></i></a>
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
-                                            <!-- <a href="#"><i class="fa fa-times"></i></a> -->
+                        <?php 
+                        if (!empty($listcom)) {
+                            foreach ($listcom as $key => $value) { 
+                                $c_img = (empty($value->c_img)) ? base_url("assets/images/company/user.png") : base_url("assets/images/company/" . $value->c_img) ;  ?>
+                                <div class="col-md-55">
+                                    <div class="thumbnail">
+                                        <div class="image view view-first">
+                                            <img style="width: 100%; display: block;" src="<?php echo $c_img; ?>" alt="image" />
+                                            <div class="mask">
+                                                <div class="tools tools-bottom">
+                                                    <a href="https://<?= $value->c_website ?>"><i class="fa fa-link"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="caption">
+                                            <p><?= $value->c_name ?></p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="caption">
-                                    <p>Ordex Technology Solutions</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-55">
-                            <div class="thumbnail">
-                                <div class="image view view-first">
-                                    <img style="width: 100%; display: block;" src="<?php echo base_url(); ?>assets/images/company/sow.png" alt="image" />
-                                    <div class="mask">
-                                        <p>It is a IT Company</p>
-                                        <div class="tools tools-bottom">
-                                            <a href="http://www.staroneweb.co.in/"><i class="fa fa-link"></i></a>
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
-                                            <!-- <a href="#"><i class="fa fa-times"></i></a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="caption">
-                                    <p>Star One Web</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-55">
-                            <div class="thumbnail">
-                                <div class="image view view-first">
-                                    <img style="width: 100%; display: block;" src="<?php echo base_url(); ?>assets/images/company/sow1.png" alt="image" />
-                                    <div class="mask">
-                                        <p>It is a IT Company</p>
-                                        <div class="tools tools-bottom">
-                                            <a href="http://www.staroneweb.co.in/"><i class="fa fa-link"></i></a>
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
-                                            <!-- <a href="#"><i class="fa fa-times"></i></a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="caption">
-                                    <p>Star One Web</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-55">
-                            <div class="thumbnail">
-                                <div class="image view view-first">
-                                    <img style="width: 100%; display: block;" src="<?php echo base_url(); ?>assets/images/company/ts.png" alt="image" />
-                                    <div class="mask">
-                                        <p>It is a IT Company</p>
-                                        <div class="tools tools-bottom">
-                                            <a href="http://www.staroneweb.co.in/"><i class="fa fa-link"></i></a>
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
-                                            <!-- <a href="#"><i class="fa fa-times"></i></a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="caption">
-                                    <p>TatvaSoft</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-55">
-                            <div class="thumbnail">
-                                <div class="image view view-first">
-                                    <img style="width: 100%; display: block;" src="<?php echo base_url(); ?>assets/images/company/ts.png" alt="image" />
-                                    <div class="mask">
-                                        <p>It is a IT Company</p>
-                                        <div class="tools tools-bottom">
-                                            <a href="http://www.staroneweb.co.in/"><i class="fa fa-link"></i></a>
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
-                                            <!-- <a href="#"><i class="fa fa-times"></i></a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="caption">
-                                    <p>TatvaSoft</p>
-                                </div>
-                            </div>
-                        </div>
+                            <?php }
+                        } ?>
                     </div>
                 </div>
             </div>
@@ -113,96 +44,27 @@
                 </div>
                 <div class="x_content">
                     <div class="row">
-                        <div class="col-md-55">
-                            <div class="thumbnail">
-                                <div class="image view view-first">
-                                    <img style="width: 100%; display: block;" src="<?php echo base_url(); ?>assets/images/college/gecg.png" alt="image" />
-                                    <div class="mask">
-                                        <p>Government Engineerin College</p>
-                                        <div class="tools tools-bottom">
-                                            <a href="#"><i class="fa fa-link"></i></a>
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
-                                            <!-- <a href="#"><i class="fa fa-times"></i></a> -->
+                        <?php 
+                        if (!empty($listtpo)) {
+                            foreach ($listtpo as $key => $value) { 
+                                $t_img = (empty($value->t_img)) ? base_url("assets/images/tpo/user.png") : base_url("assets/images/tpo/" . $value->t_img) ;  ?>
+                                <div class="col-md-55">
+                                    <div class="thumbnail">
+                                        <div class="image view view-first">
+                                            <img style="width: 100%; display: block;" src="<?php echo $t_img; ?>" alt="image" />
+                                            <div class="mask">
+                                                <div class="tools tools-bottom">
+                                                    <a href="https://<?= $value->t_website ?>"><i class="fa fa-link"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="caption">
+                                            <p><?= $value->t_name ?></p>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="caption">
-                                    <p>Government Engineerin College</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-55">
-                            <div class="thumbnail">
-                                <div class="image view view-first">
-                                    <img style="width: 100%; display: block;" src="<?php echo base_url(); ?>assets/images/college/gecg.png" alt="image" />
-                                    <div class="mask">
-                                        <p>Government Engineerin College</p>
-                                        <div class="tools tools-bottom">
-                                            <a href="#"><i class="fa fa-link"></i></a>
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
-                                            <!-- <a href="#"><i class="fa fa-times"></i></a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="caption">
-                                    <p>Government Engineerin College</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-55">
-                            <div class="thumbnail">
-                                <div class="image view view-first">
-                                    <img style="width: 100%; display: block;" src="<?php echo base_url(); ?>assets/images/college/gecg.png" alt="image" />
-                                    <div class="mask">
-                                        <p>Government Engineerin College</p>
-                                        <div class="tools tools-bottom">
-                                            <a href="#"><i class="fa fa-link"></i></a>
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
-                                            <!-- <a href="#"><i class="fa fa-times"></i></a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="caption">
-                                    <p>Government Engineerin College</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-55">
-                            <div class="thumbnail">
-                                <div class="image view view-first">
-                                    <img style="width: 100%; display: block;" src="<?php echo base_url(); ?>assets/images/college/gecg.png" alt="image" />
-                                    <div class="mask">
-                                        <p>Government Engineerin College</p>
-                                        <div class="tools tools-bottom">
-                                            <a href="#"><i class="fa fa-link"></i></a>
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
-                                            <!-- <a href="#"><i class="fa fa-times"></i></a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="caption">
-                                    <p>Government Engineerin College</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-55">
-                            <div class="thumbnail">
-                                <div class="image view view-first">
-                                    <img style="width: 100%; display: block;" src="<?php echo base_url(); ?>assets/images/college/gecg.png" alt="image" />
-                                    <div class="mask">
-                                        <p>Government Engineerin College</p>
-                                        <div class="tools tools-bottom">
-                                            <a href="#"><i class="fa fa-link"></i></a>
-                                            <!-- <a href="#"><i class="fa fa-pencil"></i></a> -->
-                                            <!-- <a href="#"><i class="fa fa-times"></i></a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="caption">
-                                    <p>Government Engineerin College</p>
-                                </div>
-                            </div>
-                        </div>
+                            <?php }
+                        } ?>
                     </div>
                 </div>
             </div>
